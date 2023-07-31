@@ -5,6 +5,7 @@
 import { visionTool } from '@sanity/vision'
 import { apiVersion, dataset, projectId } from 'lib/sanity.api'
 import { defineConfig } from 'sanity'
+import { tags } from 'sanity-plugin-tags'
 import { deskTool } from 'sanity/desk'
 import itemType from 'schemas/documents/item'
 import { schema } from 'schemas/schema'

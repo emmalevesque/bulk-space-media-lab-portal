@@ -1,31 +1,24 @@
 import { defineType } from 'sanity'
 
-// create a sanity schema type for a basic category in typescript
 export default defineType({
-  name: 'category',
-  title: 'Category',
+  name: 'tag',
+  title: 'Tag',
   type: 'document',
   fields: [
     {
       name: 'name',
-      title: 'Category Name',
+      title: 'Tag Name',
       type: 'string',
       validation: (Rule) => Rule.required(),
     },
     {
       name: 'slug',
-      title: 'Category Slug',
+      title: 'Tag Slug',
       type: 'slug',
       options: {
         source: 'name',
         maxLength: 96,
       },
-    },
-    {
-      name: 'parent',
-      title: 'Parent Category',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'category' }] }],
     },
   ],
 })
