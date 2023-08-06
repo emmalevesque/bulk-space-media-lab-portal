@@ -15,5 +15,11 @@ export default defineType({
       title: 'Email',
       type: 'string',
     },
+    {
+      name: 'phone',
+      title: 'Phone',
+      type: 'string',
+      // TODO: validation
+    },
   ],
 })

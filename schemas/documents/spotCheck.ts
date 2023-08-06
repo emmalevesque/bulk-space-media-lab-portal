@@ -5,9 +5,18 @@ export default defineType({
   title: 'Spot Check',
   type: 'document',
   fields: [
+
+    // TODO: change 'user' to 'member' and create 'staff' type
+
     {
-      name: 'checker',
-      title: 'Checker',
+      name: 'staff',
+      title: 'Staff',
+      type: 'reference',
+      to: [{ type: 'user' }],
+    },
+    {
+      name: 'member',
+      title: 'Member',
       type: 'reference',
       to: [{ type: 'user' }],
     },
@@ -26,6 +35,13 @@ export default defineType({
       name: 'notes',
       title: 'Notes',
       type: 'text',
+    },
+    {
+      // TODO: this boolean enables/disables further checkouts on item/kit
+      name: 'isComplete',
+      title: 'Is Complete?',
+      type: 'boolean',
+      validation: (Rule) => Rule.required(),
     },
   ],
 })

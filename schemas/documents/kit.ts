@@ -22,5 +22,33 @@ export default defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'inventoryItem' }] }],
     },
+    {
+      name: 'images',
+      title: 'Item Image',
+      type: 'array',
+      of: [{ type: 'image' }],
+    },
+    {
+      name: 'category',
+      title: 'Item Category',
+      type: 'reference',
+
+      to: [{ type: 'category' }],
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'tags',
+      title: 'Item Tags',
+
+      type: 'array',
+      of: [{ type: 'string' }],
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'active',
+      title: 'Item Active',
+      type: 'boolean',
+      validation: (Rule) => Rule.required(),
+    },
   ],
 })

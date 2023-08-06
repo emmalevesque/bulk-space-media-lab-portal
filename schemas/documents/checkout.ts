@@ -27,5 +27,17 @@ export default defineType({
       title: 'Return Date',
       type: 'datetime',
     },
+    {
+      name: 'returned',
+      title: 'Item Returned',
+      type: 'boolean',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'spotChecked',
+      title: 'Item Spot Checked',
+      type: 'boolean',
+      validation: (Rule) => Rule.required(),
+    },
   ],
 })
