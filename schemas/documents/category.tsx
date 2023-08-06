@@ -7,7 +7,7 @@ export default defineType({
   type: 'document',
   fields: [
     {
-      name: 'name',
+      name: 'title',
       title: 'Category Name',
       type: 'string',
       validation: (Rule) => Rule.required(),
@@ -17,7 +17,7 @@ export default defineType({
       title: 'Category Slug',
       type: 'slug',
       options: {
-        source: 'name',
+        source: 'title',
         maxLength: 96,
       },
     },
