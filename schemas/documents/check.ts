@@ -1,11 +1,10 @@
 import { defineType } from 'sanity'
 
 export default defineType({
-  name: 'spotCheck',
+  name: 'check',
   title: 'Spot Check',
   type: 'document',
   fields: [
-
     // TODO: change 'user' to 'member' and create 'staff' type
 
     {
