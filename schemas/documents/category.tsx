@@ -30,10 +30,8 @@ export default defineType({
     {
       name: 'tags',
       title: 'Category Tags',
-
       type: 'array',
-      of: [{ type: 'string' }],
-      validation: (Rule) => Rule.required(),
+      of: [{ type: 'reference', to: [{ type: 'tag' }] }],
     },
   ],
 })
