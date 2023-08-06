@@ -1,7 +1,6 @@
 /**
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
-
 import { visionTool } from '@sanity/vision'
 import { apiVersion, dataset, projectId } from 'lib/sanity.api'
 import { defineConfig } from 'sanity'
