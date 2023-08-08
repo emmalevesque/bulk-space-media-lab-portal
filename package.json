@@ -11,6 +11,12 @@
     "start": "next start",
     "type-check": "tsc --noEmit"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
   "prettier": {
     "semi": false,
     "singleQuote": true
@@ -60,5 +66,8 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "hooks": {
+    "pre-commit": "lint-staged"
   }
 }
