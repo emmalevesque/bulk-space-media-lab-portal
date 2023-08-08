@@ -45,6 +45,5 @@ studio/.env.development
 
 # Data files
 *.tar.gz
-*.json
 *.ndjson
 *.csv
