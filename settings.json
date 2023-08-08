@@ -1,0 +1,21 @@
+{
+  // highlight TODOS in the codebase
+  "todohighlight.isEnable": true,
+  // highlight FIXMEs in the codebase
+  "todohighlight.keywords": [
+    {
+      "text": "FIXME",
+      "color": "#FF0000",
+      "backgroundColor": "#FFFF00",
+      "overviewRulerColor": "#FF0000",
+      "borderColor": "#FF0000"
+    },
+    {
+      "text": "TODO",
+      "color": "#FF0000",
+      "backgroundColor": "#FFFF00",
+      "overviewRulerColor": "#FF0000",
+      "borderColor": "#FF0000"
+    }
+  ]
+}
