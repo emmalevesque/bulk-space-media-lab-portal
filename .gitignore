@@ -47,3 +47,6 @@ studio/.env.development
 *.tar.gz
 *.ndjson
 *.csv
+assets*.json
+# ignore any files that start with a number and end with .ndjson
+\d{6}\..*\.ndjson
