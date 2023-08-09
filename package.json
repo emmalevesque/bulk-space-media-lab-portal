@@ -53,8 +53,5 @@
   },
   "engines": {
     "node": ">=16"
-  },
-  "hooks": {
-    "pre-commit": "lint-staged"
   }
 }
