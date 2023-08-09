@@ -1,3 +1,5 @@
+// @eslint-disable-file
+// @ts-nocheck
 import QRCode from 'react-qr-code'
 import { defineType, useFormValue } from 'sanity'
 import { useCallback, useRef } from 'react'

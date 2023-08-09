@@ -1,0 +1,3 @@
+[data-ui='ListPane'] *:not(svg) + span {
+  box-shadow: none !important;
+}
