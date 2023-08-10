@@ -19,7 +19,9 @@ import navigation from "schemas/singletons/menu";
 
 import "styles/studio.css";
 import checkout from "schemas/documents/inventory/checkout";
-import CategoryPreviewPane from "schemas/components/preview/CategoryPreviewPane";
+import { previewDocumentNode } from "plugins/previewPane";
+import MenuPreviewPane from "schemas/components/preview/MenuPreviewPane";
+import NavigationStructure from "tools/Navigation/NavigationStructure";
 
 const title =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || "Next.js Blog with Sanity.io";
@@ -31,7 +33,7 @@ export const documentPreviewPanes: {
 }[] = [
   {
     menu: {
-      component: CategoryPreviewPane,
+      component: MenuPreviewPane,
     },
   },
 ];
@@ -45,6 +47,7 @@ export default defineConfig({
     // If you want more content types, you can add them to this array
     types: schema,
   },
+  tools: [NavigationStructure()],
   plugins: [
     deskTool({
       structure: (S) =>
@@ -67,6 +70,7 @@ export default defineConfig({
           user,
           staff,
         ]),
+      defaultDocumentNode: previewDocumentNode(),
     }),
     // Configures the global "new document" button, and document actions, to suit the Settings document singleton
     // Add the "Open preview" action

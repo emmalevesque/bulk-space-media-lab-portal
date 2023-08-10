@@ -21,7 +21,7 @@
     "@sanity/ui": "^1.7.4",
     "@sanity/vision": "^3.14.2",
     "@vercel/og": "0.5.8",
-    "classnames": "2.3.2",
+    "classnames": "^2.3.2",
     "date-fns": "^2.30.0",
     "intl-segmenter-polyfill": "0.4.4",
     "lint-staged": "^13.2.3",
