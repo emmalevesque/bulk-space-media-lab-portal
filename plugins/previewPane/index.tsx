@@ -15,6 +15,7 @@ import category from "schemas/documents/inventory/category";
 
 import CategoryPreviewPane from "schemas/components/preview/CategoryPreviewPane";
 import menu from "schemas/singletons/menu";
+import MenuPreviewPane from "schemas/components/preview/MenuPreviewPane";
 
 const urlResolver = defineUrlResolver({
   base: DRAFT_MODE_ROUTE,
@@ -34,7 +35,7 @@ export const previewDocumentNode = (): DefaultDocumentNodeResolver => {
           S.view.form(),
           S.view
             .component(({ document }) => (
-              <CategoryPreviewPane document={document} />
+              <MenuPreviewPane document={document} />
             ))
             .title("Preview"),
         ]);
@@ -42,7 +43,11 @@ export const previewDocumentNode = (): DefaultDocumentNodeResolver => {
       case menu.name:
         return S.document().views([
           S.view.form(),
-          S.view.component(Iframe).options(iframeOptions).title("Preview"),
+          S.view
+            .component(({ document }) => (
+              <MenuPreviewPane document={document} />
+            ))
+            .title("Preview"),
         ]);
       default:
         return null;
