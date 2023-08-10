@@ -11,6 +11,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@emotion/is-prop-valid": "^1.2.1",
     "@next/env": "^13.4.12",
     "@portabletext/react": "3.0.4",
     "@sanity/cli": "^3.15.0",
@@ -32,7 +33,7 @@
     "react-qr-code": "^2.0.11",
     "sanity": "^3.15.0",
     "sanity-plugin-asset-source-unsplash": "1.1.0",
-    "sanity-plugin-tags": "^2.0.1",
+    "sanity-plugin-iframe-pane": "^2.5.4",
     "slugify": "^1.6.6",
     "styled-components": "^6.0.4",
     "suspend-react": "0.1.3",

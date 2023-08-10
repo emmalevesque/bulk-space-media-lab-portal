@@ -1,30 +1,38 @@
 // @eslint-disable-file
 // @ts-nocheck
-import QRCode from 'react-qr-code'
-import { defineType, useFormValue } from 'sanity'
-import { useCallback, useRef } from 'react'
-import { Badge, Button, Card, Inline, Stack, Text, TextInput } from '@sanity/ui'
-import { set, unset } from 'sanity'
-import { BASE_URL } from 'lib/consts'
-import slugify from 'slugify'
+import QRCode from "react-qr-code";
+import { defineType, useFormValue } from "sanity";
+import { useCallback, useRef } from "react";
+import {
+  Badge,
+  Button,
+  Card,
+  Inline,
+  Stack,
+  Text,
+  TextInput,
+} from "@sanity/ui";
+import { set, unset } from "sanity";
+import { BASE_URL } from "lib/consts";
+import slugify from "slugify";
 
 export type TItem = {
-  name: string
-  description: string
-  images: any[]
-  cost: number
-  stock: number
-  active: boolean
+  name: string;
+  description: string;
+  images: any[];
+  cost: number;
+  stock: number;
+  active: boolean;
   slug: {
-    current: string
-  }
-}
+    current: string;
+  };
+};
 
 export const ItemSlugInputComponent = (props, context) => {
-  const item = useFormValue(context) as TItem
-  const { elementProps, onChange, value = '' } = props
+  const item = useFormValue(context) as TItem;
+  const { elementProps, onChange, value = "" } = props;
 
-  const itemFrontendUrl = `${BASE_URL}/inventory/${value?.current}`
+  const itemFrontendUrl = `${BASE_URL}/inventory/${value?.current}`;
 
   if (!value)
     return (
@@ -33,24 +41,24 @@ export const ItemSlugInputComponent = (props, context) => {
           Please generate a slug to see a QR code for this item
         </Text>
       </Stack>
-    )
+    );
 
-  const textInputRef = useRef(null)
+  const textInputRef = useRef(null);
 
   const handleChange = useCallback(
     (event) => {
-      const nextValue = event.currentTarget.value
-      onChange(nextValue ? set({ ...value, current: nextValue }) : unset())
+      const nextValue = event.currentTarget.value;
+      onChange(nextValue ? set({ ...value, current: nextValue }) : unset());
     },
     [onChange]
-  )
+  );
 
   const handleGenerateSlug = () => {
-    const nextValue = slugify(item?.name, { lower: true })
-    console.log({ nextValue })
+    const nextValue = slugify(item?.name, { lower: true });
+    console.log({ nextValue });
 
-    onChange(nextValue ? set({ ...value, current: nextValue }) : unset())
-  }
+    onChange(nextValue ? set({ ...value, current: nextValue }) : unset());
+  };
 
   return (
     <Stack space={2}>
@@ -71,11 +79,11 @@ export const ItemSlugInputComponent = (props, context) => {
       </Stack>
       <QRCode value={itemFrontendUrl} />
     </Stack>
-  )
-}
+  );
+};
 
 export const ItemPreviewPane = ({ document }) => {
-  const { name, description, images, cost, stock, active } = document
+  const { name, description, images, cost, stock, active } = document;
   return (
     <div>
       <h1>{name}</h1>
@@ -87,70 +95,70 @@ export const ItemPreviewPane = ({ document }) => {
         <img src={image.asset.url} alt={name} />
       ))}
     </div>
-  )
-}
+  );
+};
 
 export default defineType({
-  name: 'inventoryItem',
-  title: 'Inventory Item',
-  type: 'document',
+  name: "item",
+  title: "Inventory Item",
+  type: "document",
   groups: [
     {
-      title: 'Details',
-      name: 'details',
+      title: "Details",
+      name: "details",
     },
     {
-      title: 'Item Images',
-      name: 'images',
+      title: "Item Images",
+      name: "images",
     },
     {
-      title: 'Taxonomy',
-      name: 'taxonomy',
+      title: "Taxonomy",
+      name: "taxonomy",
     },
     {
-      title: 'Item Stock',
-      name: 'stock',
+      title: "Item Stock",
+      name: "stock",
     },
     {
-      title: 'Cost and Condition',
-      name: 'condition',
+      title: "Cost and Condition",
+      name: "condition",
     },
   ],
   fields: [
     {
-      name: 'easyName',
-      title: 'Easy Name',
+      name: "easyName",
+      title: "Easy Name",
       description:
-        'Commonly used name for the item e.g. DSLR Camera, Cord, Adapter...',
-      type: 'string',
-      group: 'details',
+        "Commonly used name for the item e.g. DSLR Camera, Cord, Adapter...",
+      type: "string",
+      group: "details",
       validation: (Rule) => Rule.required(),
     },
     {
-      group: 'details',
-      name: 'manufacturerDetails',
-      title: 'Manufacturer Details',
-      type: 'object',
+      group: "details",
+      name: "manufacturerDetails",
+      title: "Manufacturer Details",
+      type: "object",
       fields: [
         {
-          name: 'manufacturer',
-          title: 'Manufacturer',
-          type: 'string',
+          name: "manufacturer",
+          title: "Manufacturer",
+          type: "string",
         },
         {
-          name: 'model',
-          title: 'Model',
-          type: 'string',
+          name: "model",
+          title: "Model",
+          type: "string",
         },
       ],
     },
     {
-      group: 'details',
-      name: 'slug',
-      title: 'Item Slug',
-      type: 'slug',
+      group: "details",
+      name: "slug",
+      title: "Item Slug",
+      type: "slug",
       options: {
-        source: 'easyName',
+        source: "easyName",
         maxLength: 96,
       },
       components: {
@@ -158,75 +166,80 @@ export default defineType({
       },
     },
     {
-      group: 'details',
-      name: 'sku',
-      title: 'Item SKU',
-      type: 'string',
+      group: "details",
+      name: "sku",
+      title: "Item SKU",
+      type: "string",
       validation: (Rule) => Rule.required(),
     },
     {
-      group: 'details',
-      name: 'description',
-      title: 'Item Description',
-      type: 'text',
+      group: "details",
+      name: "description",
+      title: "Item Description",
+      type: "text",
       validation: (Rule) => Rule.required(),
     },
     {
-      group: 'condition',
-      name: 'cost',
-      title: 'Item Price',
-      type: 'number',
+      group: "condition",
+      name: "cost",
+      title: "Item Price",
+      type: "number",
     },
     {
-      group: 'images',
-      name: 'images',
-      title: 'Item Images',
-      type: 'array',
-      of: [{ type: 'image' }],
+      group: "images",
+      name: "images",
+      title: "Item Images",
+      type: "array",
+      of: [{ type: "image" }],
     },
     {
-      group: 'taxonomy',
-      name: 'category',
-      title: 'Item Category',
-      type: 'reference',
-      to: [{ type: 'category' }],
+      group: "taxonomy",
+      name: "category",
+      title: "Item Category",
+      type: "reference",
+      to: [{ type: "category" }],
       validation: (Rule) => Rule.required(),
     },
     {
-      group: 'taxonomy',
-      name: 'tags',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'tag' }] }],
-      title: 'Item Tags',
+      group: "taxonomy",
+      name: "tags",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "tag" }] }],
+      title: "Item Tags",
     },
     {
-      group: 'condition',
-      name: 'stock',
-      title: 'Item Stock',
-      type: 'number',
+      group: "condition",
+      name: "stock",
+      title: "Item Stock",
+      type: "number",
     },
     {
-      name: 'active',
-      title: 'Item Active',
-      type: 'boolean',
+      name: "active",
+      title: "Item Active",
+      type: "boolean",
       validation: (Rule) => Rule.required(),
     },
     {
-      group: 'details',
-      name: 'productManualUrl',
-      title: 'Product Manual URL',
+      group: "details",
+      name: "productManualUrl",
+      title: "Product Manual URL",
       description:
-        'Product Manual URL (if applicable) OR revelvant and helpful links',
-      type: 'url',
+        "Product Manual URL (if applicable) OR revelvant and helpful links",
+      type: "url",
     },
     {
-      group: 'condition',
-      name: 'condition',
-      title: 'Condition',
-      type: 'string',
+      group: "condition",
+      name: "condition",
+      title: "Condition",
+      type: "string",
       options: {
-        list: ['New', 'Good', 'Fair', 'Poor'],
+        list: ["New", "Good", "Fair", "Poor"],
       },
     },
   ],
-})
+  preview: {
+    select: {
+      title: "easyName",
+    },
+  },
+});

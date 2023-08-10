@@ -1,46 +1,45 @@
-import { defineType } from 'sanity'
+import { defineType } from "sanity";
 
 export default defineType({
-  name: 'check',
-  title: 'Spot Check',
-  type: 'document',
+  name: "check",
+  title: "Spot Check",
+  type: "document",
   fields: [
     // TODO: change 'user' to 'member' and create 'staff' type
-
     {
-      name: 'staff',
-      title: 'Staff',
-      type: 'reference',
-      to: [{ type: 'user' }],
+      name: "staff",
+      title: "Staff",
+      type: "reference",
+      to: [{ type: "user" }],
     },
     {
-      name: 'member',
-      title: 'Member',
-      type: 'reference',
-      to: [{ type: 'user' }],
+      name: "member",
+      title: "Member",
+      type: "reference",
+      to: [{ type: "user" }],
     },
     {
-      name: 'inventoryItems',
-      title: 'Inventory Items',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'inventoryItem' }] }],
+      name: "items",
+      title: "Inventory Items",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "item" }] }],
     },
     {
-      name: 'checkDate',
-      title: 'Check Date',
-      type: 'datetime',
+      name: "checkDate",
+      title: "Check Date",
+      type: "datetime",
     },
     {
-      name: 'notes',
-      title: 'Notes',
-      type: 'text',
+      name: "notes",
+      title: "Notes",
+      type: "text",
     },
     {
       // TODO: this boolean enables/disables further checkouts on item/kit
-      name: 'isComplete',
-      title: 'Is Complete?',
-      type: 'boolean',
+      name: "isComplete",
+      title: "Is Complete?",
+      type: "boolean",
       validation: (Rule) => Rule.required(),
     },
   ],
-})
+});

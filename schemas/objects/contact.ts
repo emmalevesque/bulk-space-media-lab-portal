@@ -1,10 +1,9 @@
 import { defineField, defineType } from "sanity";
 
-// TODO: move contact fields into user
 export default defineType({
-  name: "user",
-  title: "User",
-  type: "document",
+  name: "contact",
+  title: "Contact Information",
+  type: "object",
   fields: [
     defineField({
       type: "string",
@@ -12,7 +11,7 @@ export default defineType({
       title: "Name",
     }),
     defineField({
-      name: "contact",
+      name: "contactInformation",
       title: "Contact Information",
       type: "object",
       fields: [
@@ -32,16 +31,4 @@ export default defineType({
       },
     }),
   ],
-  preview: {
-    select: {
-      name: "name",
-      contact: "contact",
-    },
-    prepare({ name, contact }) {
-      return {
-        title: name ? `${name}` : "No user name contact yet...",
-        subtitle: contact?.email,
-      };
-    },
-  },
 });
