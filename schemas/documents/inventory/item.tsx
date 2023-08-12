@@ -143,8 +143,8 @@ export default defineType({
       type: "object",
       fields: [
         {
-          name: "manufacturer",
-          title: "Manufacturer",
+          name: "make",
+          title: "Make",
           type: "string",
         },
         {
@@ -241,7 +241,9 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: "easyName",
+      title:
+        "easyName" ||
+        `${manufacturerDetails.make} ${manufacturerDetails.model}`,
     },
   },
 });
