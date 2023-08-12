@@ -41,7 +41,6 @@ const NavigationStructureComponent = (props) => {
   return data ? (
     <Stack padding={4} space={4}>
       <Heading as="h2">Equipment Inventory Navigation</Heading>
-      <Heading as="h3">Active Category: {activeCategory} </Heading>
       <Stack space={3}>
         {data.map((category) => (
           <CategoryDetails

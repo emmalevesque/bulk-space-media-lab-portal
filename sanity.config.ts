@@ -35,6 +35,9 @@ export const documentPreviewPanes: {
     menu: {
       component: MenuPreviewPane,
     },
+    category: {
+      component: MenuPreviewPane,
+    },
   },
 ];
 
@@ -46,30 +49,41 @@ export default defineConfig({
   schema: {
     // If you want more content types, you can add them to this array
     types: schema,
+    templates: (prev) => {
+      const categoryChild = {
+        id: "category-child",
+        title: "Category: Child",
+        schemaType: "category",
+        parameters: [{ name: `parentId`, title: `Parent ID`, type: `string` }],
+        // This value will be passed-in from desk structure
+        value: ({ parentId }: { parentId: string }) => ({
+          parent: { _type: "reference", _ref: parentId },
+        }),
+      };
+
+      return [...prev, categoryChild];
+    },
   },
   tools: [NavigationStructure()],
   plugins: [
     deskTool({
-      structure: (S) =>
-        deskStructure(S, [
-          {
-            type: "list",
-            title: "Inventory",
-            icon: icon,
-            typeDefs: [navigation],
-          },
-          S.divider(),
-          item,
-          kit,
-          S.divider(),
-          checkout,
-          S.divider(),
-          category,
-          tag,
-          S.divider(),
-          user,
-          staff,
-        ]),
+      structure: (S, context) =>
+        deskStructure(
+          S,
+          [
+            item,
+            kit,
+            S.divider(),
+            checkout,
+            S.divider(),
+            category,
+            tag,
+            S.divider(),
+            user,
+            staff,
+          ],
+          context
+        ),
       defaultDocumentNode: previewDocumentNode(),
     }),
     // Configures the global "new document" button, and document actions, to suit the Settings document singleton

@@ -1,7 +1,15 @@
 import { ComponentType, ReactNode } from "react";
 import { DocumentDefinition } from "sanity";
 import { documentPreviewPanes, singletonDocumentTypes } from "sanity.config";
-import type { Divider, ListItemBuilder, StructureBuilder } from "sanity/desk";
+import type {
+  Divider,
+  ListItemBuilder,
+  StructureBuilder,
+  StructureResolverContext,
+} from "sanity/desk";
+import MenuPreviewPane from "schemas/components/preview/MenuPreviewPane";
+import parentChild from "./parentCategory";
+import category from "schemas/documents/inventory/category";
 
 // define new deskStructure list item type for legibility and organization
 type TopLevelListDefinition = {
@@ -14,6 +22,10 @@ type TopLevelListDefinition = {
 type ListItem = (TopLevelListDefinition | Divider | DocumentDefinition)[];
 
 /***
+ * This is the parent child taxonomy
+ */
+
+/***
  * This returns a list item builder for a singleton document type
  */
 const singletonListItemBuilder = (
@@ -24,10 +36,24 @@ const singletonListItemBuilder = (
     .title(type.title || type.name)
     .icon(type.icon)
     .child(
-      S.document()
-        .documentId(type.name)
-        .schemaType(type.name)
-        .views([S.view.form()])
+      Object.keys(documentPreviewPanes).includes(type.name)
+        ? S.editor()
+            .id(type.name)
+            .schemaType(type.name)
+            .documentId(type.name)
+            .title("type.title || type.name")
+            .views([
+              S.view.form().title("Edit"),
+              S.view
+                .component(MenuPreviewPane)
+                .title("Preview")
+                .options({ previewMode: true }),
+            ])
+        : S.editor()
+            .id(type.name)
+            .schemaType(type.name)
+            .documentId(type.name)
+            .title(type.title || type.name)
     );
 
 /***
@@ -42,7 +68,7 @@ const documentListItemBuilder = (
     .icon(type.icon)
     .child(
       singletonDocumentTypes.includes(type.name)
-        ? Object(documentPreviewPanes).keys().includes(type.name)
+        ? Object.keys(documentPreviewPanes).includes(type.name)
           ? S.editor()
               .id(type.name)
               .schemaType(type.name)
@@ -92,10 +118,29 @@ const listItemBuilder = (
         )
     );
 
+const getAllItemTypesFromDeskStructure = (listItems) => {
+  return listItems
+    .map((item) => {
+      if (item.type === "divider") return false;
+      if (item.type === "list") {
+        return getAllItemTypesFromDeskStructure(item.typeDefs);
+      }
+
+      return item.name;
+    })
+    .filter(Boolean);
+};
+
 /***
  * This returns the deskStructure
  */
-const deskStructure = (S: StructureBuilder, listItems: ListItem) => {
+const deskStructure = (
+  S: StructureBuilder,
+  listItems: ListItem,
+  context: StructureResolverContext
+) => {
+  console.log({ listItems });
+
   const documentTypesStructure = listItems.map((listItem) => {
     if (listItem.type === "list") {
       return listItemBuilder(S, listItem);
@@ -110,7 +155,11 @@ const deskStructure = (S: StructureBuilder, listItems: ListItem) => {
 
   return S.list()
     .title("Content")
-    .items([...documentTypesStructure]);
+    .items([
+      parentChild(category.name, S, context.documentStore),
+      S.divider(),
+      ...documentTypesStructure,
+    ]);
 };
 
 export default deskStructure;

@@ -1,4 +1,3 @@
-import { Card, Text } from "@sanity/ui";
 import EmojiIcon from "components/Icon/Emoji";
 import { defineType } from "sanity";
 

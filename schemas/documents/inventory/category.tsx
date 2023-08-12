@@ -1,5 +1,7 @@
 import { Flex, Box, Card } from "@sanity/ui";
+import EmojiIcon from "components/Icon/Emoji";
 import { groq } from "next-sanity";
+import { icon } from "plugins/navigation";
 import { Id, PreviewProps, Reference, defineType } from "sanity";
 
 type Category = {
@@ -21,7 +23,7 @@ export default defineType({
   name: "category",
   title: "Category",
   type: "document",
-
+  icon: () => <EmojiIcon>🔖</EmojiIcon>,
   fields: [
     {
       name: "title",
@@ -43,6 +45,9 @@ export default defineType({
       title: "Parent Category",
       type: "reference",
       to: [{ type: "category" }],
+      options: {
+        filter: "!defined(parent)",
+      },
     },
     // TODO: determine whether this structure is better
     {
@@ -61,12 +66,7 @@ export default defineType({
   preview: {
     select: {
       title: "title",
-      subtitle: "slug.current",
-    },
-    prepare: (selection) => {
-      return {
-        ...selection,
-      };
+      subtitle: "parent.title",
     },
   },
 });
