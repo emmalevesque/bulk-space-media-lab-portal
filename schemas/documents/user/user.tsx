@@ -1,3 +1,4 @@
+import EmojiIcon from "components/Icon/Emoji";
 import { defineField, defineType } from "sanity";
 
 // TODO: move contact fields into user
@@ -5,6 +6,7 @@ export default defineType({
   name: "user",
   title: "User",
   type: "document",
+  icon: () => <EmojiIcon>👤</EmojiIcon>,
   fields: [
     defineField({
       type: "string",

@@ -6,8 +6,9 @@ import category from "schemas/documents/inventory/category";
 import menu from "schemas/singletons/menu";
 import MenuPreviewPaneComponent from "schemas/components/preview/MenuPreviewPane";
 import { uuid } from "@sanity/uuid";
-import { MenuIcon, EditIcon } from "@sanity/icons";
+import { MenuIcon, ComposeIcon } from "@sanity/icons";
 import { groq } from "next-sanity";
+import EmojiIcon from "components/Icon/Emoji";
 
 export default function parentChild(
   schemaType: string,
@@ -99,7 +100,7 @@ export default function parentChild(
   return S.listItem()
     .title(menu.title || "Navigation")
     .id(uuid())
-    .icon(MenuIcon)
+    .icon(() => <EmojiIcon>🧭</EmojiIcon>)
     .child(() =>
       documentStore.listenQuery(query, {}, options).pipe(
         map((parents) =>
@@ -109,7 +110,7 @@ export default function parentChild(
             .menuItems([
               S.menuItem()
                 .title("Add")
-                .icon(EditIcon)
+                .icon(ComposeIcon)
                 .intent({ type: "create", params: { type: schemaType } }),
             ])
             .items([

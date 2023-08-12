@@ -1,9 +1,11 @@
+import EmojiIcon from "components/Icon/Emoji";
 import { defineType } from "sanity";
 
 export default defineType({
   name: "check",
   title: "Spot Check",
   type: "document",
+  icon: () => <EmojiIcon>🔎</EmojiIcon>,
   fields: [
     // TODO: change 'user' to 'member' and create 'staff' type
     {

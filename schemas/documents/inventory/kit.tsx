@@ -1,9 +1,11 @@
+import EmojiIcon from "components/Icon/Emoji";
 import { defineType } from "sanity";
 
 export default defineType({
   name: "kit",
   title: "Kit",
   type: "document",
+  icon: () => <EmojiIcon>🎒</EmojiIcon>,
   fields: [
     {
       name: "title",

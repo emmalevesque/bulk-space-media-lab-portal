@@ -15,6 +15,7 @@ import {
 import { set, unset } from "sanity";
 import { BASE_URL } from "lib/consts";
 import slugify from "slugify";
+import EmojiIcon from "components/Icon/Emoji";
 
 export type TItem = {
   name: string;
@@ -102,6 +103,7 @@ export default defineType({
   name: "item",
   title: "Inventory Item",
   type: "document",
+  icon: () => <EmojiIcon>📸</EmojiIcon>,
   groups: [
     {
       title: "Details",
