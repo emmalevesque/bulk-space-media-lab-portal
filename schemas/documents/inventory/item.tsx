@@ -83,22 +83,6 @@ export const ItemSlugInputComponent = (props, context) => {
   );
 };
 
-export const ItemPreviewPane = ({ document }) => {
-  const { name, description, images, cost, stock, active } = document;
-  return (
-    <div>
-      <h1>{name}</h1>
-      <p>{description}</p>
-      <p>{cost}</p>
-      <p>{stock}</p>
-      <p>{active}</p>
-      {images?.map((image) => (
-        <img src={image.asset.url} alt={name} />
-      ))}
-    </div>
-  );
-};
-
 export default defineType({
   name: "item",
   title: "Inventory Item",
@@ -106,23 +90,22 @@ export default defineType({
   icon: () => <EmojiIcon>📸</EmojiIcon>,
   groups: [
     {
-      title: "Details",
-      name: "details",
+      name: "qrCode",
     },
     {
-      title: "Item Images",
+      name: "details",
+      default: true,
+    },
+    {
       name: "images",
     },
     {
-      title: "Taxonomy",
       name: "taxonomy",
     },
     {
-      title: "Item Stock",
       name: "stock",
     },
     {
-      title: "Cost and Condition",
       name: "condition",
     },
   ],
@@ -240,9 +223,31 @@ export default defineType({
   ],
   preview: {
     select: {
-      title:
-        "easyName" ||
-        `${manufacturerDetails.make} ${manufacturerDetails.model}`,
+      subtitle: "easyName",
+      manufacturerMake: "manufacturerDetails.make",
+      manufacturerModel: "manufacturerDetails.model",
+      media: "images.0",
+      category: "category.title",
+      parentCategory: "category.parent.title",
+    },
+    prepare: ({
+      media,
+      category,
+      parentCategory,
+      subtitle,
+      manufacturerMake,
+      manufacturerModel,
+    }) => {
+      return {
+        subtitle: `${parentCategory ? `${parentCategory} > ` : ""}${
+          category || ""
+        }`,
+        title:
+          manufacturerMake && manufacturerModel
+            ? `${manufacturerMake} ${manufacturerModel}`
+            : subtitle,
+        media: media || undefined,
+      };
     },
   },
 });
