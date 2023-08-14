@@ -17,7 +17,13 @@ export default defineType({
       name: "checkoutItems",
       title: "Inventory Items",
       type: "array",
-      of: [{ type: "reference", to: [{ type: "item" }, { type: "kit" }] }],
+      of: [
+        {
+          type: "reference",
+          weak: true,
+          to: [{ type: "item" }, { type: "kit" }],
+        },
+      ],
     },
     {
       name: "checkoutDate",
