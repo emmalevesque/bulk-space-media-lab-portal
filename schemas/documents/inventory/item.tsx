@@ -200,7 +200,6 @@ export default defineType({
       title: "Item Category",
       type: "reference",
       to: [{ type: "category" }],
-      validation: (Rule) => Rule.required(),
     },
     {
       group: "taxonomy",
