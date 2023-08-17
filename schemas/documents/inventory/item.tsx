@@ -138,9 +138,9 @@ export default defineType({
         source: 'easyName',
         maxLength: 96,
       },
-      components: {
-        input: ItemSlugInputComponent,
-      },
+      // components: {
+      //   input: ItemSlugInputComponent,
+      // },
     },
     {
       group: 'details',

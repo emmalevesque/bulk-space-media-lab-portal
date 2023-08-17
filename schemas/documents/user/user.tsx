@@ -1,7 +1,7 @@
 import EmojiIcon from 'components/Icon/Emoji'
 import { defineField, defineType } from 'sanity'
 
-// TODO: move contact fields into user
+// TODO: Add QR Code for users
 export default defineType({
   name: 'user',
   title: 'User',

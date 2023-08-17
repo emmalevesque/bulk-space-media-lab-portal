@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Box, Button, Inline } from '@sanity/ui'
 import LoadingOverlay from 'components/LoadingOverlay'
 import { groq } from 'next-sanity'
@@ -8,7 +8,20 @@ import { childrenQuery } from 'tools/Navigation/NavigationStructure'
 import CategoryInputContainer from './CategoryInputContainer'
 import { CategoryInputContextProvider } from '../hooks/useCategoryInputContext'
 import { set, unset } from 'sanity'
-import { uuid } from '@sanity/uuid'
+
+const getCategoryNames = async (ids) => {
+  const client = useClient()
+
+  const query = groq`*[defined(categories) && categories[]._ref in $ds][]`
+
+  const params = {
+    ids,
+  }
+
+  const data = await client.fetch(query, params)
+
+  return data?.title
+}
 
 export const CategoryInputComponent = (props) => {
   const { value, onChange, schemaType } = props
@@ -31,6 +44,11 @@ export const CategoryInputComponent = (props) => {
   if (isLoading) return <LoadingOverlay />
 
   if (error) throw new Error(error)
+
+  const categoryNames = useMemo(
+    async () => await getCategoryNames(value),
+    [value, onChange]
+  )
 
   return data ? (
     <CategoryInputContextProvider

@@ -5,6 +5,7 @@ import { useCategoryTree } from '../hooks/useCategoryTree'
 import { CategoryInputCheckbox } from './CategoryInputCheckbox'
 import { useCategoryInputContext } from '../hooks/useCategoryInputContext'
 import { useCallback, useEffect } from 'react'
+import { uuid } from '@sanity/uuid'
 
 export type CategoryInputContainerProps = SanityDocument & {
   slug: Slug
@@ -29,7 +30,6 @@ export default function CategoryInputContainer({
     (event) => {
       const isInCategory = value?.some((item) => item._ref === event.target.id)
 
-      // TODO: refactor to move all logic in handle change
       if (isInCategory) {
         onChange(
           !isInCategory
@@ -41,8 +41,8 @@ export default function CategoryInputContainer({
           !isInCategory
             ? set(
                 value
-                  ? [...value, { _key: event.target.id, _ref: event.target.id }]
-                  : [{ _key: event.target.id, _ref: event.target.id }]
+                  ? [...value, { _key: uuid(), _ref: event.target.id }]
+                  : [{ _key: uuid(), _ref: event.target.id }]
               )
             : unset()
         )
@@ -64,7 +64,12 @@ export default function CategoryInputContainer({
         />
       ) : (
         <Card tone="default">
-          <CategoryInputCheckbox id={_id} label={title} slug={slug.current} />
+          <CategoryInputCheckbox
+            id={_id}
+            label={title}
+            slug={slug.current}
+            onClick={handleChange}
+          />
         </Card>
       )}
     </Box>
