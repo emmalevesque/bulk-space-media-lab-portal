@@ -17,3 +17,9 @@ jobs:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         with:
           args: dataset export production backups/backup.tar.gz
+
+      - name: Upload backup
+        uses: actions/upload-artifact@v2
+        with:
+          name: backup
+          path: backups/backup.tar.gz
