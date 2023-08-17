@@ -2,24 +2,20 @@ name: Export dataset
 on:
   schedule:
     # runs every day at 1am EDT
-    - cron: '7 5 * * *'
+    - cron: '0 10 * * *'
 
 jobs:
   backup:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Export Sanity dataset
-        uses: sanity-io/github-action-sanity@v0.1-alpha
+      - uses: actions/checkout@v2
+      - name: Export dataset
+        uses: sanity-io/github-action-sanity@v0.2-alpha
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         with:
           args: dataset export production backups/backup.tar.gz
-
-      - name: Upload backup
-        uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2
         with:
           name: backup
           path: backups/backup.tar.gz
