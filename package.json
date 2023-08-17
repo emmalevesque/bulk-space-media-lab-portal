@@ -4,17 +4,16 @@
   "scripts": {
     "build": "next build",
     "dev": "next",
-    "format": "npx prettier --write . --ignore-path .gitignore --cache",
-    "lint": "next lint -- --ignore-path .gitignore",
-    "lint:fix": "npm run format && npm run lint -- --fix",
+    "format": "npx prettier --write . --ignore-path .gitignore node_modules --cache",
+    "lint": "next lint . --ignore-path .gitignore node_modules",
+    "lint:fix": "npm run format && npm run lint . --fix",
     "prepare": "husky install",
     "start": "next start",
     "type-check": "tsc --noEmit"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+      " npm run lint"
     ]
   },
   "prettier": {
@@ -59,6 +58,7 @@
     "autoprefixer": "^10.4.14",
     "eslint": "^8.39.0",
     "eslint-config-next": "13.4.9",
+    "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "postcss": "^8.4.23",
     "prettier": "^2.8.8",

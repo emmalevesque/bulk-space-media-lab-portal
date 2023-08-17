@@ -1,5 +1,4 @@
-import { Checkbox, Inline, Stack, Text } from '@sanity/ui'
-import { useCategoryTree } from '../hooks/useCategoryTree'
+import { Checkbox, Inline, Stack } from '@sanity/ui'
 import { CategoryChildren } from './CategoryChildren'
 import { CategoryInputProps } from './CategoryInputContainer'
 

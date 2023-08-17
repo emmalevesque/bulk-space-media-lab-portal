@@ -1,4 +1,4 @@
-import "tailwindcss/tailwind.css";
+import 'tailwindcss/tailwind.css'
 
 export default function RootLayout({ children }) {
   return (
@@ -7,5 +7,5 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
       </body>
     </html>
-  );
+  )
 }

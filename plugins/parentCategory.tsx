@@ -1,23 +1,23 @@
-import { DocumentStore, useDocumentStore, useFormValue } from "sanity";
-import { SanityDocument } from "@sanity/client";
-import { StructureBuilder } from "sanity/desk";
-import { map } from "rxjs/operators";
-import category from "schemas/documents/inventory/category";
-import menu from "schemas/singletons/menu";
-import MenuPreviewPaneComponent from "schemas/components/preview/MenuPreviewPane";
-import { uuid } from "@sanity/uuid";
-import { MenuIcon, ComposeIcon } from "@sanity/icons";
-import { groq } from "next-sanity";
-import EmojiIcon from "components/Icon/Emoji";
+import { DocumentStore, useDocumentStore, useFormValue } from 'sanity'
+import { SanityDocument } from '@sanity/client'
+import { StructureBuilder } from 'sanity/desk'
+import { map } from 'rxjs/operators'
+import category from 'schemas/documents/inventory/category'
+import menu from 'schemas/singletons/menu'
+import MenuPreviewPaneComponent from 'schemas/components/preview/MenuPreviewPane'
+import { uuid } from '@sanity/uuid'
+import { MenuIcon, ComposeIcon } from '@sanity/icons'
+import { groq } from 'next-sanity'
+import EmojiIcon from 'components/Icon/Emoji'
 
 export default function parentChild(
   schemaType: string,
   S: StructureBuilder,
   documentStore: DocumentStore
 ) {
-  const filter = `_type == "${schemaType}" && !defined(parent) && !(_id in path("drafts.**"))`;
-  const query = `*[${filter}]{ _id, title }`;
-  const options = { apiVersion: `2023-01-01` };
+  const filter = `_type == "${schemaType}" && !defined(parent) && !(_id in path("drafts.**"))`
+  const query = `*[${filter}]{ _id, title }`
+  const options = { apiVersion: `2023-01-01` }
 
   function createChildList(
     S: StructureBuilder,
@@ -31,7 +31,7 @@ export default function parentChild(
       {
         parentId: parent._id,
       }
-    );
+    )
 
     return S.listItem({
       id: parent._id,
@@ -47,12 +47,12 @@ export default function parentChild(
           .params({ schemaType, parentId: parent._id })
           .canHandleIntent(
             (intentName, params) =>
-              intentName === "create" && params.template === "category-child"
+              intentName === 'create' && params.template === 'category-child'
           )
           .initialValueTemplates([
-            S.initialValueTemplateItem("category-child", {
+            S.initialValueTemplateItem('category-child', {
               parentId: parent._id,
-              title: "test",
+              title: 'test',
             }),
           ])
           .child((subChildId) => {
@@ -64,7 +64,7 @@ export default function parentChild(
               },
               "parentTitle": *[_id == $subChildId][0].title,
             }
-            `;
+            `
             return documentStore
               .listenQuery(query, { subChildId }, options)
               .pipe(
@@ -83,22 +83,22 @@ export default function parentChild(
                     })
                     .canHandleIntent(
                       (intentName, params) =>
-                        intentName === "create" &&
-                        params.template === "category-child"
+                        intentName === 'create' &&
+                        params.template === 'category-child'
                     )
                     .initialValueTemplates([
-                      S.initialValueTemplateItem("category-child", {
+                      S.initialValueTemplateItem('category-child', {
                         parentId: subChildId,
                       }),
                     ])
                 )
-              );
+              )
           }),
-    });
+    })
   }
 
   return S.listItem()
-    .title(menu.title || "Navigation")
+    .title(menu.title || 'Navigation')
     .id(uuid())
     .icon(() => <EmojiIcon>🧭</EmojiIcon>)
     .child(() =>
@@ -106,12 +106,12 @@ export default function parentChild(
         map((parents) =>
           S.list()
             .id(menu.name)
-            .title(`${menu.title}` || "Navigation")
+            .title(`${menu.title}` || 'Navigation')
             .menuItems([
               S.menuItem()
-                .title("Add")
+                .title('Add')
                 .icon(ComposeIcon)
-                .intent({ type: "create", params: { type: schemaType } }),
+                .intent({ type: 'create', params: { type: schemaType } }),
             ])
             .items([
               // Create a List Item for each parent
@@ -122,5 +122,5 @@ export default function parentChild(
             ])
         )
       )
-    );
+    )
 }

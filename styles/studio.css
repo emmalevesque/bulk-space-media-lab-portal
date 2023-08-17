@@ -1,4 +1,4 @@
-[data-ui="ListPane"] *:not(svg) + span,
-[data-test-id="pane-content"] *:not(svg) + span {
+[data-ui='ListPane'] *:not(svg) + span,
+[data-test-id='pane-content'] *:not(svg) + span {
   box-shadow: none !important;
 }

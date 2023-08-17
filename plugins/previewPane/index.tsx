@@ -4,28 +4,28 @@
 // It's part of the Studio's “Structure Builder API” and is documented here:
 // https://www.sanity.io/docs/structure-builder-reference
 
-import { DRAFT_MODE_ROUTE, previewSecretId } from "lib/sanity.api";
-import { DefaultDocumentNodeResolver } from "sanity/desk";
+import { DRAFT_MODE_ROUTE, previewSecretId } from 'lib/sanity.api'
+import { DefaultDocumentNodeResolver } from 'sanity/desk'
 import {
   defineUrlResolver,
   Iframe,
   type IframeOptions,
-} from "sanity-plugin-iframe-pane";
-import category from "schemas/documents/inventory/category";
+} from 'sanity-plugin-iframe-pane'
+import category from 'schemas/documents/inventory/category'
 
-import CategoryPreviewPane from "schemas/components/preview/CategoryPreviewPane";
-import menu from "schemas/singletons/menu";
-import MenuPreviewPane from "schemas/components/preview/MenuPreviewPane";
+import CategoryPreviewPane from 'schemas/components/preview/CategoryPreviewPane'
+import menu from 'schemas/singletons/menu'
+import MenuPreviewPane from 'schemas/components/preview/MenuPreviewPane'
 
 const urlResolver = defineUrlResolver({
   base: DRAFT_MODE_ROUTE,
   requiresSlug: [category.name],
-});
+})
 const iframeOptions = {
   url: urlResolver,
   urlSecretId: previewSecretId,
   reload: { button: true },
-} satisfies IframeOptions;
+} satisfies IframeOptions
 
 export const previewDocumentNode = (): DefaultDocumentNodeResolver => {
   return (S, { schemaType }) => {
@@ -37,8 +37,8 @@ export const previewDocumentNode = (): DefaultDocumentNodeResolver => {
             .component(({ document }) => (
               <MenuPreviewPane document={document} />
             ))
-            .title("Preview"),
-        ]);
+            .title('Preview'),
+        ])
 
       case menu.name:
         return S.document().views([
@@ -47,10 +47,10 @@ export const previewDocumentNode = (): DefaultDocumentNodeResolver => {
             .component(({ document }) => (
               <MenuPreviewPane document={document} />
             ))
-            .title("Preview"),
-        ]);
+            .title('Preview'),
+        ])
       default:
-        return null;
+        return null
     }
-  };
-};
+  }
+}
