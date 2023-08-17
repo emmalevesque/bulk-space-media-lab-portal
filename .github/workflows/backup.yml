@@ -1,7 +1,8 @@
 name: Export dataset
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every day at midnight
+    # runs every day at 1am EDT
+    - cron: '0 5 * * *'
 
 jobs:
   backup:
