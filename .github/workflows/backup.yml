@@ -1,0 +1,18 @@
+name: Export dataset
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at midnight
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Export Sanity dataset
+        uses: sanity-io/github-action-sanity@v0.1-alpha
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+        with:
+          args: dataset export production backups/backup.tar.gz
