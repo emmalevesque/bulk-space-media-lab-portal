@@ -11,6 +11,16 @@
     "start": "next start",
     "type-check": "tsc --noEmit"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.2.1",
     "@next/env": "^13.4.12",
@@ -29,8 +39,8 @@
     "husky": "^8.0.3",
     "intl-segmenter-polyfill": "0.4.4",
     "lint-staged": "^13.2.3",
-    "next": "^13.4.13",
-    "next-sanity": "^5.2.3",
+    "next": "13.4.9",
+    "next-sanity": "5.1.0",
     "next-sanity-image": "6.1.0",
     "pre-commit": "^1.2.2",
     "react": "^18.2.0",
@@ -59,5 +69,8 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "hooks": {
+    "pre-commit": "lint-staged"
   }
 }
