@@ -48,8 +48,7 @@ export const ItemSlugInputComponent = (props, context) => {
   )
 
   const handleGenerateSlug = () => {
-    const nextValue = slugify(item?.name, { lower: true })
-    console.log({ nextValue })
+    const nextValue = slugify(item?.name, { lower: true })({ nextValue })
 
     onChange(nextValue ? set({ ...value, current: nextValue }) : unset())
   }

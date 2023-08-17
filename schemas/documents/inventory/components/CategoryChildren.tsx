@@ -1,6 +1,6 @@
 import { Card } from '@sanity/ui'
 import CategoryInputCheckbox, {
-  CategoryInputProps,
+  CategoryInputContainerProps,
 } from './CategoryInputContainer'
 import { useCategoryTree } from '../hooks/useCategoryTree'
 import CategoryInputContainer from './CategoryInputContainer'
@@ -8,13 +8,12 @@ import CategoryInputContainer from './CategoryInputContainer'
 type CategoryChildrenProps = {
   slug: string
   id: string
-  childCategories: CategoryInputProps[]
+  childCategories: CategoryInputContainerProps[]
   showChildren: boolean
 }
 
 export const CategoryChildren = (props: CategoryChildrenProps) => {
   const { slug, showChildren, childCategories } = props
-  console.log({ childCategories })
 
   return showChildren ? (
     <Card paddingX={2}>

@@ -6,8 +6,6 @@ export const useNavigation = () => {
   const handleCategoryClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    console.log({ category: event.currentTarget.dataset.category })
-
     setActiveCategory(event.currentTarget.dataset.category || null)
   }
 

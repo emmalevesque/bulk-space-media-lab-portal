@@ -1,12 +1,18 @@
-import { Box, Card, Heading, Stack, Text, TextInput } from '@sanity/ui'
+import { useCallback, useState } from 'react'
+import { Box, Button, Inline } from '@sanity/ui'
 import LoadingOverlay from 'components/LoadingOverlay'
 import { groq } from 'next-sanity'
-import { useClient } from 'sanity'
+import { Reference, useClient } from 'sanity'
 import useSWR from 'swr'
 import { childrenQuery } from 'tools/Navigation/NavigationStructure'
-import CategoryInputCheckbox from './CategoryInputContainer'
+import CategoryInputContainer from './CategoryInputContainer'
+import { CategoryInputContextProvider } from '../hooks/useCategoryInputContext'
+import { set, unset } from 'sanity'
+import { uuid } from '@sanity/uuid'
 
-export const CategoryInputComponent = () => {
+export const CategoryInputComponent = (props) => {
+  const { value, onChange, schemaType } = props
+
   const client = useClient()
 
   const fetcher = (query, params) => client.fetch(query, params)
@@ -27,16 +33,31 @@ export const CategoryInputComponent = () => {
   if (error) throw new Error(error)
 
   return data ? (
-    <Box>
-      {data.map((category) => (
-        <CategoryInputCheckbox
-          slug={category.slug}
-          {...category}
-          key={category._key}
-          category={category}
-        />
-      ))}
-    </Box>
+    <CategoryInputContextProvider
+      value={{
+        value,
+        onChange,
+        schemaType,
+        set,
+        unset,
+      }}
+    >
+      <Inline>
+        <Button onClick={() => onChange(Array.isArray(value) ? unset() : null)}>
+          Reset
+        </Button>
+      </Inline>
+      <Box>
+        {data.map((category) => (
+          <CategoryInputContainer
+            slug={category.slug}
+            {...category}
+            key={category._key}
+            category={category}
+          />
+        ))}
+      </Box>
+    </CategoryInputContextProvider>
   ) : (
     <LoadingOverlay />
   )
