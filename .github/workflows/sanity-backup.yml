@@ -1,0 +1,14 @@
+name: Backup Sanity Dataset
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: sanity-io/github-action-sanity@v0.1-alpha
