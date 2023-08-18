@@ -1,12 +1,8 @@
 // @eslint-disable-file
 // @ts-nocheck
 import QRCode from 'react-qr-code'
-import { defineType, useFormValue } from 'sanity'
-import { useCallback, useRef } from 'react'
-import { Badge, Button, Card, Inline, Stack, Text, TextInput } from '@sanity/ui'
-import { set, unset } from 'sanity'
-import { BASE_URL } from 'lib/consts'
-import slugify from 'slugify'
+import { defineType } from 'sanity'
+
 import EmojiIcon from 'components/Icon/Emoji'
 import { CategoryInputComponent } from './components/CategoryInput'
 
@@ -20,59 +16,6 @@ export type TItem = {
   slug: {
     current: string
   }
-}
-
-export const ItemSlugInputComponent = (props, context) => {
-  const item = useFormValue(context) as TItem
-  const { elementProps, onChange, value = '' } = props
-
-  const itemFrontendUrl = `${BASE_URL}/inventory/${value?.current}`
-
-  if (!value)
-    return (
-      <Stack space={2}>
-        <Text size={1} weight="semibold">
-          Please generate a slug to see a QR code for this item
-        </Text>
-      </Stack>
-    )
-
-  const textInputRef = useRef(null)
-
-  const handleChange = useCallback(
-    (event) => {
-      const nextValue = event.currentTarget.value
-      onChange(nextValue ? set({ ...value, current: nextValue }) : unset())
-    },
-    [onChange]
-  )
-
-  const handleGenerateSlug = () => {
-    const nextValue = slugify(item?.name, { lower: true })({ nextValue })
-
-    onChange(nextValue ? set({ ...value, current: nextValue }) : unset())
-  }
-
-  return (
-    <Stack space={2}>
-      <Inline space={2}>
-        <TextInput
-          ref={textInputRef}
-          {...elementProps}
-          onChange={handleChange}
-          value={value?.current}
-        />
-        <Button text="Generate" onClick={handleGenerateSlug} />
-      </Inline>
-      <Stack space={2} paddingY={2}>
-        <Card>Item QR Code Generated from URL</Card>
-        <Badge size={1} tone="positive">
-          {itemFrontendUrl}
-        </Badge>
-      </Stack>
-      <QRCode value={itemFrontendUrl} />
-    </Stack>
-  )
 }
 
 export default defineType({
@@ -102,6 +45,12 @@ export default defineType({
     },
   ],
   fields: [
+    {
+      group: 'qrCode',
+      name: 'qrCode',
+      title: 'QR Code',
+      type: 'qrCode',
+    },
     {
       name: 'easyName',
       title: 'Easy Name',
@@ -138,9 +87,6 @@ export default defineType({
         source: 'easyName',
         maxLength: 96,
       },
-      // components: {
-      //   input: ItemSlugInputComponent,
-      // },
     },
     {
       group: 'details',

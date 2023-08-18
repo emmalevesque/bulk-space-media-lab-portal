@@ -1,6 +1,7 @@
 import { Card } from '@sanity/ui'
 import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
+import QrScanner from './components/QrScanner'
 
 // TODO: add qr code scan for items and users
 export default defineType({
@@ -14,6 +15,9 @@ export default defineType({
       title: 'User',
       type: 'reference',
       to: [{ type: 'user' }],
+      components: {
+        input: QrScanner,
+      },
     },
     {
       name: 'checkoutItems',
