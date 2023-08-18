@@ -45,11 +45,6 @@ export const CategoryInputComponent = (props) => {
 
   if (error) throw new Error(error)
 
-  const categoryNames = useMemo(
-    async () => await getCategoryNames(value),
-    [value, onChange]
-  )
-
   return data ? (
     <CategoryInputContextProvider
       value={{

@@ -30,25 +30,17 @@ export default function CategoryInputContainer({
     (event) => {
       const isInCategory = value?.some((item) => item._ref === event.target.id)
 
-      if (isInCategory) {
-        onChange(
-          !isInCategory
-            ? set(value?.filter((item) => item._ref !== event.target.id))
-            : unset()
-        )
-      } else {
-        onChange(
-          !isInCategory
-            ? set(
-                value
-                  ? [...value, { _key: uuid(), _ref: event.target.id }]
-                  : [{ _key: uuid(), _ref: event.target.id }]
-              )
-            : unset()
-        )
-      }
+      onChange(
+        !isInCategory
+          ? set(
+              value
+                ? [...value, { _key: uuid(), _ref: event.target.id }]
+                : [{ _key: uuid(), _ref: event.target.id }]
+            )
+          : set(value?.filter((item) => item._ref !== event.target.id))
+      )
     },
-    [onChange, value, set, unset]
+    [onChange, value, set]
   )
 
   return (
