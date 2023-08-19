@@ -11,20 +11,13 @@ jobs:
     runs-on: ubuntu-22.04
     name: Backup dataset
     steps:
-      # build project
       - uses: actions/checkout@v2
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-      - name: Install dependencies
-        run: yarn install
-      - name: Backup dataset
-        run: npx sanity dataset export production backups/production.tar.gz
+      - name: Export dataset
+        uses: sanity-io/github-action-sanity
         env:
-          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
-          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
-          NEXT_PUBLIC_SANITY_READ_TOKEN: ${{ secrets.NEXT_PUBIC_SANITY_READ_TOKEN }}
+          SANITY_AUTH_TOKEN: ${{ secrets.NEXT_PUBLIC_READ_TOKEN }}
+        with:
+          args: dataset export production backups/backup.tar.gz
       - name: Upload backup.tar.gz
         uses: actions/upload-artifact@v2
         with:
