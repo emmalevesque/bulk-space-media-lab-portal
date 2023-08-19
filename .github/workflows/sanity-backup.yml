@@ -11,10 +11,9 @@ jobs:
     runs-on: ubuntu-20.04
     name: Backup dataset
     steps:
-      - uses: actions/checkout@v2
       # build project
-      - name: Install dependencies
-        run: yarn install
+      - name: Install Sanity CLI
+        run: yarn global add @sanity/cli
       - name: Export dataset
         uses: sanity-io/github-action-sanity@v0.2-alpha
         env:
