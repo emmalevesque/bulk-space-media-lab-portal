@@ -4,14 +4,17 @@ on:
     branches: main
   schedule:
     # Runs at 04:00 UTC on the 1st and 17th of every month
-    - cron: "0 8 * * *"
-    
+    - cron: '0 8 * * *'
+
 jobs:
   backup-dataset:
     runs-on: ubuntu-22.04
     name: Backup dataset
     steps:
       - uses: actions/checkout@v2
+      # build project
+      - name: Install dependencies
+        run: yarn install
       - name: Export dataset
         uses: sanity-io/github-action-sanity@v0.2-alpha
         env:
