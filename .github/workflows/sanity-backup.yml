@@ -1,12 +1,14 @@
 name: Backup Routine
 on:
+  push:
+    branches: main
   schedule:
     # Runs at 04:00 UTC on the 1st and 17th of every month
     - cron: "0 8 * * *"
     
 jobs:
   backup-dataset:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     name: Backup dataset
     steps:
       - uses: actions/checkout@v2
