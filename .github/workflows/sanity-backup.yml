@@ -13,15 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Export dataset
-        uses: sanity-io/github-action-sanity@v0.4-alpha
+        uses: sanity-io/github-action-sanity@v0.1-alpha
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         with:
-          args: . dataset export production backups/backup.tar.gz
-      - name: Run Backup
-        run: |
-          mkdir -p backups
-          npx sanity dataset export production backups/backup.tar.gz
+          args: dataset export production backups/backup.tar.gz
       - name: Upload backup.tar.gz
         uses: actions/upload-artifact@v2
         with:
