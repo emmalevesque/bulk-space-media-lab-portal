@@ -8,18 +8,16 @@ on:
 
 jobs:
   backup-dataset:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     name: Backup dataset
     steps:
       # build project
       - name: Install Sanity CLI
         run: yarn global add @sanity/cli
-      - name: Export dataset
-        uses: sanity-io/github-action-sanity@v0.2-alpha
+      - name: Backup dataset
+        run: npx sanity dataset export production backups/production.tar.gz
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
-        with:
-          args: dataset export production backups/backup.tar.gz
       - name: Upload backup.tar.gz
         uses: actions/upload-artifact@v2
         with:
