@@ -23,6 +23,9 @@ export default defineType({
       name: 'checkoutItems',
       title: 'Inventory Items',
       type: 'array',
+      components: {
+        input: QrScanner,
+      },
       of: [
         {
           type: 'reference',

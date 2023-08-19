@@ -2430,10 +2430,26 @@
     "@babel/plugin-transform-react-jsx-source" "^7.22.5"
     react-refresh "^0.14.0"
 
+"@yudiel/react-qr-scanner@^1.1.10":
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/@yudiel/react-qr-scanner/-/react-qr-scanner-1.1.10.tgz#d6508f57947e8e35e106000c7263746b9d9912a8"
+  integrity sha512-+YIHbnocynkkGgyMK8MMkn1NBnJRwJntdm4shQ+linm4NdGdSAavLYxJYwnk2PixZyVu/GZ3Uc2aM0XWlBq+Zw==
+  dependencies:
+    "@zxing/library" "^0.20.0"
+
 "@zxing/library@^0.19.1":
   version "0.19.3"
   resolved "https://registry.yarnpkg.com/@zxing/library/-/library-0.19.3.tgz#8f8fb119edac43c109e7d74ae240daba04b7f44f"
   integrity sha512-RUv5svewpDoD0ymXleOP8yVTO5BLkR0zn5coGC/Vs1671u0OBJ4xdtR8WVWf08OcvrieEMHdSfQY3ZKtqII/hg==
+  dependencies:
+    ts-custom-error "^3.2.1"
+  optionalDependencies:
+    "@zxing/text-encoding" "~0.9.0"
+
+"@zxing/library@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@zxing/library/-/library-0.20.0.tgz#11bc411b87693015389555c589da61532879be7b"
+  integrity sha512-6Ev6rcqVjMakZFIDvbUf0dtpPGeZMTfyxYg4HkVWioWeN7cRcnUWT3bU6sdohc82O1nPXcjq6WiGfXX2Pnit6A==
   dependencies:
     ts-custom-error "^3.2.1"
   optionalDependencies:

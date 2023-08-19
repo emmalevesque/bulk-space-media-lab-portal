@@ -13,9 +13,11 @@ export default (props) => {
     _ref: id,
   }
 
+  const endpoint = `/api/qr-code/${id}`
+
   return (
     <Stack space={2}>
-      <QRCode value={JSON.stringify(qrCodeText)} />
+      <QRCode value={`${process.env.NEXT_PUBLIC_BASE_URL}?${id}`} />
     </Stack>
   )
 }

@@ -33,6 +33,7 @@
     "@sanity/uuid": "^3.0.2",
     "@sanity/vision": "^3.14.2",
     "@vercel/og": "0.5.8",
+    "@yudiel/react-qr-scanner": "^1.1.10",
     "classnames": "^2.3.2",
     "date-fns": "^2.30.0",
     "husky": "^8.0.3",

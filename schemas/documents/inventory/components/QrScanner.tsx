@@ -1,16 +1,30 @@
-import { Badge, BadgeTone, Stack } from '@sanity/ui'
+import { Badge, BadgeTone, Card, Inline, Stack } from '@sanity/ui'
 import { useState } from 'react'
-import QrReader from 'react-qr-scanner'
+import { QrScanner } from '@yudiel/react-qr-scanner'
+import { FormBuilderInputComponentMap, set, unset } from 'sanity'
 
 export default (props) => {
+  const { onChange, value, schemaType } = props
+  const [showScanner, setShowScanner] = useState<boolean>(false)
+
+  console.log({ schemaType })
+
   const delay = 100
 
   const [result, setResult] = useState('No result')
 
   const handleScan = (data) => {
     if (data) {
-      setResult(data)
+      const id = data.split('?')[1]
+      setResult(id)
       setTone('positive')
+
+      const newReference = {
+        _type: 'reference',
+        _ref: id,
+      }
+
+      onChange(newReference._ref ? set(newReference) : unset())
     }
   }
 
@@ -26,16 +40,19 @@ export default (props) => {
 
   const [tone, setTone] = useState<BadgeTone>('default')
 
+  console.log({ result })
+
   return (
-    <Stack space={2}>
+    <Card>
       {props.renderDefault(props)}
-      {/* <QrReader
-        delay={delay}
-        style={previewStyle}
-        onError={handleError}
-        onScan={handleScan}
-      /> */}
-      <Badge tone={tone}>{result}</Badge>
-    </Stack>
+      <Inline>
+        <Stack space={2}>
+          {showScanner ? (
+            <QrScanner onError={handleError} onDecode={handleScan} />
+          ) : null}
+          <Badge tone={tone}>{result}</Badge>
+        </Stack>
+      </Inline>
+    </Card>
   )
 }
