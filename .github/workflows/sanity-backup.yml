@@ -13,9 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Export dataset
-        uses: sanity-io/github-action-sanity
+        uses: sanity-io/github-action-sanity@v0.4-alpha
         env:
-          SANITY_AUTH_TOKEN: ${{ secrets.NEXT_PUBLIC_READ_TOKEN }}
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         with:
           args: dataset export production backups/backup.tar.gz
       - name: Upload backup.tar.gz
