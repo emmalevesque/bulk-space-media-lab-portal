@@ -1,4 +1,4 @@
-import { Badge, BadgeTone, Card, Inline, Stack } from '@sanity/ui'
+import { Badge, BadgeTone, Button, Card, Grid, Inline, Stack } from '@sanity/ui'
 import { useState } from 'react'
 import { QrScanner } from '@yudiel/react-qr-scanner'
 import { FormBuilderInputComponentMap, set, unset } from 'sanity'
@@ -44,15 +44,25 @@ export default (props) => {
 
   return (
     <Card>
-      {props.renderDefault(props)}
-      <Inline>
+      <Grid paddingY={2} columns={[1, 2]}>
+        {props.renderDefault(props)}
         <Stack space={2}>
-          {showScanner ? (
-            <QrScanner onError={handleError} onDecode={handleScan} />
-          ) : null}
-          <Badge tone={tone}>{result}</Badge>
+          <Grid paddingX={2} columns={[1]}>
+            <Stack space={1}>
+              {showScanner ? (
+                <QrScanner onError={handleError} onDecode={handleScan} />
+              ) : null}
+              <Button
+                onClick={() => setShowScanner(!showScanner)}
+                text={showScanner ? 'Hide Scanner' : 'Show Scanner'}
+              />
+              <Card padding={2} tone={tone}>
+                {showScanner ? result : null}
+              </Card>
+            </Stack>
+          </Grid>
         </Stack>
-      </Inline>
+      </Grid>
     </Card>
   )
 }
