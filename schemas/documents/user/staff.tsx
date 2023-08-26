@@ -6,7 +6,7 @@ export default defineType({
   name: 'staff',
   title: 'Staff',
   type: 'document',
-  icon: () => <EmojiIcon>🧑‍💻</EmojiIcon>,
+  icon: () => <EmojiIcon>🫂</EmojiIcon>,
   groups: [
     {
       name: 'contact',

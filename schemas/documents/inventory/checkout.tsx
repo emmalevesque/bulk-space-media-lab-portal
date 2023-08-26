@@ -7,6 +7,12 @@ const QrScanner = dynamic(() => import('./components/QrScanner'), {
   ssr: false,
 })
 
+// TODO: add hot and cold feature (hot means checked out, cold means returned)
+
+// TODO: patch the inventory of item when checkout is created?
+// TODO: create a guided checkout flow and add custom actions to the "publish" menu that remaps Publish to Checkout
+//     and adds a "Return" button to the checkout document
+
 // TODO: add qr code scan for items and users
 export default defineType({
   name: 'checkout',

@@ -1,7 +1,5 @@
 import { createContext, useContext } from 'react'
-import { CategoryInputContainerProps } from '../components/CategoryInputContainer'
 import { Reference } from 'sanity'
-import { Category } from '../category'
 
 export type CategoryInputContextValue = {
   onChange: (value: string) => void
