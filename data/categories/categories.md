@@ -1,4 +1,5 @@
 # Photo/Video
+
 - ### Cameras
   - DSLR
   - Mirrorless
@@ -30,7 +31,9 @@
   - Light Stands
 - Darkroom
 - Vintage/Ephemera
+
 ## Audio/Visual
+
 - Microphones
 - Voice Recorders
 - Projectors
@@ -39,7 +42,9 @@
 - PA Systems
 - Speakers
 - Cables/Cords/Adaptors
+
 ## Computers/Tablets
+
 - Laptops
 - Desktops
 - Tablets

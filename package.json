@@ -4,17 +4,16 @@
   "scripts": {
     "build": "next build",
     "dev": "next",
-    "format": "npx prettier --write . --ignore-path .gitignore --cache",
-    "lint": "next lint -- --ignore-path .gitignore",
-    "lint:fix": "npm run format && npm run lint -- --fix",
+    "format": "npx prettier --write . --ignore-path .gitignore node_modules --cache",
+    "lint": "next lint . --ignore-path .gitignore node_modules",
+    "lint:fix": "npm run format && npm run lint . --fix",
     "prepare": "husky install",
     "start": "next start",
     "type-check": "tsc --noEmit"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+      " npm run lint"
     ]
   },
   "prettier": {
@@ -34,6 +33,7 @@
     "@sanity/uuid": "^3.0.2",
     "@sanity/vision": "^3.14.2",
     "@vercel/og": "0.5.8",
+    "@yudiel/react-qr-scanner": "^1.1.10",
     "classnames": "^2.3.2",
     "date-fns": "^2.30.0",
     "husky": "^8.0.3",
@@ -46,6 +46,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-qr-code": "^2.0.11",
+    "react-qr-scanner": "^1.0.0-alpha.11",
     "sanity": "^3.15.1",
     "sanity-plugin-asset-source-unsplash": "1.1.0",
     "sanity-plugin-iframe-pane": "^2.5.4",
@@ -59,6 +60,7 @@
     "autoprefixer": "^10.4.14",
     "eslint": "^8.39.0",
     "eslint-config-next": "13.4.9",
+    "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "postcss": "^8.4.23",
     "prettier": "^2.8.8",

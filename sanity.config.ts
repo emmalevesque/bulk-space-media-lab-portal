@@ -1,35 +1,35 @@
 /**
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
-import { visionTool } from "@sanity/vision";
-import EmojiIcon from "components/Icon/Emoji";
-import { apiVersion, dataset, projectId } from "lib/sanity.api";
-import deskStructure from "plugins/deskStructure";
-import { icon } from "plugins/navigation";
-import { defineConfig } from "sanity";
-import { deskTool } from "sanity/desk";
-import category from "schemas/documents/inventory/category";
-import item from "schemas/documents/inventory/item";
-import kit from "schemas/documents/inventory/kit";
-import staff from "schemas/documents/user/staff";
-import tag from "schemas/documents/inventory/tag";
-import user from "schemas/documents/user/user";
-import { schema } from "schemas/schema";
-import navigation from "schemas/singletons/menu";
+import { visionTool } from '@sanity/vision'
+import EmojiIcon from 'components/Icon/Emoji'
+import { apiVersion, dataset, projectId } from 'lib/sanity.api'
+import deskStructure from 'plugins/deskStructure'
+import { icon } from 'plugins/navigation'
+import { defineConfig } from 'sanity'
+import { deskTool } from 'sanity/desk'
+import category from 'schemas/documents/inventory/category'
+import item from 'schemas/documents/inventory/item'
+import kit from 'schemas/documents/inventory/kit'
+import staff from 'schemas/documents/user/staff'
+import tag from 'schemas/documents/inventory/tag'
+import user from 'schemas/documents/user/user'
+import { schema } from 'schemas/schema'
+import navigation from 'schemas/singletons/menu'
 
-import "styles/studio.css";
-import checkout from "schemas/documents/inventory/checkout";
-import { previewDocumentNode } from "plugins/previewPane";
-import MenuPreviewPane from "schemas/components/preview/MenuPreviewPane";
-import NavigationStructure from "tools/Navigation/NavigationStructure";
+import 'styles/studio.css'
+import checkout from 'schemas/documents/inventory/checkout'
+import { previewDocumentNode } from 'plugins/previewPane'
+import MenuPreviewPane from 'schemas/components/preview/MenuPreviewPane'
+import NavigationStructure from 'tools/Navigation/NavigationStructure'
 
 const title =
-  process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || "Next.js Blog with Sanity.io";
+  process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Next.js Blog with Sanity.io'
 
-export const singletonDocumentTypes: string[] = ["menu"];
+export const singletonDocumentTypes: string[] = ['menu']
 
 export const documentPreviewPanes: {
-  [key: string]: { component: React.FC };
+  [key: string]: { component: React.FC }
 }[] = [
   {
     menu: {
@@ -39,10 +39,10 @@ export const documentPreviewPanes: {
       component: MenuPreviewPane,
     },
   },
-];
+]
 
 export default defineConfig({
-  basePath: "/studio",
+  basePath: '/studio',
   projectId,
   dataset,
   title,
@@ -51,17 +51,17 @@ export default defineConfig({
     types: schema,
     templates: (prev) => {
       const categoryChild = {
-        id: "category-child",
-        title: "Category: Child",
-        schemaType: "category",
+        id: 'category-child',
+        title: 'Category: Child',
+        schemaType: 'category',
         parameters: [{ name: `parentId`, title: `Parent ID`, type: `string` }],
         // This value will be passed-in from desk structure
         value: ({ parentId }: { parentId: string }) => ({
-          parent: { _type: "reference", _ref: parentId },
+          parent: { _type: 'reference', _ref: parentId },
         }),
-      };
+      }
 
-      return [...prev, categoryChild];
+      return [...prev, categoryChild]
     },
   },
   tools: [NavigationStructure()],
@@ -100,4 +100,4 @@ export default defineConfig({
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
   ],
-});
+})

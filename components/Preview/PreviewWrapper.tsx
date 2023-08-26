@@ -1,17 +1,17 @@
 // PreviewWrapper.tsx
 
-import { Slot } from "@radix-ui/react-slot";
-import { QueryParams } from "@sanity/client";
-import { PropsWithChildren } from "react";
+import { Slot } from '@radix-ui/react-slot'
+import { QueryParams } from '@sanity/client'
+import { PropsWithChildren } from 'react'
 
-import { PreviewData } from "components/Preview/PreviewData";
+import { PreviewData } from 'components/Preview/PreviewData'
 
 type PreviewWrapperProps<T> = PropsWithChildren<{
-  initialData: T;
-  preview?: boolean;
-  query?: string;
-  params?: QueryParams;
-}>;
+  initialData: T
+  preview?: boolean
+  query?: string
+  params?: QueryParams
+}>
 
 // Component just renders its children if preview mode is not enabled
 export function PreviewWrapper<T>(props: PreviewWrapperProps<T>) {
@@ -24,13 +24,13 @@ export function PreviewWrapper<T>(props: PreviewWrapperProps<T>) {
     params = {},
     // Separate remaining props to pass to the child
     ...rest
-  } = props;
+  } = props
 
   // Render child, with the wrapper's initial data and props
   if (!preview || !query) {
-    const nonPreviewProps = { ...rest, data: props.initialData };
+    const nonPreviewProps = { ...rest, data: props.initialData }
 
-    return <Slot {...nonPreviewProps} />;
+    return <Slot {...nonPreviewProps} />
   }
 
   // Swap initialData for live data
@@ -42,5 +42,5 @@ export function PreviewWrapper<T>(props: PreviewWrapperProps<T>) {
     >
       {props.children}
     </PreviewData>
-  );
+  )
 }
