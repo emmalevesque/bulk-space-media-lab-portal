@@ -21,6 +21,8 @@ export const CategoryInputCheckbox = ({
 }: CategoryInputCheckboxProps) => {
   const { onChange, set, unset, value } = useCategoryInputContext()
 
+  console.log({ value })
+
   return (
     <Stack>
       <Inline space={2} paddingY={2}>

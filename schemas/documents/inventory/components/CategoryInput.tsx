@@ -48,7 +48,7 @@ export const CategoryInputComponent = (props) => {
 
   const handleReset = useCallback(() => {
     onChange(Array.isArray(value) ? unset() : null)
-  }, [value])
+  }, [onChange])
 
   return data ? (
     <CategoryInputContextProvider

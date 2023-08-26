@@ -25,6 +25,7 @@ export default function CategoryInputContainer({
   children,
 }: CategoryInputContainerProps) {
   const { value, onChange, set, unset } = useCategoryInputContext()
+  console.log({ childrenCategories })
 
   // instantiate the client
 
@@ -35,9 +36,11 @@ export default function CategoryInputContainer({
       const hasChildren = childrenCategories
         ? childrenCategories?.length > 0
         : false
-      const childrenAreSelected = value?.some((item) =>
-        childrenCategories?.some((child) => child._id === item._ref)
-      )
+      const childrenAreSelected = isSelected
+        ? value?.some((item) =>
+            childrenCategories?.some((child) => child._id === item._ref)
+          )
+        : false
 
       // Current category is being selected
       if (!isSelected) {
