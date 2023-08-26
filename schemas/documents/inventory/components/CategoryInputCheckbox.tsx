@@ -19,24 +19,22 @@ export const CategoryInputCheckbox = ({
   onClick,
   checked,
 }: CategoryInputCheckboxProps) => {
-  const { onChange, set, unset, value } = useCategoryInputContext()
+  const { onChange, set, unset, value = [] } = useCategoryInputContext()
 
   console.log({ value })
+
+  const isSelected = value ? value?.some((item) => item._ref === id) : false
 
   return (
     <Stack>
       <Inline space={2} paddingY={2}>
-        <Checkbox
-          id={id}
-          checked={value?.some((item) => item._ref === id) || false}
-          onClick={onClick}
-        />
+        <Checkbox id={id} checked={isSelected} onClick={onClick} />
         <label htmlFor={id}>{label}</label>
       </Inline>
       {Array.isArray(childCategories) ? (
         <CategoryChildren
           id={id}
-          showChildren={value?.some((item) => item._ref === id) || false}
+          showChildren={isSelected}
           childCategories={childCategories}
           slug={slug}
         />
