@@ -9,6 +9,7 @@ import CategoryInputContainer from './CategoryInputContainer'
 import { CategoryInputContextProvider } from '../hooks/useCategoryInputContext'
 import { set, unset } from 'sanity'
 
+// TODO: remove if not needed
 const getCategoryNames = async (ids) => {
   const client = useClient()
 
@@ -45,6 +46,10 @@ export const CategoryInputComponent = (props) => {
 
   if (error) throw new Error(error)
 
+  const handleReset = useCallback(() => {
+    onChange(Array.isArray(value) ? unset() : null)
+  }, [value])
+
   return data ? (
     <CategoryInputContextProvider
       value={{
@@ -56,13 +61,14 @@ export const CategoryInputComponent = (props) => {
       }}
     >
       <Inline>
-        <Button onClick={() => onChange(Array.isArray(value) ? unset() : null)}>
+        <Button padding={4} onClick={handleReset}>
           Reset
         </Button>
       </Inline>
       <Box>
         {data.map((category) => (
           <CategoryInputContainer
+            childrenCategories={category.children}
             slug={category.slug}
             {...category}
             key={category._key}

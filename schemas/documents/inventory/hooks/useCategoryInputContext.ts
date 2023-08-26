@@ -1,13 +1,14 @@
 import { createContext, useContext } from 'react'
 import { CategoryInputContainerProps } from '../components/CategoryInputContainer'
 import { Reference } from 'sanity'
+import { Category } from '../category'
 
 export type CategoryInputContextValue = {
   onChange: (value: string) => void
   // FIXME: this might return something
   set: (nextValue: any) => any
   unset: () => void
-  value: Reference[] | undefined
+  value: Reference[] | []
   schemaType: any
 } | null
 

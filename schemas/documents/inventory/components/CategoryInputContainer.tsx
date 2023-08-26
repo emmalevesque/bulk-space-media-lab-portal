@@ -1,10 +1,9 @@
 import { Card, Box } from '@sanity/ui'
 import { SanityDocument } from 'next-sanity'
-import { Reference, Slug } from 'sanity'
-import { useCategoryTree } from '../hooks/useCategoryTree'
+import { Slug, useClient } from 'sanity'
 import { CategoryInputCheckbox } from './CategoryInputCheckbox'
 import { useCategoryInputContext } from '../hooks/useCategoryInputContext'
-import { useCallback, useEffect } from 'react'
+import { SyntheticEvent, useCallback } from 'react'
 import { uuid } from '@sanity/uuid'
 
 export type CategoryInputContainerProps = SanityDocument & {
@@ -13,34 +12,55 @@ export type CategoryInputContainerProps = SanityDocument & {
   children?: CategoryInputContainerProps[]
   _key?: string
   isActive?: boolean
-  onClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  onClick: (event: SyntheticEvent<HTMLInputElement>) => void
 }
 
 export default function CategoryInputContainer({
   _id,
   title,
   slug,
+  childrenCategories,
   children,
 }: CategoryInputContainerProps) {
-  // create state for this parent category
-
   const { value, onChange, set, unset } = useCategoryInputContext()
 
+  // instantiate the client
+
+  // handle the click event on the input checkbox
   const handleChange = useCallback(
     (event) => {
-      const isInCategory = value?.some((item) => item._ref === event.target.id)
-
-      onChange(
-        !isInCategory
-          ? set(
-              value
-                ? [...value, { _key: uuid(), _ref: event.target.id }]
-                : [{ _key: uuid(), _ref: event.target.id }]
-            )
-          : set(value?.filter((item) => item._ref !== event.target.id))
+      const isSelected = value?.some((item) => item._ref === event.target.id)
+      const hasChildren = childrenCategories?.length > 0
+      const childrenAreSelected = value?.some((item) =>
+        childrenCategories?.some((child) => child._id === item._ref)
       )
+
+      // Current category is being selected
+      if (!isSelected) {
+        onChange(
+          set([...(value || []), { _key: uuid(), _ref: event.target.id }])
+        )
+      } else {
+        // Current category is being deselected
+        if (hasChildren && childrenAreSelected) {
+          // Deselect all child categories
+          onChange(
+            set(
+              value?.filter(
+                (item) =>
+                  !childrenCategories?.some(
+                    (child) => child._id === item._ref
+                  ) && item._ref !== event.target.id
+              )
+            )
+          )
+        } else {
+          // Only deselect the current category
+          onChange(set(value?.filter((item) => item._ref !== event.target.id)))
+        }
+      }
     },
-    [onChange, value, set]
+    [onChange, value, set, childrenCategories]
   )
 
   return (

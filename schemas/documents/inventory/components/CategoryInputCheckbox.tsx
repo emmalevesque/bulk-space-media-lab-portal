@@ -7,7 +7,7 @@ type CategoryInputCheckboxProps = Partial<HTMLInputElement> & {
   id: string
   slug: string
   label: string
-  onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  onClick?: (event) => void
   childCategories?: CategoryInputContainerProps[] | undefined
 }
 

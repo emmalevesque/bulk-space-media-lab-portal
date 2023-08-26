@@ -4,7 +4,7 @@ import { groq } from 'next-sanity'
 import { icon } from 'plugins/navigation'
 import { Id, PreviewProps, Reference, defineType } from 'sanity'
 
-type Category = {
+export type Category = {
   _id: Id
   _type: 'category'
   title: string
