@@ -11,7 +11,7 @@ export type CategoryInputContainerProps = SanityDocument & {
   slug: Slug
   title: string
   children?: CategoryInputContainerProps[]
-  childrenCategories?: Category[] | []
+  childrenCategories?: CategoryInputContainerProps[] | []
   _key?: string
   isActive?: boolean
   onClick: (event: SyntheticEvent<HTMLInputElement>) => void
