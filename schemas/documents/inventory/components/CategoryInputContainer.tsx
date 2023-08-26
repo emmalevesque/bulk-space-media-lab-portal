@@ -5,11 +5,13 @@ import { CategoryInputCheckbox } from './CategoryInputCheckbox'
 import { useCategoryInputContext } from '../hooks/useCategoryInputContext'
 import { SyntheticEvent, useCallback } from 'react'
 import { uuid } from '@sanity/uuid'
+import { Category } from '../category'
 
 export type CategoryInputContainerProps = SanityDocument & {
   slug: Slug
   title: string
   children?: CategoryInputContainerProps[]
+  childrenCategories?: CategoryInputContainerProps[] | []
   _key?: string
   isActive?: boolean
   onClick: (event: SyntheticEvent<HTMLInputElement>) => void
@@ -23,6 +25,7 @@ export default function CategoryInputContainer({
   children,
 }: CategoryInputContainerProps) {
   const { value, onChange, set, unset } = useCategoryInputContext()
+  console.log({ childrenCategories })
 
   // instantiate the client
 
@@ -30,10 +33,14 @@ export default function CategoryInputContainer({
   const handleChange = useCallback(
     (event) => {
       const isSelected = value?.some((item) => item._ref === event.target.id)
-      const hasChildren = childrenCategories?.length > 0
-      const childrenAreSelected = value?.some((item) =>
-        childrenCategories?.some((child) => child._id === item._ref)
-      )
+      const hasChildren = childrenCategories
+        ? childrenCategories?.length > 0
+        : false
+      const childrenAreSelected = isSelected
+        ? value?.some((item) =>
+            childrenCategories?.some((child) => child._id === item._ref)
+          )
+        : false
 
       // Current category is being selected
       if (!isSelected) {

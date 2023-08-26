@@ -9,6 +9,7 @@ import tag from './documents/inventory/tag'
 import user from './documents/user/user'
 import contact from './objects/contact'
 import menu from './singletons/menu'
+import qrCode from './objects/qrCode'
 
 export const schema = [
   category,
@@ -22,4 +23,5 @@ export const schema = [
   staff,
   tag,
   user,
+  qrCode,
 ]

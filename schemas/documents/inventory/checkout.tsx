@@ -1,6 +1,11 @@
 import { Card } from '@sanity/ui'
 import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
+import dynamic from 'next/dynamic'
+
+const QrScanner = dynamic(() => import('./components/QrScanner'), {
+  ssr: false,
+})
 
 // TODO: add qr code scan for items and users
 export default defineType({
@@ -14,11 +19,17 @@ export default defineType({
       title: 'User',
       type: 'reference',
       to: [{ type: 'user' }],
+      components: {
+        input: QrScanner,
+      },
     },
     {
       name: 'checkoutItems',
       title: 'Inventory Items',
       type: 'array',
+      components: {
+        input: QrScanner,
+      },
       of: [
         {
           type: 'reference',

@@ -8,7 +8,7 @@ export type CategoryInputContextValue = {
   // FIXME: this might return something
   set: (nextValue: any) => any
   unset: () => void
-  value: Reference[] | []
+  value: Reference[] | undefined
   schemaType: any
 } | null
 
