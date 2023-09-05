@@ -1,6 +1,6 @@
 import EmojiIcon from 'components/Icon/Emoji'
 import { defineField, defineType } from 'sanity'
-import QrCode from '../inventory/components/QrCode'
+import QrCode from '../inventory/components/QrCode/QrCode'
 
 // TODO: Add QR Code for users
 export default defineType({

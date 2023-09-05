@@ -8,16 +8,15 @@ export default (props) => {
 
   const id = useFormValue(['_id']) as string
 
-  const qrCodeText = {
-    _type: 'reference',
-    _ref: id,
-  }
+  const idNotDraft = id.replace('drafts.', '')
 
-  const endpoint = `/api/qr-code/${id}`
+  const qrValue = `${process.env.NEXT_PUBLIC_BASE_URL}?${idNotDraft}`
+
+  console.log({ qrValue })
 
   return (
-    <Stack space={2}>
-      <QRCode value={`${process.env.NEXT_PUBLIC_BASE_URL}?${id}`} />
+    <Stack padding={4} style={{ backgroundColor: 'white' }} space={2}>
+      <QRCode value={qrValue} />
     </Stack>
   )
 }

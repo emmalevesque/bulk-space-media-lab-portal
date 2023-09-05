@@ -3,7 +3,7 @@ import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
 import dynamic from 'next/dynamic'
 
-const QrScanner = dynamic(() => import('./components/QrScanner'), {
+const QrScanner = dynamic(() => import('./components/QrCode/QrScanner'), {
   ssr: false,
 })
 
@@ -23,8 +23,14 @@ export default defineType({
     {
       name: 'user',
       title: 'User',
-      type: 'reference',
-      to: [{ type: 'user' }],
+      type: 'array',
+      of: [
+        {
+          weak: true,
+          type: 'reference',
+          to: [{ type: 'user' }],
+        },
+      ],
       components: {
         input: QrScanner,
       },
