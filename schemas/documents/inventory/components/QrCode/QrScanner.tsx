@@ -4,10 +4,9 @@ import { QrScanner } from '@yudiel/react-qr-scanner'
 import { set, unset } from 'sanity'
 import { uuid } from '@sanity/uuid'
 import ConfirmAddDialog from './ConfirmAddDialog'
-import { QrScannerProvider } from './hooks/useQrScanner'
 
 export default (props) => {
-  const { onChange, value: currentValue, schemaType } = props
+  const { onChange, value, schemaType } = props
   const [showScanner, setShowScanner] = useState<boolean>(false)
   const [open, setOpen] = useState(false)
   const onClose = useCallback(() => setOpen(false), [])
@@ -37,13 +36,10 @@ export default (props) => {
       return onChange(newReference ? set(newReference) : unset())
       // if it is an array field
     } else if (schemaType.name === 'array') {
-      if (!currentValue)
-        return onChange(newReference ? set([newReference]) : unset())
+      if (!value) return onChange(newReference ? set([newReference]) : unset())
 
-      if (Array.isArray(currentvalue) && currentvalue.length > 1) {
-        return onChange(
-          newReference ? set([...currentvalue, newReference]) : unset()
-        )
+      if (Array.isArray(value) && value.length > 1) {
+        return onChange(newReference ? set([...value, newReference]) : unset())
       }
     }
   }, [itemToBeAdded, triggerAddItem])
@@ -66,7 +62,7 @@ export default (props) => {
     console.log({ data })
 
     if (data && data?.includes('?')) {
-      if (currentvalue?.map(({ _ref }) => _ref).includes(data?.split('?')[1])) {
+      if (value?.map(({ _ref }) => _ref).includes(data?.split('?')[1])) {
         handleWarn()
       } else {
         setItemToBeAdded(data?.split('?')[1])
@@ -88,7 +84,7 @@ export default (props) => {
   }
 
   return (
-    <QrScannerProvider value={{ handleAddToArray: handleAddToCheckout }}>
+    <>
       <Card>
         <Grid paddingY={2} gap={2} columns={[1, 2]}>
           {props.renderDefault(props)}
@@ -115,6 +111,6 @@ export default (props) => {
         </Grid>
       </Card>
       <ConfirmAddDialog {...{ open, setOpen, onClose, handleConfirm }} />
-    </QrScannerProvider>
+    </>
   )
 }
