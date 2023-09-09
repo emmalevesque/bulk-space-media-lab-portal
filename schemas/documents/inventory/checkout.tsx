@@ -7,6 +7,8 @@ const QrScanner = dynamic(() => import('./components/QrScanner'), {
   ssr: false,
 })
 
+// TODO: PATCH INVENTORY ITEM WHEN CHECKOUT IS CREATED
+
 // TODO: add hot and cold feature (hot means checked out, cold means returned)
 
 // TODO: patch the inventory of item when checkout is created?
