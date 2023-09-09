@@ -1,6 +1,3 @@
-// @eslint-disable-file
-// @ts-nocheck
-import QRCode from 'react-qr-code'
 import { defineType } from 'sanity'
 
 import EmojiIcon from 'components/Icon/Emoji'
