@@ -1,3 +1,4 @@
+// TODO: figure out why sometimes the taxonomy tab page crashes
 import { defineType } from 'sanity'
 
 import EmojiIcon from 'components/Icon/Emoji'
@@ -38,7 +39,7 @@ export default defineType({
       name: 'stock',
     },
     {
-      name: 'condition',
+      name: 'miscellaneous',
     },
   ],
   fields: [
@@ -100,12 +101,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     },
     {
-      group: 'condition',
-      name: 'cost',
-      title: 'Item Price',
-      type: 'number',
-    },
-    {
       group: 'images',
       name: 'images',
       title: 'Item Images',
@@ -137,33 +132,12 @@ export default defineType({
       title: 'Item Tags',
     },
     {
-      group: 'condition',
-      name: 'stock',
-      title: 'Item Stock',
-      type: 'number',
-    },
-    {
-      name: 'active',
-      title: 'Item Active',
-      type: 'boolean',
-      validation: (Rule) => Rule.required(),
-    },
-    {
-      group: 'details',
+      group: 'miscellaneous',
       name: 'productManualUrl',
       title: 'Product Manual URL',
       description:
         'Product Manual URL (if applicable) OR revelvant and helpful links',
       type: 'url',
-    },
-    {
-      group: 'condition',
-      name: 'condition',
-      title: 'Condition',
-      type: 'string',
-      options: {
-        list: ['New', 'Good', 'Fair', 'Poor'],
-      },
     },
   ],
   preview: {
