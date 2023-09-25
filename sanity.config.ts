@@ -20,6 +20,9 @@ import { previewDocumentNode } from 'plugins/previewPane'
 import MenuPreviewPane from 'schemas/components/preview/MenuPreviewPane'
 import NavigationStructure from 'tools/Navigation/NavigationStructure'
 import { webhooks } from 'sanity-plugin-webhooks'
+import documentActions from 'plugins/documentActions'
+import { checkoutActions } from 'plugins/documentActions/checkoutActions'
+import documentBadges from 'plugins/documentBadges'
 
 const title =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Next.js Blog with Sanity.io'
@@ -99,4 +102,8 @@ export default defineConfig({
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
   ],
+  document: {
+    actions: documentActions,
+    badges: documentBadges,
+  },
 })

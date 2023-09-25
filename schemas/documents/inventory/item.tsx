@@ -1,8 +1,35 @@
-// TODO: figure out why sometimes the taxonomy tab page crashes
-import { defineType } from 'sanity'
+import { defineType, useClient } from 'sanity'
 
 import EmojiIcon from 'components/Icon/Emoji'
 import { CategoryInputComponent } from './components/CategoryInput'
+import { groq } from 'next-sanity'
+
+export const patchStock = async (
+  client,
+  id: string,
+  direction: 'increment' | 'decrement'
+) => {
+  const itemIds = await client.fetch(groq`*[_id == $id].checkoutItems[]._ref`, {
+    id,
+  })
+
+  itemIds?.forEach(async (itemId) => {
+    let patch = await client.patch(itemId)
+
+    if (direction === 'increment') {
+      patch = patch.inc({ stock: 1 })
+    } else if (direction === 'decrement') {
+      patch = patch.dec({ stock: 1 })
+    }
+    const response = patch
+
+      .commit()
+      .then((r) => {})
+      .catch((e) => console.error({ e }))
+
+    return response
+  })
+}
 
 export type TItem = {
   name: string
