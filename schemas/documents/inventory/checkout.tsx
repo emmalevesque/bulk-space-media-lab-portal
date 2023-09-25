@@ -105,15 +105,14 @@ export default defineType({
       checkedOutTo: 'user.name',
       checkoutDate: 'checkoutDate',
       returnDate: 'returnDate',
+      isCheckedOut: 'isCheckedOut',
     },
     prepare(selection) {
-      const { checkedOutTo, checkoutDate, returnDate } = selection
+      const { checkedOutTo, checkoutDate, returnDate, isCheckedOut } = selection
       return {
         title: checkedOutTo || 'No user selected yet',
-        subtitle:
-          checkoutDate && returnDate
-            ? `${checkoutDate} - ${returnDate}`
-            : 'No dates selected yet',
+        subtitle: isCheckedOut ? `Checked Out` : 'Checked In',
+        media: () => <EmojiIcon>{isCheckedOut ? `🟥` : `✅`}</EmojiIcon>,
       }
     },
   },
@@ -123,5 +122,6 @@ export default defineType({
   },
   components: {
     preview: CheckoutPreview,
+    item: CheckoutPreview,
   },
 })

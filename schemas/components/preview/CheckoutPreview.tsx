@@ -1,5 +1,7 @@
+import { Card } from '@sanity/ui'
+
 export default (props) => {
   console.log({ props })
 
-  return <>{props.renderDefault(props)}</>
+  return <Card tone="critical">{props.renderDefault(props)}</Card>
 }
