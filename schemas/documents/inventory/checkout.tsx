@@ -3,6 +3,8 @@ import { defineType } from 'sanity'
 import dynamic from 'next/dynamic'
 import CheckoutPreview from 'schemas/components/preview/CheckoutPreview'
 
+const dev = process.env.NODE_ENV !== 'production'
+
 const QrScanner = dynamic(() => import('./components/QrScanner'), {
   ssr: false,
 })
@@ -48,6 +50,18 @@ export default defineType({
         'This field is handled autotically when processing a checkout.',
       type: 'boolean',
       validation: (Rule) => Rule.required(),
+      hidden: !dev,
+    },
+    {
+      group: 'status',
+      readOnly: true,
+      name: 'isReturned',
+      title: 'Item is Returned?',
+      description:
+        'This field is handled autotically when processing a checkout.',
+      type: 'boolean',
+      validation: (Rule) => Rule.required(),
+      hidden: !dev,
     },
     {
       group: 'status',
@@ -118,10 +132,10 @@ export default defineType({
   },
   initialValue: {
     isCheckedOut: false,
+    isReturned: false,
     spotChecked: false,
   },
   components: {
     preview: CheckoutPreview,
-    item: CheckoutPreview,
   },
 })

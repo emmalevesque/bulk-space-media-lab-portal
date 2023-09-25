@@ -40,7 +40,8 @@ export function processCheckout(props) {
           patch.execute([
             {
               set: {
-                isCheckedOut: !latestDocument?.isCheckedOut,
+                isCheckedOut: latestDocument?.isCheckedOut ? false : true,
+                isReturned: latestDocument?.isCheckedOut ? true : false,
               },
             },
           ])
