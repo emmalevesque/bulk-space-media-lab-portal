@@ -175,6 +175,7 @@ export default defineType({
       media: 'images.0',
       category: 'category.title',
       parentCategory: 'category.parent.title',
+      stock: 'stock',
     },
     prepare: ({
       media,
@@ -183,6 +184,7 @@ export default defineType({
       subtitle,
       manufacturerMake,
       manufacturerModel,
+      stock,
     }) => {
       return {
         subtitle: `${parentCategory ? `${parentCategory} > ` : ''}${
@@ -192,7 +194,7 @@ export default defineType({
           manufacturerMake && manufacturerModel
             ? `${manufacturerMake} ${manufacturerModel}`
             : subtitle,
-        media: media || undefined,
+        media: () => <EmojiIcon>{stock === 0 ? `🟥` : `✅`}</EmojiIcon>,
       }
     },
   },

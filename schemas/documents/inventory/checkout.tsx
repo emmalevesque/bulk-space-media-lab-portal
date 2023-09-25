@@ -98,6 +98,13 @@ export default defineType({
           type: 'reference',
           weak: true,
           to: [{ type: 'item' }],
+          options: {
+            filter: ({ document }) => {
+              return {
+                filter: 'stock > 0',
+              }
+            },
+          },
         },
       ],
     },
