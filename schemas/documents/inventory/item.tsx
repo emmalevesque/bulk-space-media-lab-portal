@@ -3,33 +3,7 @@ import { defineType, useClient } from 'sanity'
 import EmojiIcon from 'components/Icon/Emoji'
 import { CategoryInputComponent } from './components/CategoryInput'
 import { groq } from 'next-sanity'
-
-export const patchStock = async (
-  client,
-  id: string,
-  direction: 'increment' | 'decrement'
-) => {
-  const itemIds = await client.fetch(groq`*[_id == $id].checkoutItems[]._ref`, {
-    id,
-  })
-
-  itemIds?.forEach(async (itemId) => {
-    let patch = await client.patch(itemId)
-
-    if (direction === 'increment') {
-      patch = patch.inc({ stock: 1 })
-    } else if (direction === 'decrement') {
-      patch = patch.dec({ stock: 1 })
-    }
-    const response = patch
-
-      .commit()
-      .then((r) => {})
-      .catch((e) => console.error({ e }))
-
-    return response
-  })
-}
+import StatusIcon from './components/StatusIcon'
 
 export type TItem = {
   name: string
@@ -159,6 +133,13 @@ export default defineType({
       title: 'Item Tags',
     },
     {
+      name: 'stock',
+      title: 'Stock Quanity',
+      type: 'number',
+      group: 'stock',
+      initialValue: 1,
+    },
+    {
       group: 'miscellaneous',
       name: 'productManualUrl',
       title: 'Product Manual URL',
@@ -194,7 +175,7 @@ export default defineType({
           manufacturerMake && manufacturerModel
             ? `${manufacturerMake} ${manufacturerModel}`
             : subtitle,
-        media: () => <EmojiIcon>{stock === 0 ? `🟥` : `✅`}</EmojiIcon>,
+        media: <StatusIcon stock={stock} />,
       }
     },
   },

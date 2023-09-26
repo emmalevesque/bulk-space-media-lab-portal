@@ -1,7 +1,12 @@
-import { CheckmarkCircleIcon, UserIcon } from '@sanity/icons'
-import { useState, useEffect, useCallback } from 'react'
+import { CheckmarkCircleIcon, UserIcon, ClockIcon } from '@sanity/icons'
+import { groq } from 'next-sanity'
+import { useState, useEffect } from 'react'
 import { useClient, useDocumentOperation } from 'sanity'
-import { patchStock } from 'schemas/documents/inventory/item'
+import {
+  checkoutActions,
+  patchStock,
+  useInventory,
+} from 'schemas/documents/inventory/hooks/useInventory'
 
 export function processCheckout(props) {
   const client = useClient({
@@ -10,7 +15,16 @@ export function processCheckout(props) {
   const latestDocument = props?.draft || props?.published
 
   const { patch, publish } = useDocumentOperation(props.id, props.type)
-  const [isPublishing, setIsPublishing] = useState(false)
+
+  const { checkoutStatus, checkoutActions, isPublishing, setIsPublishing } =
+    useInventory(latestDocument, client, patch)
+
+  console.log({
+    checkoutStatus,
+    checkoutActions,
+    isPublishing,
+    setIsPublishing,
+  })
 
   useEffect(() => {
     // if the isPublishing state was set to true and the draft has changed
@@ -21,12 +35,8 @@ export function processCheckout(props) {
   }, [props.draft])
 
   return {
-    icon: UserIcon,
-    CheckmarkCircleIcon,
-    label: isPublishing
-      ? 'Processing...'
-      : `Process ${latestDocument?.isCheckedOut ? 'Return' : 'Checkout'}`,
-    tone: latestDocument?.isCheckedOut ? 'positive' : 'caution',
+    ...checkoutActions[checkoutStatus],
+    disabled: checkoutStatus === 'RETURNED' || isPublishing,
     onHandle: async () => {
       // This will update the button text
       setIsPublishing(true)
@@ -40,7 +50,7 @@ export function processCheckout(props) {
           patch.execute([
             {
               set: {
-                isCheckedOut: latestDocument?.isCheckedOut ? false : true,
+                isCheckedOut: true,
                 isReturned: latestDocument?.isCheckedOut ? true : false,
               },
             },
