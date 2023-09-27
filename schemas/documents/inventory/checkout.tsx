@@ -36,6 +36,9 @@ export default defineType({
     {
       name: 'people',
     },
+    {
+      name: 'notes',
+    },
   ],
   fields: [
     {
@@ -65,6 +68,7 @@ export default defineType({
       name: 'spotChecked',
       title: 'Item Spot Checked',
       type: 'boolean',
+      readOnly: ({ document }) => Boolean(document?.isCheckedOut),
       validation: (Rule) =>
         Rule.custom(
           (value, context) =>
@@ -118,19 +122,44 @@ export default defineType({
       title: 'Return Date',
       type: 'datetime',
     },
+    {
+      name: 'notes',
+      title: 'Checkout Notes',
+      type: 'array',
+      of: [{ type: 'block' }],
+      group: 'notes',
+    },
   ],
   preview: {
     select: {
       checkedOutTo: 'user.name',
       checkoutDate: 'checkoutDate',
       returnDate: 'returnDate',
+      spotChecked: 'spotChecked',
       isCheckedOut: 'isCheckedOut',
+      isReturned: 'isReturned',
     },
     prepare(selection) {
-      const { checkedOutTo, checkoutDate, returnDate, isCheckedOut } = selection
+      const {
+        checkedOutTo,
+        checkoutDate,
+        returnDate,
+        spotChecked,
+        isCheckedOut,
+        isReturned,
+      } = selection
       return {
         title: checkedOutTo || 'No user selected yet',
-        subtitle: isCheckedOut ? `Checked Out` : 'Checked In',
+        subtitle:
+          isCheckedOut && isReturned
+            ? 'Checkout Complete'
+            : !isCheckedOut && !isReturned && !spotChecked
+            ? 'Spotchecks Needed'
+            : !isCheckedOut && !isReturned
+            ? 'Ready for checkout'
+            : isCheckedOut && !isReturned
+            ? 'Checked Out'
+            : 'Checked In',
         media: () => <EmojiIcon>{isCheckedOut ? `🟥` : `✅`}</EmojiIcon>,
       }
     },

@@ -19,13 +19,6 @@ export function processCheckout(props) {
   const { checkoutStatus, checkoutActions, isPublishing, setIsPublishing } =
     useInventory(latestDocument, client, patch)
 
-  console.log({
-    checkoutStatus,
-    checkoutActions,
-    isPublishing,
-    setIsPublishing,
-  })
-
   useEffect(() => {
     // if the isPublishing state was set to true and the draft has changed
     // to become `null` the document has been published
@@ -38,9 +31,12 @@ export function processCheckout(props) {
     ...checkoutActions[checkoutStatus],
     disabled: checkoutStatus === 'RETURNED' || isPublishing,
     onHandle: async () => {
+      if (!client || !latestDocument) console.error('missing client or doc')
+
       // This will update the button text
       setIsPublishing(true)
 
+      //TODO: test this rigorously to make sure there are no edge cases with the UX
       patchStock(
         client,
         latestDocument?._id.replace('drafts.', ''),
@@ -52,6 +48,9 @@ export function processCheckout(props) {
               set: {
                 isCheckedOut: true,
                 isReturned: latestDocument?.isCheckedOut ? true : false,
+                returnDate: latestDocument?.isCheckedOut
+                  ? new Date().toISOString()
+                  : null,
               },
             },
           ])

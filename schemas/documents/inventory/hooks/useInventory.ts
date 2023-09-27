@@ -11,14 +11,14 @@ export const checkoutActions = {
     label: 'Begin Checkout',
     color: 'primary',
     title: 'This item is available to be checked out',
-    tone: 'default',
+    tone: 'critical',
   },
   CHECKED_OUT: {
     icon: UserIcon,
     label: 'Process Return',
     color: 'primary',
     title: 'This is checked out',
-    tone: 'default',
+    tone: 'caution',
   },
   RETURNED: {
     icon: CheckmarkCircleIcon,
