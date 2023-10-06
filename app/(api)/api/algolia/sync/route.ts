@@ -8,7 +8,7 @@ const sanity = client
  *  This function receives webhook POSTs from Sanity and updates, creates or
  *  deletes records in the corresponding Algolia indices.
  */
-const POST = async (req: VercelRequest, res: VercelResponse) => {
+export async function POST(req: VercelRequest, res: VercelResponse) {
   // Tip: Add webhook secrets to verify that the request is coming from Sanity.
   // See more at: https://www.sanity.io/docs/webhooks#bfa1758643b3
   if (req.headers['content-type'] !== 'application/json') {
@@ -31,5 +31,3 @@ const POST = async (req: VercelRequest, res: VercelResponse) => {
       }
     })
 }
-
-export default POST
