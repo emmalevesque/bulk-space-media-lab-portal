@@ -1,10 +1,9 @@
 import { client } from 'lib/sanity.client'
-import { SanityDocumentStub } from 'next-sanity'
+import { NextResponse } from 'next/server'
 
-import algoliasearch from 'algoliasearch'
 import { sanityAlgolia } from '../_algolia'
 
-export async function GET() {
+export async function GET(req, res) {
   const sanity = client // configured Sanity client
 
   // Fetch the _id of all the documents we want to index
@@ -16,7 +15,7 @@ export async function GET() {
       ids: { created: ids, updated: [], deleted: [] },
     })
   )
-  return Response.json({
+  return NextResponse.json({
     status: 200,
     message: 'Hello, World!',
   })
