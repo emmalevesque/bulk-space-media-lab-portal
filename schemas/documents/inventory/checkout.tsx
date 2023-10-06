@@ -2,6 +2,7 @@ import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
 import dynamic from 'next/dynamic'
 import CheckoutPreview from 'schemas/components/preview/CheckoutPreview'
+import { checkoutStatuses, getCheckoutStatus } from './hooks/useInventory'
 
 const dev = process.env.NODE_ENV !== 'production'
 
@@ -16,7 +17,11 @@ const QrScanner = dynamic(() => import('./components/QrScanner'), {
 
 // TODO: move qrScanner into a modal'
 
-export type CheckoutStatus = 'READY' | 'CHECKED_OUT' | 'RETURNED'
+export type CheckoutStatus =
+  | 'SPOTCHECK_NEEDED'
+  | 'READY'
+  | 'CHECKED_OUT'
+  | 'RETURNED'
 
 export default defineType({
   name: 'checkout',
@@ -25,16 +30,14 @@ export default defineType({
   icon: () => <EmojiIcon>📦</EmojiIcon>,
   groups: [
     {
-      name: 'status',
-    },
-    {
-      name: 'items',
+      name: 'details',
+      default: true,
     },
     {
       name: 'dates',
     },
     {
-      name: 'people',
+      name: 'status',
     },
     {
       name: 'notes',
@@ -77,7 +80,7 @@ export default defineType({
         ),
     },
     {
-      group: 'people',
+      group: 'details',
       name: 'user',
       title: 'User',
       type: 'reference',
@@ -87,7 +90,8 @@ export default defineType({
       },
     },
     {
-      group: 'items',
+      group: 'details',
+      // TODO: rename this to items
       name: 'checkoutItems',
       title: 'Inventory Items',
       type: 'array',
@@ -99,8 +103,9 @@ export default defineType({
           type: 'reference',
           weak: true,
           to: [{ type: 'item' }],
+          validation: (Rule) => Rule.min(1).required(),
           options: {
-            filter: ({ document }) => {
+            filter: () => {
               return {
                 filter: 'stock > 0',
               }
@@ -140,27 +145,20 @@ export default defineType({
       isReturned: 'isReturned',
     },
     prepare(selection) {
-      const {
-        checkedOutTo,
-        checkoutDate,
-        returnDate,
-        spotChecked,
-        isCheckedOut,
-        isReturned,
-      } = selection
+      const { checkedOutTo, isCheckedOut, isReturned } = selection
+
       return {
         title: checkedOutTo || 'No user selected yet',
-        subtitle:
-          isCheckedOut && isReturned
-            ? 'Checkout Complete'
-            : !isCheckedOut && !isReturned && !spotChecked
-            ? 'Spotchecks Needed'
-            : !isCheckedOut && !isReturned
-            ? 'Ready for checkout'
-            : isCheckedOut && !isReturned
-            ? 'Checked Out'
-            : 'Checked In',
-        media: () => <EmojiIcon>{isCheckedOut ? `🟥` : `✅`}</EmojiIcon>,
+        subtitle: checkoutStatuses[getCheckoutStatus(selection)].label,
+        media: () => (
+          <EmojiIcon>
+            {!isCheckedOut && !isReturned
+              ? `📦`
+              : isCheckedOut && !isReturned
+              ? `🟥`
+              : `✅`}
+          </EmojiIcon>
+        ),
       }
     },
   },
@@ -170,6 +168,7 @@ export default defineType({
     spotChecked: false,
   },
   components: {
+    item: CheckoutPreview,
     preview: CheckoutPreview,
   },
 })

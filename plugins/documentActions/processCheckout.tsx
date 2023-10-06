@@ -16,7 +16,7 @@ export function processCheckout(props) {
 
   const { patch, publish } = useDocumentOperation(props.id, props.type)
 
-  const { checkoutStatus, checkoutActions, isPublishing, setIsPublishing } =
+  const { getCheckoutStatus, checkoutActions, isPublishing, setIsPublishing } =
     useInventory(latestDocument, client, patch)
 
   useEffect(() => {
@@ -28,8 +28,8 @@ export function processCheckout(props) {
   }, [props.draft])
 
   return {
-    ...checkoutActions[checkoutStatus],
-    disabled: checkoutStatus === 'RETURNED' || isPublishing,
+    ...checkoutActions[getCheckoutStatus],
+    disabled: getCheckoutStatus === 'RETURNED' || isPublishing,
     onHandle: async () => {
       if (!client || !latestDocument) console.error('missing client or doc')
 
@@ -42,12 +42,15 @@ export function processCheckout(props) {
         latestDocument?._id.replace('drafts.', ''),
         !latestDocument?.isCheckedOut ? 'decrement' : 'increment'
       )
-        .then((r) => {
+        .then(() => {
           patch.execute([
             {
               set: {
                 isCheckedOut: true,
                 isReturned: latestDocument?.isCheckedOut ? true : false,
+                checkoutDate: !latestDocument?.isCheckedOut
+                  ? new Date().toISOString()
+                  : latestDocument?.checkoutDate,
                 returnDate: latestDocument?.isCheckedOut
                   ? new Date().toISOString()
                   : null,

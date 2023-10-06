@@ -1,8 +1,54 @@
-import { CheckmarkCircleIcon, ClockIcon, UserIcon } from '@sanity/icons'
+import {
+  CheckmarkCircleIcon,
+  ClockIcon,
+  UserIcon,
+  SearchIcon,
+} from '@sanity/icons'
 import { useState } from 'react'
 import { SanityDocument, groq } from 'next-sanity'
 import { SanityClient } from 'sanity'
-import { CheckoutStatus } from '../checkout'
+
+export const checkoutStatuses = {
+  CHECKED_OUT: {
+    label: 'Checked Out',
+    color: 'danger',
+    title: 'Items have been checked out',
+    tone: 'critical',
+  },
+  RETURNED: {
+    label: 'Return Complete',
+    color: 'success',
+    title: 'Items have been returned successfully',
+    tone: 'positive',
+  },
+  READY: {
+    label: 'Ready for Checkout',
+    color: 'default',
+    title: 'This item is available to be checked out',
+    tone: 'default',
+  },
+  SPOTCHECK_NEEDED: {
+    label: 'Spotcheck Needed',
+    color: 'caution',
+    title: 'Please spotcheck this item before checking it out',
+    tone: 'caution',
+  },
+}
+
+export type CheckoutStatus =
+  | 'CHECKED_OUT'
+  | 'RETURNED'
+  | 'READY'
+  | 'SPOTCHECK_NEEDED'
+
+export function CheckoutBadge(props) {
+  const { getCheckoutStatus } = useInventory(props?.published)
+  if (props.published) {
+    return checkoutStatuses[getCheckoutStatus]
+  } else {
+    return null
+  }
+}
 
 // the parent document's patch function
 export const checkoutActions = {
@@ -11,7 +57,14 @@ export const checkoutActions = {
     label: 'Begin Checkout',
     color: 'primary',
     title: 'This item is available to be checked out',
-    tone: 'critical',
+    tone: 'primary',
+  },
+  SPOTCHECK_NEEDED: {
+    icon: SearchIcon,
+    label: 'Spotcheck Needed',
+    color: 'caution',
+    title: 'This item is available to be checked out',
+    tone: 'caution',
   },
   CHECKED_OUT: {
     icon: UserIcon,
@@ -22,7 +75,7 @@ export const checkoutActions = {
   },
   RETURNED: {
     icon: CheckmarkCircleIcon,
-    label: 'Checkout Completed',
+    label: 'Checkout Complete',
     color: 'success',
     title: 'This has been returned',
     tone: 'positive',
@@ -56,8 +109,18 @@ export const patchStock = async (
   })
 }
 
-export const checkoutStatus = (document): CheckoutStatus => {
-  if (!document?.isCheckedOut && !document?.isReturned) {
+export const getCheckoutStatus = (document): CheckoutStatus => {
+  if (
+    !document?.isReturned &&
+    !document?.isCheckedOut &&
+    !document?.spotChecked
+  ) {
+    return 'SPOTCHECK_NEEDED'
+  } else if (
+    !document?.isCheckedOut &&
+    !document?.isReturned &&
+    document?.spotChecked
+  ) {
     return 'READY'
   } else if (document?.isCheckedOut && !document?.isReturned) {
     return 'CHECKED_OUT'
@@ -100,7 +163,7 @@ export const useInventory = (
 
   return {
     checkoutActions,
-    checkoutStatus: checkoutStatus(document),
+    getCheckoutStatus: getCheckoutStatus(document),
     handleProcessCheckout,
     isPublishing,
     setIsPublishing,
