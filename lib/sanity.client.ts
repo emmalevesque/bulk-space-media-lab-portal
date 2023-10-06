@@ -10,6 +10,13 @@ import {
 } from 'lib/sanity.queries'
 import { createClient, type SanityClient } from 'next-sanity'
 
+export const client = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn,
+})
+
 export function getClient(preview?: { token: string }): SanityClient {
   const client = createClient({
     projectId,
