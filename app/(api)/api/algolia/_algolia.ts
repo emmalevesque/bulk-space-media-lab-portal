@@ -21,7 +21,7 @@ export const sanityAlgolia = indexer(
     item: {
       index: algoliaIndex,
       projection: `{
-        title: details.make + ' ' + details.model,
+        title: details.make + " " + details.model,
         "path": slug.current,
         "easyName": easyName,
         "make": details.make,
