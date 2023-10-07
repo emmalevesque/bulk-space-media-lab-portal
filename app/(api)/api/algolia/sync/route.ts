@@ -25,7 +25,7 @@ export async function POST(req: Request) {
   // client and make sure the algolia indices are synced to match.
   return sanityAlgolia
     .webhookSync(sanity, body)
-    .then(() => Response.json({ status: 200, message: 'OK' }))
+    .then(() => NextResponse.json({ status: 200, message: 'OK' }))
     .catch((err) => {
       return NextResponse.json({
         status: 500,
