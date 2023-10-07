@@ -8,7 +8,7 @@ const sanity = client
  *  This function receives webhook POSTs from Sanity and updates, creates or
  *  deletes records in the corresponding Algolia indices.
  */
-export async function POST(req: Request) {
+export async function POST(req: Request, res) {
   const requestHeaders = new Headers(req.headers)
   if (requestHeaders.get('content-type') !== 'application/json') {
     return NextResponse.json({
@@ -27,9 +27,10 @@ export async function POST(req: Request) {
     .webhookSync(sanity, body)
     .then(() => NextResponse.json({ status: 200, message: 'OK' }))
     .catch((err) => {
-      return NextResponse.json({
+      return res.status(500).json({
         status: 500,
-        message: 'Something went wrong',
+        message: 'Internal Server Error',
+        error: err,
       })
     })
 }
