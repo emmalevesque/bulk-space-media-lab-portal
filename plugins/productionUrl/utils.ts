@@ -26,8 +26,6 @@ export async function getSecret(
       await client
         .transaction()
         .createIfNotExists({ _id: id, _type: id })
-        // FIXME: This is a bug in the types, it should be `patch(patch, { tag })`
-        // @ts-expect-error
         .patch(patch)
         .commit({ tag })
       return newSecret

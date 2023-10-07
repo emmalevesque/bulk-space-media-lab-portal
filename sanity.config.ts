@@ -2,10 +2,8 @@
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
 import { visionTool } from '@sanity/vision'
-import EmojiIcon from 'components/Icon/Emoji'
 import { apiVersion, dataset, projectId } from 'lib/sanity.api'
 import deskStructure from 'plugins/deskStructure'
-import { icon } from 'plugins/navigation'
 import { defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 import category from 'schemas/documents/inventory/category'
@@ -15,13 +13,13 @@ import staff from 'schemas/documents/user/staff'
 import tag from 'schemas/documents/inventory/tag'
 import user from 'schemas/documents/user/user'
 import { schema } from 'schemas/schema'
-import navigation from 'schemas/singletons/menu'
 
 import 'styles/studio.css'
 import checkout from 'schemas/documents/inventory/checkout'
 import { previewDocumentNode } from 'plugins/previewPane'
 import MenuPreviewPane from 'schemas/components/preview/MenuPreviewPane'
 import NavigationStructure from 'tools/Navigation/NavigationStructure'
+import { webhooks } from 'sanity-plugin-webhooks'
 
 const title =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Next.js Blog with Sanity.io'
@@ -86,6 +84,7 @@ export default defineConfig({
         ),
       defaultDocumentNode: previewDocumentNode(),
     }),
+    webhooks(),
     // Configures the global "new document" button, and document actions, to suit the Settings document singleton
     // Add the "Open preview" action
     /*** */

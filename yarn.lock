@@ -2255,7 +2255,7 @@
     split2 "^3.2.2"
     tar-fs "^2.1.1"
 
-"@sanity/incompatible-plugin@^1.0.0":
+"@sanity/incompatible-plugin@^1.0.0", "@sanity/incompatible-plugin@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@sanity/incompatible-plugin/-/incompatible-plugin-1.0.4.tgz#c369af3b629de6c01e5843373fb3ede9972a53f4"
   integrity sha512-2z39G9PTM8MXOF4fJNx3TG4tH0RrTjtH6dVLW93DSjCPbIS7FgCY5yWjZfQ+HVkwhLsF7ATDAGLA/jp65pFjAg==
@@ -2293,7 +2293,7 @@
     slate "0.94.1"
     slate-react "0.98.1"
 
-"@sanity/preview-kit@3.1.6":
+"@sanity/preview-kit@3.1.6", "@sanity/preview-kit@^3.1.6":
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/@sanity/preview-kit/-/preview-kit-3.1.6.tgz#817a54f89ed87f719b13b7932c37e83f8a8f783a"
   integrity sha512-V8gZlIcyqqMr1WDAzrNXntrgYVeR56EKEZHbXOoHIr3qjgCRXPogVJ5w09DJ6cMhv2NKClOpAqmA9MWzt81wXw==
@@ -3503,7 +3503,7 @@ cli-truncate@^3.1.0:
     slice-ansi "^5.0.0"
     string-width "^5.0.0"
 
-client-only@0.0.1:
+client-only@0.0.1, client-only@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/client-only/-/client-only-0.0.1.tgz#38bba5d403c41ab150bff64a95c85013cf73bca1"
   integrity sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==
@@ -7647,6 +7647,17 @@ sanity-plugin-iframe-pane@^2.5.4:
     framer-motion "^10.15.1"
     usehooks-ts "2.9.1"
 
+sanity-plugin-webhooks@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/sanity-plugin-webhooks/-/sanity-plugin-webhooks-1.0.0.tgz#419463f792565c07b20bcdf342ea055aaa074fe1"
+  integrity sha512-ZLrQsM1LOyeOzDMPvIOAQqYTGvp8+erd38WuLCtzHUXxXhrVZISMWzPR9PeAzaHplq7BFs0RWymxybHLLuFaEQ==
+  dependencies:
+    "@sanity/icons" "^2.4.1"
+    "@sanity/incompatible-plugin" "^1.0.4"
+    "@sanity/ui" "^1.8.2"
+    date-fns "^2.30.0"
+    swr "^2.2.2"
+
 sanity@^3.16.7:
   version "3.16.7"
   resolved "https://registry.yarnpkg.com/sanity/-/sanity-3.16.7.tgz#d340bb3d6b45a3d785fe4b0b23ed902da2461b15"
@@ -8290,6 +8301,14 @@ swr@^2.2.0:
   resolved "https://registry.yarnpkg.com/swr/-/swr-2.2.0.tgz#575c6ac1bec087847f4c86a39ccbc0043c834d6a"
   integrity sha512-AjqHOv2lAhkuUdIiBu9xbuettzAzWXmCEcLONNKJRba87WAefz8Ca9d6ds/SzrPc235n1IxWYdhJ2zF3MNUaoQ==
   dependencies:
+    use-sync-external-store "^1.2.0"
+
+swr@^2.2.2:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-2.2.4.tgz#03ec4c56019902fbdc904d78544bd7a9a6fa3f07"
+  integrity sha512-njiZ/4RiIhoOlAaLYDqwz5qH/KZXVilRLvomrx83HjzCWTfa+InyfAjv05PSFxnmLzZkNO9ZfvgoqzAaEI4sGQ==
+  dependencies:
+    client-only "^0.0.1"
     use-sync-external-store "^1.2.0"
 
 symbol-tree@^3.2.4:
