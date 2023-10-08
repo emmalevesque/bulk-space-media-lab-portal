@@ -27,7 +27,7 @@ export async function POST(req: Request, res) {
     .webhookSync(sanity, body)
     .then(() => NextResponse.json({ status: 200, message: 'OK' }))
     .catch((err) => {
-      return res.status(500).json({
+      return NextResponse.json({
         status: 500,
         message: 'Internal Server Error',
         error: err,
