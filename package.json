@@ -42,7 +42,7 @@
     "husky": "^8.0.3",
     "intl-segmenter-polyfill": "0.4.4",
     "lint-staged": "^13.2.3",
-    "next": "^13.5.2",
+    "next": "^13.5.3",
     "next-sanity": "^5.5.4",
     "next-sanity-image": "6.1.0",
     "pre-commit": "^1.2.2",

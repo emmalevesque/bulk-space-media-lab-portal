@@ -1,37 +1,41 @@
-import { Badge, BadgeTone, Button, Card, Grid, Inline, Stack } from '@sanity/ui'
-import { useState } from 'react'
+import { BadgeTone, Button, Card, Grid, Stack } from '@sanity/ui'
+import { useCallback, useState } from 'react'
 import { QrScanner } from '@yudiel/react-qr-scanner'
-import { FormBuilderInputComponentMap, set, unset } from 'sanity'
+import { set, unset } from 'sanity'
 
 export default (props) => {
   const { onChange, value, schemaType } = props
   const [showScanner, setShowScanner] = useState<boolean>(false)
 
-  console.log({ schemaType })
-
   const delay = 100
 
   const [result, setResult] = useState('No result')
 
-  const handleScan = (data) => {
-    if (data) {
-      const id = data.split('?')[1]
-      setResult(id)
-      setTone('positive')
+  const handleScan = useCallback(
+    (data) => {
+      if (data) {
+        const id = data.split('?')[1]
+        setResult(id)
+        setTone('positive')
 
-      const newReference = {
-        _type: 'reference',
-        _ref: id,
+        const newReference = {
+          _type: 'reference',
+          _ref: id,
+        }
+
+        onChange(newReference._ref ? set(newReference) : unset())
       }
+    },
+    [showScanner]
+  )
 
-      onChange(newReference._ref ? set(newReference) : unset())
-    }
-  }
-
-  const handleError = (err) => {
-    console.error(err)
-    setTone('critical')
-  }
+  const handleError = useCallback(
+    (err) => {
+      console.error(err)
+      setTone('critical')
+    },
+    [showScanner]
+  )
 
   const previewStyle = {
     height: 240,
@@ -40,14 +44,12 @@ export default (props) => {
 
   const [tone, setTone] = useState<BadgeTone>('default')
 
-  console.log({ result })
-
   return (
     <Card>
-      <Grid paddingY={2} columns={[1, 2]}>
+      <Grid paddingY={2} columns={[1]}>
         {props.renderDefault(props)}
         <Stack space={2}>
-          <Grid paddingX={2} columns={[1]}>
+          <Grid paddingY={2} columns={[1]}>
             <Stack space={1}>
               {showScanner ? (
                 <QrScanner onError={handleError} onDecode={handleScan} />

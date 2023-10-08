@@ -1,8 +1,9 @@
-// TODO: figure out why sometimes the taxonomy tab page crashes
-import { defineType } from 'sanity'
+import { defineType, useClient } from 'sanity'
 
 import EmojiIcon from 'components/Icon/Emoji'
 import { CategoryInputComponent } from './components/CategoryInput'
+import { groq } from 'next-sanity'
+import StatusIcon from './components/StatusIcon'
 
 export type TItem = {
   name: string
@@ -132,6 +133,13 @@ export default defineType({
       title: 'Item Tags',
     },
     {
+      name: 'stock',
+      title: 'Stock Quanity',
+      type: 'number',
+      group: 'stock',
+      initialValue: 1,
+    },
+    {
       group: 'miscellaneous',
       name: 'productManualUrl',
       title: 'Product Manual URL',
@@ -148,6 +156,7 @@ export default defineType({
       media: 'images.0',
       category: 'category.title',
       parentCategory: 'category.parent.title',
+      stock: 'stock',
     },
     prepare: ({
       media,
@@ -156,6 +165,7 @@ export default defineType({
       subtitle,
       manufacturerMake,
       manufacturerModel,
+      stock,
     }) => {
       return {
         subtitle: `${parentCategory ? `${parentCategory} > ` : ''}${
@@ -165,7 +175,7 @@ export default defineType({
           manufacturerMake && manufacturerModel
             ? `${manufacturerMake} ${manufacturerModel}`
             : subtitle,
-        media: media || undefined,
+        media: <StatusIcon stock={stock} />,
       }
     },
   },
