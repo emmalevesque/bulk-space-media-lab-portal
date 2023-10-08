@@ -13,7 +13,7 @@ import { set, unset } from 'sanity'
 const getCategoryNames = async (ids) => {
   const client = useClient()
 
-  const query = groq`*[defined(categories) && categories[]._ref in $ds][]`
+  const query = groq`*[defined(categories) && categories[]._ref in $ids][]`
 
   const params = {
     ids,
@@ -21,7 +21,7 @@ const getCategoryNames = async (ids) => {
 
   const data = await client.fetch(query, params)
 
-  return data?.title
+  return data?.name
 }
 
 export const CategoryInputComponent = (props) => {
@@ -31,24 +31,25 @@ export const CategoryInputComponent = (props) => {
 
   const fetcher = (query, params) => client.fetch(query, params)
 
+  // TODO: add search filtering feature
   const { data, isLoading, error } = useSWR(
     [
-      groq`*[_id == "menu"][0].categories[]->{
+      groq`*[!defined(parent) && _type == "category" && !(_id in path("drafts.**"))][]{
         ...,
         "_key": _id,
        ${childrenQuery(childrenQuery(''))} 
-      } | order(title asc)`,
+      } | order(name asc)`,
     ],
     fetcher
   )
 
-  if (isLoading) return <LoadingOverlay />
-
-  if (error) throw new Error(error)
-
   const handleReset = useCallback(() => {
     onChange(Array.isArray(value) ? unset() : null)
-  }, [onChange])
+  }, [onChange, value])
+
+  if (isLoading && !data) return <LoadingOverlay />
+
+  if (error) throw new Error(error)
 
   return data ? (
     <CategoryInputContextProvider

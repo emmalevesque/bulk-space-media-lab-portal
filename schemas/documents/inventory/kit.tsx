@@ -22,8 +22,8 @@ export default defineType({
   fields: [
     {
       group: 'details',
-      name: 'title',
-      title: 'Title',
+      name: 'name',
+      title: 'Kit name',
       type: 'string',
     },
     {

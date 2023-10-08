@@ -66,6 +66,7 @@ export default defineType({
       validation: (Rule) => Rule.required(),
       hidden: !dev,
     },
+    // TODO: confirm this feature or deprecate it
     {
       group: 'status',
       name: 'spotChecked',

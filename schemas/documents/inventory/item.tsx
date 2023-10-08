@@ -51,8 +51,8 @@ export default defineType({
       type: 'qrCode',
     },
     {
-      name: 'easyName',
-      title: 'Easy Name',
+      name: 'name',
+      title: 'Short Name',
       description:
         'Commonly used name for the item e.g. DSLR Camera, Cord, Adapter...',
       type: 'string',

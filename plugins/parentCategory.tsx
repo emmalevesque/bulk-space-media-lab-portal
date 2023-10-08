@@ -16,7 +16,7 @@ export default function parentChild(
   documentStore: DocumentStore
 ) {
   const filter = `_type == "${schemaType}" && !defined(parent) && !(_id in path("drafts.**"))`
-  const query = `*[${filter}]{ _id, title }`
+  const query = `*[${filter}]{ _id, name}`
   const options = { apiVersion: `2023-01-01` }
 
   function createChildList(
@@ -35,12 +35,12 @@ export default function parentChild(
 
     return S.listItem({
       id: parent._id,
-      title: parent.title,
+      title: parent.name,
       icon: category.icon,
       schemaType,
       child: (childId) =>
         S.documentTypeList(schemaType)
-          .title(`${parent.title}`)
+          .title(`${parent.name}`)
           .showIcons(true)
           .id(parent._id)
           .filter(`_type == $schemaType && parent._ref == $parentId`)
@@ -60,9 +60,9 @@ export default function parentChild(
             const query = groq`{
                 "subChildren": *[_type == "${schemaType}" && parent._ref == $subChildId && !(_id in path("drafts.**"))]{
                 _id, 
-                title 
+                name
               },
-              "parentTitle": *[_id == $subChildId][0].title,
+              "parentName": *[_id == $subChildId][0].title,
             }
             `
             return documentStore
@@ -70,7 +70,7 @@ export default function parentChild(
               .pipe(
                 map((response) =>
                   S.documentTypeList(schemaType)
-                    .title(response.parentTitle)
+                    .title(response.parentName)
                     .showIcons(true)
                     .id(parent._id)
                     .filter(

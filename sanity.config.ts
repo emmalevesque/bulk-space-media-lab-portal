@@ -23,6 +23,7 @@ import { webhooks } from 'sanity-plugin-webhooks'
 import documentActions from 'plugins/documentActions'
 import { checkoutActions } from 'plugins/documentActions/checkoutActions'
 import documentBadges from 'plugins/documentBadges'
+import menu from 'schemas/singletons/menu'
 
 const title =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Next.js Blog with Sanity.io'
@@ -72,6 +73,8 @@ export default defineConfig({
         deskStructure(
           S,
           [
+            menu,
+            S.divider(),
             item,
             kit,
             S.divider(),

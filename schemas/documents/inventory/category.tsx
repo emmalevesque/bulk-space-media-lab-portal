@@ -2,7 +2,8 @@ import { Flex, Box, Card } from '@sanity/ui'
 import EmojiIcon from 'components/Icon/Emoji'
 import { groq } from 'next-sanity'
 import { icon } from 'plugins/navigation'
-import { Id, PreviewProps, Reference, defineType } from 'sanity'
+import { Id, PreviewProps, Reference, defineField, defineType } from 'sanity'
+import slugify from 'slugify'
 
 export type Category = {
   _id: Id
@@ -18,6 +19,10 @@ export type Category = {
 
 type CategoryPreviewProps = PreviewProps & Category
 
+function asyncSlugify(input, schemaType, context) {
+  return slugify(input, { lower: true, strict: true })
+}
+
 // create a sanity schema type for a basic category in typescript
 export default defineType({
   name: 'category',
@@ -26,36 +31,28 @@ export default defineType({
   icon: () => <EmojiIcon>🔖</EmojiIcon>,
   fields: [
     {
-      name: 'title',
+      name: 'name',
       title: 'Category Name',
       type: 'string',
       validation: (Rule) => Rule.required(),
-    },
-    {
-      name: 'slug',
-      title: 'Category Slug',
-      type: 'slug',
-      options: {
-        source: 'title',
-        maxLength: 96,
-      },
     },
     {
       name: 'parent',
       title: 'Parent Category',
       type: 'reference',
       to: [{ type: 'category' }],
+      options: {},
+    },
+    defineField({
+      name: 'slug',
+      title: 'Category Slug',
+      type: 'slug',
       options: {
-        filter: '!defined(parent)',
+        source: 'name',
+        slugify: asyncSlugify,
+        maxLength: 96,
       },
-    },
-    // TODO: determine whether this structure is better
-    {
-      name: 'children',
-      title: 'Children Categories',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'category' }] }],
-    },
+    }),
     {
       name: 'tags',
       title: 'Category Tags',
@@ -65,8 +62,8 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'title',
-      subtitle: 'parent.title',
+      title: 'name',
+      subtitle: 'parent.name',
     },
   },
 })

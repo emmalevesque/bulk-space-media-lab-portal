@@ -9,7 +9,7 @@ import { Category } from '../category'
 
 export type CategoryInputContainerProps = SanityDocument & {
   slug: Slug
-  title: string
+  name: string
   children?: CategoryInputContainerProps[]
   childrenCategories?: CategoryInputContainerProps[] | []
   _key?: string
@@ -19,7 +19,7 @@ export type CategoryInputContainerProps = SanityDocument & {
 
 export default function CategoryInputContainer({
   _id,
-  title,
+  name,
   slug,
   childrenCategories,
   children,
@@ -76,7 +76,7 @@ export default function CategoryInputContainer({
       {Array.isArray(children) ? (
         <CategoryInputCheckbox
           id={_id}
-          label={`${title} (${children.length})`}
+          label={`${name} (${children.length})`}
           slug={slug.current}
           childCategories={children}
           onClick={handleChange}
@@ -85,7 +85,7 @@ export default function CategoryInputContainer({
         <Card tone="default">
           <CategoryInputCheckbox
             id={_id}
-            label={title}
+            label={name}
             slug={slug.current}
             onClick={handleChange}
           />

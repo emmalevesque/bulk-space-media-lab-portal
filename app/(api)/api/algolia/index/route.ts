@@ -12,6 +12,9 @@ export async function GET(req, res) {
   const query = groq`*[_type in $types && !(_id in path("drafts.**"))][]._id`
 
   try {
+    const indexedRecords = await client.fetch(query, { types })
+    const totalRecordsIndexed = indexedRecords.length
+
     sanity.fetch(query, { types }).then((ids) =>
       sanityAlgolia.webhookSync(sanity, {
         ids: { created: ids, updated: [], deleted: [] },
@@ -19,7 +22,7 @@ export async function GET(req, res) {
     )
     return NextResponse.json({
       status: 200,
-      message: 'Hello, World!',
+      message: `${totalRecordsIndexed} Indexed successfully`,
     })
   } catch (err) {
     return NextResponse.json({

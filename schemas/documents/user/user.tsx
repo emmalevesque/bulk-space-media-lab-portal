@@ -10,11 +10,6 @@ export default defineType({
   icon: () => <EmojiIcon>👤</EmojiIcon>,
   fields: [
     defineField({
-      type: 'qrCode',
-      name: 'qrCode',
-      title: 'QR Code',
-    }),
-    defineField({
       type: 'string',
       name: 'name',
       title: 'Name',

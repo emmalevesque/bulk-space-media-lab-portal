@@ -9,7 +9,7 @@ import { useNavigation } from './hooks/useNavigation'
 
 export const childrenQuery = (childQuery) => groq`
   count(*[_type == "category" && defined(parent) && parent._ref == ^._id]) > 0 => {
-    "children": *[_type == "category" && defined(parent) && parent._ref == ^._id][] | order(title asc){
+    "children": *[_type == "category" && defined(parent) && parent._ref == ^._id][] | order(name asc){
       ...,
       ${childQuery}
     }
@@ -27,7 +27,7 @@ const NavigationStructureComponent = (props) => {
       ...,
       "_key": _id,
      ${childrenQuery(childrenQuery(''))} 
-    } | order(title asc)`,
+    } | order(name asc)`,
     ],
     fetcher
   )

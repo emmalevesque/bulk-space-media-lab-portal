@@ -21,13 +21,12 @@ export const sanityAlgolia = indexer(
     item: {
       index: algoliaIndex,
       projection: `{
-        title: details.make + " " + details.model,
+        "item": name,
         "path": slug.current,
-        "easyName": easyName,
-        "make": details.make,
-        "model": details.model,
-        "description": details.description,
-        "categories": categories[]->title
+        "make": manufacturerDetails.make,
+        "model": manufacturerDetails.model,
+        "description": description,
+        "categories": categories->name[]
       }`,
     },
     // For the article document in this example we want to resolve a list of
@@ -37,8 +36,17 @@ export const sanityAlgolia = indexer(
       index: algoliaIndex,
       projection: `{
         "title": name,
+        "path": slug.current,
         "email": contact.email,
-        "phone": contact.phone,
+        "phone": contact.phone
+      }`,
+    },
+    category: {
+      index: algoliaIndex,
+      projection: `{
+        "title": name,
+        "path": slug.current,
+        "parent": parent->.name
       }`,
     },
   },
