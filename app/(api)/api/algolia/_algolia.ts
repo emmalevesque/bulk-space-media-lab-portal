@@ -21,7 +21,8 @@ export const sanityAlgolia = indexer(
     item: {
       index: algoliaIndex,
       projection: `{
-        "item": name,
+        "objectID": path,
+        "title": name,
         "path": slug.current,
         "make": manufacturerDetails.make,
         "model": manufacturerDetails.model,
@@ -57,15 +58,21 @@ export const sanityAlgolia = indexer(
   (document: SanityDocumentStub) => {
     // switch (document._type) {
     //   case 'item':
-    //     return {
-    //       title: document.heading,
-    //       body: document.body,
-    //       authorNames: document.authorNames,
-    //     }
+    //     return document
+    //       ? {
+    //           objectID: document?._id || '',
+    //           ...document,
+    //         }
+    //       : {}
     //   default:
     //     return document
+    //       ? {
+    //           objectID: document?._id || '',
+    //           document,
+    //         }
+    //       : {}
     // }
-    return document
+    return document._id ? { objectID: document._id, ...document } : {}
   },
   // Visibility function (optional).
   //
