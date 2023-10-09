@@ -24,11 +24,12 @@ import documentActions from 'plugins/documentActions'
 import { checkoutActions } from 'plugins/documentActions/checkoutActions'
 import documentBadges from 'plugins/documentBadges'
 import menu from 'schemas/singletons/menu'
+import settings from 'schemas/singletons/settings'
 
 const title =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Next.js Blog with Sanity.io'
 
-export const singletonDocumentTypes: string[] = ['menu']
+export const singletonDocumentTypes: string[] = ['menu', 'settings']
 
 export const documentPreviewPanes: {
   [key: string]: { component: React.FC }
@@ -73,8 +74,6 @@ export default defineConfig({
         deskStructure(
           S,
           [
-            menu,
-            S.divider(),
             item,
             kit,
             S.divider(),
@@ -85,6 +84,8 @@ export default defineConfig({
             S.divider(),
             user,
             staff,
+            S.divider(),
+            settings,
           ],
           context
         ),

@@ -15,6 +15,17 @@ export default defineType({
       title: 'Name',
     }),
     defineField({
+      name: 'slug',
+      title: 'Internal Slug',
+      description:
+        'This is an internal name used by the system to identify this user.',
+      type: 'slug',
+      options: {
+        source: 'name',
+        maxLength: 96,
+      },
+    }),
+    defineField({
       name: 'contact',
       title: 'Contact Information',
       type: 'object',

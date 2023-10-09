@@ -8,8 +8,8 @@ import type {
   StructureResolverContext,
 } from 'sanity/desk'
 import MenuPreviewPane from 'schemas/components/preview/MenuPreviewPane'
-import parentChild from './parentCategory'
 import category from 'schemas/documents/inventory/category'
+import navigationStructure from './navigationStructure'
 
 // define new deskStructure list item type for legibility and organization
 type TopLevelListDefinition = {
@@ -154,7 +154,7 @@ const deskStructure = (
   return S.list()
     .title('Content')
     .items([
-      parentChild(category.name, S, context.documentStore),
+      navigationStructure(category.name, S, context.documentStore),
       S.divider(),
       ...documentTypesStructure,
     ])

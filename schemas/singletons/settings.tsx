@@ -3,12 +3,14 @@ import { defineType } from 'sanity'
 
 export default defineType({
   name: 'settings',
-  title: 'Navigation Menu',
+  title: 'Settings',
   type: 'document',
-  icon: () => <EmojiIcon>🧭</EmojiIcon>,
+  icon: () => <EmojiIcon>⚙️</EmojiIcon>,
   fields: [
     {
       name: 'categories',
+      description:
+        'Top Level Categories. These will display in the portal in the order they are listed here.',
       title: 'Categories',
       type: 'array',
       of: [

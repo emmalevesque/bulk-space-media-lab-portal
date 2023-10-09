@@ -10,7 +10,7 @@ import { MenuIcon, ComposeIcon } from '@sanity/icons'
 import { groq } from 'next-sanity'
 import EmojiIcon from 'components/Icon/Emoji'
 
-export default function parentChild(
+export default function navigationStructure(
   schemaType: string,
   S: StructureBuilder,
   documentStore: DocumentStore
