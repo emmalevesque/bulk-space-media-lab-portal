@@ -19,15 +19,26 @@ export async function POST(request: NextRequest) {
   const requestHeaders = new Headers(request.headers)
 
   if (requestHeaders.get('content-type') !== 'application/json') {
-    return NextResponse.json({
-      status: 400,
-      message: 'Bad request',
-    })
+    return NextResponse.json(
+      {
+        status: 400,
+        message: 'Bad request',
+      },
+      {
+        status: 400,
+        statusText: 'Bad request',
+      }
+    )
   } else if (secret !== process.env.NEXT_PUBLIC_ALGOLIA_SECRET) {
-    return NextResponse.json({
-      status: 401,
-      message: 'Unauthorized',
-    })
+    return NextResponse.json(
+      {
+        message: 'Unauthorized',
+      },
+      {
+        status: 401,
+        statusText: 'Unauthorized',
+      }
+    )
   }
 
   const body = await request.json()
