@@ -4,6 +4,12 @@ import { algoliaIndex } from '../_algolia'
 import { groq } from 'next-sanity'
 import { NextResponse } from 'next/server'
 
+/***
+ * Shouts to @hdoro for this one:
+ * https://hdoro.dev/integrating-sanity-io-algolia
+ * extremely patient and helpful tutorial
+ */
+
 export const ALL_DOCUMENTS = groq`
     // Bureaucracies - shared across all
     _type,
