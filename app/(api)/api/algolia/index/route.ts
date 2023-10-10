@@ -1,34 +1,74 @@
 import { client } from 'lib/sanity.client'
+
+import { algoliaIndex } from '../_algolia'
+import { groq } from 'next-sanity'
 import { NextResponse } from 'next/server'
 
-import { sanityAlgolia } from '../_algolia'
-import { groq } from 'next-sanity'
+export const ALL_DOCUMENTS = groq`
+    // Bureaucracies - shared across all
+    _type,
+    _rev,
+    "objectID": _id,
+    _createdAt,
+  
+    // Item
+    _type == 'item' => {
+      "title": name,
+      "path": slug.current,
+      "make": manufacturerDetails.make,
+      "model": manufacturerDetails.model,
+      "description": description,
+      "categories": categories[]->.name
+    },
+
+    _type == 'user' => {
+      "title": name,
+      "path": slug.current,
+      "email": contact.email,
+      "phone": contact.phone
+    },
+
+    _type == 'category' => {
+      "title": name,
+      "path": slug.current,
+      "parent": parent->.name
+    },
+
+    _type == 'checkout' => {
+      "title": name,
+      "path": slug.current,
+      "parent": parent->.name
+    }
+  `
 
 export async function GET(req, res) {
-  const sanity = client // configured Sanity client
+  const documentTypes = ['item', 'user', 'category', 'checkout']
+  const documentsQuery = groq`
+      *[
+      _type in $documentTypes
+      && !(_id in path("drafts.**"))
+      ]{
+        ${ALL_DOCUMENTS} 
+      }
+      `
 
-  // Fetch the _id of all the documents we want to index
-  const types = ['item', 'checkout', 'user', 'category']
-  const query = groq`*[_type in $types && !(_id in path("drafts.**"))][]._id`
+  const documents = await client.fetch(documentsQuery, {
+    documentTypes,
+  })
 
   try {
-    const indexedRecords = await client.fetch(query, { types })
-    const totalRecordsIndexed = indexedRecords.length
-
-    sanity.fetch(query, { types }).then((ids) =>
-      sanityAlgolia.webhookSync(sanity, {
-        ids: { created: ids, updated: [], deleted: [] },
-      })
-    )
+    console.time(`Saving ${documents.length} documents to index:`)
+    await algoliaIndex.saveObjects(documents)
+    console.timeEnd(`Saving ${documents.length} documents to index:`)
     return NextResponse.json({
       status: 200,
-      message: `${totalRecordsIndexed} Indexed successfully`,
+      body: 'Success!',
     })
-  } catch (err) {
+  } catch (error) {
+    console.error(error)
     return NextResponse.json({
       status: 500,
-      message: 'Internal Server Error',
-      error: err,
+      body: error,
     })
   }
 }

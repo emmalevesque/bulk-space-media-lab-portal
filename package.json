@@ -27,6 +27,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@sanity/cli": "^3.17.0",
     "@sanity/client": "6.1.7",
+    "@sanity/cross-dataset-duplicator": "^1.2.1",
     "@sanity/image-url": "1.0.2",
     "@sanity/preview-kit": "^3.1.6",
     "@sanity/react-hooks": "^2.36.1",

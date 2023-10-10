@@ -1,30 +1,73 @@
 import { client } from 'lib/sanity.client'
-import { sanityAlgolia } from '../_algolia'
-import { NextResponse } from 'next/server'
+import { algoliaIndex } from '../_algolia'
+import { NextRequest, NextResponse } from 'next/server'
+import indexer from 'sanity-algolia'
+import { groq } from 'next-sanity'
+import { ALL_DOCUMENTS } from '../index/route'
 
-const sanity = client
+const sanityClient = client
 
 /**
  *  This function receives webhook POSTs from Sanity and updates, creates or
  *  deletes records in the corresponding Algolia indices.
  */
-export async function POST(req: Request, res) {
-  const requestHeaders = new Headers(req.headers)
+export async function POST(request: NextRequest) {
+  const searchParmas = request.nextUrl.searchParams
+
+  const secret = searchParmas.get('secret')
+
+  const requestHeaders = new Headers(request.headers)
+
   if (requestHeaders.get('content-type') !== 'application/json') {
     return NextResponse.json({
       status: 400,
       message: 'Bad request',
     })
+  } else if (secret !== process.env.NEXT_PUBLIC_ALGOLIA_SECRET) {
+    return NextResponse.json({
+      status: 401,
+      message: 'Unauthorized',
+    })
   }
 
-  const body = await req.json()
+  const body = await request.json()
 
-  // Finally connect the Sanity webhook payload to Algolia indices via the
-  // configured serializers and optional visibility function. `webhookSync` will
-  // inspect the webhook payload, make queries back to Sanity with the `sanity`
-  // client and make sure the algolia indices are synced to match.
-  return sanityAlgolia
-    .webhookSync(sanity, body)
+  const RECIPE_PROJECTION = groq`
+    //  
+    "objectID": _id,
+    _rev,
+    _createdAt,
+    _updatedAt,
+    _type,
+
+  `
+
+  const index = algoliaIndex
+  const sanityAglolia = indexer(
+    {
+      item: {
+        index,
+        projection: ALL_DOCUMENTS,
+      },
+      user: {
+        index,
+        projection: ALL_DOCUMENTS,
+      },
+      category: {
+        index,
+        projection: ALL_DOCUMENTS,
+      },
+      checkout: {
+        index,
+        projection: ALL_DOCUMENTS,
+      },
+    },
+    (document) => document,
+    (document) => !['draft'].includes(document._id.split('.')[1])
+  )
+
+  return sanityAglolia
+    .webhookSync(sanityClient, body)
     .then((result) => {
       return NextResponse.json(
         {
