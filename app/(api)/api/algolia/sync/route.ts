@@ -14,9 +14,8 @@ const sanityClient = client
 export async function POST(request: NextRequest) {
   const searchParmas = request.nextUrl.searchParams
 
-  const secret = searchParmas.get('secret')
-
   const requestHeaders = new Headers(request.headers)
+  const secret = requestHeaders.get('secret')
 
   if (requestHeaders.get('content-type') !== 'application/json') {
     return NextResponse.json(

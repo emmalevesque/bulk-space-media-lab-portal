@@ -9,21 +9,6 @@ import CategoryInputContainer from './CategoryInputContainer'
 import { CategoryInputContextProvider } from '../hooks/useCategoryInputContext'
 import { set, unset } from 'sanity'
 
-// TODO: remove if not needed
-const getCategoryNames = async (ids) => {
-  const client = useClient()
-
-  const query = groq`*[defined(categories) && categories[]._ref in $ids][]`
-
-  const params = {
-    ids,
-  }
-
-  const data = await client.fetch(query, params)
-
-  return data?.name
-}
-
 export const CategoryInputComponent = (props) => {
   const { value, onChange, schemaType } = props
 
@@ -37,6 +22,7 @@ export const CategoryInputComponent = (props) => {
       groq`*[!defined(parent) && _type == "category" && !(_id in path("drafts.**"))][]{
         ...,
         "_key": _id,
+      //  look into why i passed an empty string here
        ${childrenQuery(childrenQuery(''))} 
       } | order(name asc)`,
     ],

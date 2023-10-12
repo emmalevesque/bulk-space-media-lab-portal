@@ -1,5 +1,4 @@
 import { client } from 'lib/sanity.client'
-
 import { algoliaIndex } from '../_algolia'
 import { groq } from 'next-sanity'
 import { NextResponse } from 'next/server'
@@ -62,14 +61,22 @@ export async function GET(req, res) {
     documentTypes,
   })
 
+  // TODO: debug this on vercel
+  // postman requests are succeeding on local
+  // but webhooks are failing when pointed at vercel
   try {
-    console.time(`Saving ${documents.length} documents to index:`)
+    console.time(`Saving ${await documents.length} documents to index:`)
     await algoliaIndex.saveObjects(documents)
     console.timeEnd(`Saving ${documents.length} documents to index:`)
-    return NextResponse.json({
-      status: 200,
-      body: 'Success!',
-    })
+    return NextResponse.json(
+      {
+        body: 'Success!',
+      },
+      {
+        status: 200,
+        statusText: 'Success!',
+      }
+    )
   } catch (error) {
     console.error(error)
     return NextResponse.json({
