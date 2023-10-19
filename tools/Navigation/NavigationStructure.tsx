@@ -3,39 +3,46 @@ import { Tool, useClient } from 'sanity'
 import { MenuIcon } from '@sanity/icons'
 import useSWR from 'swr'
 import LoadingOverlay from 'components/LoadingOverlay'
-import { Box, Card, Heading, Stack, Text } from '@sanity/ui'
+import { Heading, Stack } from '@sanity/ui'
 import CategoryDetails from './CategoryDetails'
 import { useNavigation } from './hooks/useNavigation'
 
 export const childrenQuery = (childQuery) => groq`
-  count(*[_type == "category" && defined(parent) && parent._ref == ^._id]) > 0 => {
-    "children": *[_type == "category" && defined(parent) && parent._ref == ^._id][] | order(name asc){
+      "children": 
+        *[_type == "category" 
+        && defined(parent) 
+        && parent._ref == ^._id
+      ][] 
+      | order(name asc)
+      {
       ...,
-      ${childQuery}
-    }
-  }
+      ${childQuery} 
+      }
 `
 
-const NavigationStructureComponent = (props) => {
+const NavigationStructureComponent = () => {
   const client = useClient()
 
-  const fetcher = (query, params) => client.fetch(query, params)
+  const fetcher = (query) => client.fetch(query)
 
   const { data, isLoading, error } = useSWR(
-    [
-      groq`*[_id == "menu"][0].categories[]->{
-      ...,
-      "_key": _id,
-     ${childrenQuery(childrenQuery(''))} 
-    } | order(name asc)`,
-    ],
+    groq`
+      *[
+        _id == "settings"
+      ][0]
+      .categories[]->
+      {
+        ...,
+        "_key": _id,
+       ${childrenQuery(childrenQuery(''))} 
+      } 
+      | order(name asc)`,
     fetcher
   )
 
   const { activeCategory, handleCategoryClick } = useNavigation()
 
   if (isLoading) return <LoadingOverlay />
-
   if (error) throw new Error(error)
 
   return data ? (

@@ -46,7 +46,7 @@ export const ALL_DOCUMENTS = groq`
     }
   `
 
-export async function GET(req, res) {
+export async function GET() {
   const documentTypes = ['item', 'user', 'category', 'checkout']
   const documentsQuery = groq`
       *[

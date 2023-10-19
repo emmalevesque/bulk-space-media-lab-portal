@@ -19,13 +19,10 @@ import checkout from 'schemas/documents/inventory/checkout'
 import { previewDocumentNode } from 'plugins/previewPane'
 import MenuPreviewPane from 'schemas/components/preview/MenuPreviewPane'
 import NavigationStructure from 'tools/Navigation/NavigationStructure'
-import { webhooks } from 'sanity-plugin-webhooks'
 import documentActions from 'plugins/documentActions'
-import { checkoutActions } from 'plugins/documentActions/checkoutActions'
 import documentBadges from 'plugins/documentBadges'
-import menu from 'schemas/singletons/menu'
 import settings from 'schemas/singletons/settings'
-import dashboard from '@sanity/dashboard'
+import menu from 'schemas/singletons/menu'
 
 const title =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Next.js Blog with Sanity.io'
@@ -75,6 +72,7 @@ export default defineConfig({
         deskStructure(
           S,
           [
+            menu,
             item,
             kit,
             S.divider(),

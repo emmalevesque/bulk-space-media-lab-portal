@@ -1,8 +1,8 @@
+// @ts-ignore
 import { client } from 'lib/sanity.client'
 import { algoliaIndex } from '../_algolia'
 import { NextRequest, NextResponse } from 'next/server'
 import indexer from 'sanity-algolia'
-import { groq } from 'next-sanity'
 import { ALL_DOCUMENTS } from '../index/route'
 
 const sanityClient = client
@@ -12,8 +12,6 @@ const sanityClient = client
  *  deletes records in the corresponding Algolia indices.
  */
 export async function POST(request: NextRequest) {
-  const searchParmas = request.nextUrl.searchParams
-
   const requestHeaders = new Headers(request.headers)
   const secret = requestHeaders.get('secret')
 
@@ -41,16 +39,6 @@ export async function POST(request: NextRequest) {
   }
 
   const body = await request.json()
-
-  const RECIPE_PROJECTION = groq`
-    //  
-    "objectID": _id,
-    _rev,
-    _createdAt,
-    _updatedAt,
-    _type,
-
-  `
 
   const index = algoliaIndex
   const sanityAglolia = indexer(

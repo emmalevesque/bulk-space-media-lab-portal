@@ -118,19 +118,6 @@ const listItemBuilder = (
         )
     )
 
-const getAllItemTypesFromDeskStructure = (listItems) => {
-  return listItems
-    .map((item) => {
-      if (item.type === 'divider') return false
-      if (item.type === 'list') {
-        return getAllItemTypesFromDeskStructure(item.typeDefs)
-      }
-
-      return item.name
-    })
-    .filter(Boolean)
-}
-
 /***
  * This returns the deskStructure
  */

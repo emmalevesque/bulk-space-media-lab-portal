@@ -1,5 +1,4 @@
 import algoliasearch from 'algoliasearch'
-import indexer from 'sanity-algolia'
 
 export const algolia = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',

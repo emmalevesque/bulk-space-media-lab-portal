@@ -3,7 +3,7 @@ import { defineType } from 'sanity'
 
 export default defineType({
   name: 'settings',
-  title: 'Navigation Menu',
+  title: 'Top Level Navigation',
   type: 'document',
   icon: () => <EmojiIcon>🧭</EmojiIcon>,
   fields: [

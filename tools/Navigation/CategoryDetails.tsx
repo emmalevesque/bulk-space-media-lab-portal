@@ -1,38 +1,39 @@
-import { Text, Card, Box, Heading, Stack, Button, Inline } from '@sanity/ui'
+import { Text, Card } from '@sanity/ui'
 import { SanityDocument } from 'next-sanity'
-import classNames from 'classnames'
 import { Slug } from 'sanity'
 
 type CategoryProps = SanityDocument & {
   slug: Slug
-  title: string
+  name: string
   children?: CategoryProps[]
   _key?: string
   isActive?: boolean
-  onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  onClick?: () => void
 }
 
-export default function CategoryDetails({ title, children }: CategoryProps) {
+export default function CategoryDetails({ name, children }: CategoryProps) {
+  console.log({ name, children })
+
   return Array.isArray(children) ? (
     <Card paddingX={4}>
       {Array.isArray(children) ? (
         <details>
-          <summary>{title}</summary>
+          <summary>{name}</summary>
           <>
             {children.map((child) => (
-              <CategoryDetails {...child} />
+              <CategoryDetails key={child._id} {...child} />
             ))}
           </>
         </details>
       ) : (
         <Card paddingY={2} paddingX={4} tone="default">
-          <Text>{title}</Text>
+          <Text>{name}</Text>
         </Card>
       )}
     </Card>
   ) : (
     <Card paddingY={2} paddingX={4} tone="default">
-      <Text>{title}</Text>
+      <Text>{name}</Text>
     </Card>
   )
 }

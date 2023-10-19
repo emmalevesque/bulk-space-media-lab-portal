@@ -14,7 +14,7 @@ export const CategoryInputComponent = (props) => {
 
   const client = useClient()
 
-  const fetcher = (query, params) => client.fetch(query, params)
+  const fetcher = (query, params?: any) => client.fetch(query, params)
 
   // TODO: add search filtering feature
   const { data, isLoading, error } = useSWR(

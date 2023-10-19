@@ -1,8 +1,5 @@
-import { Flex, Box, Card } from '@sanity/ui'
 import EmojiIcon from 'components/Icon/Emoji'
-import { groq } from 'next-sanity'
-import { icon } from 'plugins/navigation'
-import { Id, PreviewProps, Reference, defineField, defineType } from 'sanity'
+import { Id, Reference, defineField, defineType } from 'sanity'
 import slugify from 'slugify'
 
 export type Category = {
@@ -17,9 +14,7 @@ export type Category = {
   }[]
 }
 
-type CategoryPreviewProps = PreviewProps & Category
-
-function asyncSlugify(input, schemaType, context) {
+function asyncSlugify(input) {
   return slugify(input, { lower: true, strict: true })
 }
 

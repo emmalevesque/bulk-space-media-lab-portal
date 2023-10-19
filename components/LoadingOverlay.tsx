@@ -1,4 +1,4 @@
-import { Flex, Spinner, Stack } from '@sanity/ui'
+import { Flex, Spinner } from '@sanity/ui'
 
 export default function LoadingOverlay() {
   return (

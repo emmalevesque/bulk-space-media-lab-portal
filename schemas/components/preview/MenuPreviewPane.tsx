@@ -15,12 +15,12 @@ const childrenQuery = (childQuery) => groq`
   }
 `
 
-const MenuPreviewPaneComponent = (props) => {
+const MenuPreviewPaneComponent = () => {
   const client = useClient({
     apiVersion: '2021-03-25',
   })
 
-  const fetcher = (query, params) => client.fetch(query, params)
+  const fetcher = (query, params?: any) => client.fetch(query, params)
 
   const { data, isLoading, error } = useSWR(
     [
