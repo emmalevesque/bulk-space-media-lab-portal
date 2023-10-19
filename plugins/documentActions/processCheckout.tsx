@@ -29,7 +29,10 @@ export function processCheckout(props) {
 
   return {
     ...checkoutActions[getCheckoutStatus],
-    disabled: getCheckoutStatus === 'RETURNED' || isPublishing,
+    disabled:
+      getCheckoutStatus === 'RETURNED' ||
+      getCheckoutStatus === 'SPOTCHECK_NEEDED' ||
+      isPublishing,
     onHandle: async () => {
       if (!client || !latestDocument) console.error('missing client or doc')
 

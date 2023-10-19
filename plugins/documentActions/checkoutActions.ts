@@ -1,5 +1,7 @@
+import { client } from 'lib/sanity.client'
 import { useState, useEffect } from 'react'
 import { useDocumentOperation } from 'sanity'
+import { patchStock } from 'schemas/documents/inventory/hooks/useInventory'
 
 export function checkoutActions(props) {
   const { patch, publish } = useDocumentOperation(props.id, props.type)
@@ -23,6 +25,10 @@ export function checkoutActions(props) {
 
         // Set publishedAt to current date and time
         patch.execute([{ set: { publishedAt: new Date().toISOString() } }])
+
+        // TODO: debug
+        // Patch the inventory
+        patchStock(client, props.id.replace('drafts.', ''), 'decrement')
 
         // Perform the publish
         publish.execute()

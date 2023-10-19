@@ -39,6 +39,7 @@ export type CheckoutStatus =
   | 'CHECKED_OUT'
   | 'RETURNED'
   | 'READY'
+  // add Pre & Post spotcheck
   | 'SPOTCHECK_NEEDED'
 
 export function CheckoutBadge(props) {

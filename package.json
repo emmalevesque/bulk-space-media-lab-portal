@@ -28,6 +28,7 @@
     "@sanity/cli": "^3.17.0",
     "@sanity/client": "6.1.7",
     "@sanity/cross-dataset-duplicator": "^1.2.1",
+    "@sanity/dashboard": "^3.0.0-v3-studio.8",
     "@sanity/image-url": "1.0.2",
     "@sanity/preview-kit": "^3.1.6",
     "@sanity/react-hooks": "^2.36.1",
@@ -76,7 +77,7 @@
     "typescript": "5.1.6"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "hooks": {
     "pre-commit": "lint-staged"

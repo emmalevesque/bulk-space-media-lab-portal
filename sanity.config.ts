@@ -25,6 +25,7 @@ import { checkoutActions } from 'plugins/documentActions/checkoutActions'
 import documentBadges from 'plugins/documentBadges'
 import menu from 'schemas/singletons/menu'
 import settings from 'schemas/singletons/settings'
+import dashboard from '@sanity/dashboard'
 
 const title =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Next.js Blog with Sanity.io'
