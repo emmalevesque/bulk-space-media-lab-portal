@@ -92,7 +92,6 @@ export default defineConfig({
         ),
       defaultDocumentNode: previewDocumentNode(),
     }),
-    webhooks(),
     // Configures the global "new document" button, and document actions, to suit the Settings document singleton
     // Add the "Open preview" action
     /*** */
