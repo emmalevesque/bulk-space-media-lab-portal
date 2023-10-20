@@ -1,14 +1,11 @@
-import { CheckmarkCircleIcon, UserIcon, ClockIcon } from '@sanity/icons'
-import { groq } from 'next-sanity'
-import { useState, useEffect } from 'react'
+import react from 'react'
 import { useClient, useDocumentOperation } from 'sanity'
 import {
-  checkoutActions,
   patchStock,
   useInventory,
 } from 'schemas/documents/inventory/hooks/useInventory'
 
-export function processCheckout(props) {
+export function ProcessCheckout(props) {
   const client = useClient({
     apiVersion: '2021-03-25',
   })
@@ -19,7 +16,7 @@ export function processCheckout(props) {
   const { getCheckoutStatus, checkoutActions, isPublishing, setIsPublishing } =
     useInventory(latestDocument, client, patch)
 
-  useEffect(() => {
+  react.useEffect(() => {
     // if the isPublishing state was set to true and the draft has changed
     // to become `null` the document has been published
     if (isPublishing && !props.draft) {
@@ -31,7 +28,8 @@ export function processCheckout(props) {
     ...checkoutActions[getCheckoutStatus],
     disabled:
       getCheckoutStatus === 'RETURNED' ||
-      getCheckoutStatus === 'SPOTCHECK_NEEDED' ||
+      getCheckoutStatus === 'PRE_SPOTCHECK_NEEDED' ||
+      getCheckoutStatus === 'POST_SPOTCHECK_NEEDED' ||
       isPublishing,
     onHandle: async () => {
       if (!client || !latestDocument) console.error('missing client or doc')

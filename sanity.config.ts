@@ -3,8 +3,8 @@
  */
 import { visionTool } from '@sanity/vision'
 import { apiVersion, dataset, projectId } from 'lib/sanity.api'
-import deskStructure from 'plugins/deskStructure'
 import { defineConfig } from 'sanity'
+import deskStructure from 'plugins/deskStructure'
 import { deskTool } from 'sanity/desk'
 import category from 'schemas/documents/inventory/category'
 import item from 'schemas/documents/inventory/item'
@@ -22,7 +22,6 @@ import NavigationStructure from 'tools/Navigation/NavigationStructure'
 import documentActions from 'plugins/documentActions'
 import documentBadges from 'plugins/documentBadges'
 import settings from 'schemas/singletons/settings'
-import menu from 'schemas/singletons/menu'
 
 const title =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Next.js Blog with Sanity.io'
@@ -72,17 +71,25 @@ export default defineConfig({
         deskStructure(
           S,
           [
-            menu,
-            item,
-            kit,
+            {
+              type: 'list',
+              title: 'Checkout Workflow (Beta)',
+              icon: checkout.icon,
+              typeDefs: [checkout],
+            },
             S.divider(),
-            checkout,
-            S.divider(),
-            category,
-            tag,
-            S.divider(),
-            user,
-            staff,
+            {
+              type: 'list',
+              title: 'Inventory Management',
+              icon: kit.icon,
+              typeDefs: [item, kit, category, tag],
+            },
+            {
+              type: 'list',
+              title: 'Users',
+              icon: user.icon,
+              typeDefs: [user, staff],
+            },
             S.divider(),
             settings,
           ],

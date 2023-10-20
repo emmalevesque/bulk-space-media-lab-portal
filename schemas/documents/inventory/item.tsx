@@ -1,9 +1,11 @@
-import { defineType, useClient } from 'sanity'
+import { defineType } from 'sanity'
 
 import EmojiIcon from 'components/Icon/Emoji'
 import { CategoryInputComponent } from './components/CategoryInput'
-import { groq } from 'next-sanity'
 import StatusIcon from './components/StatusIcon'
+import slugify from 'slugify'
+import { Box, Flex } from '@sanity/ui'
+import { checkoutActions, getCheckoutStatus } from './hooks/useInventory'
 
 export type TItem = {
   name: string
@@ -22,6 +24,18 @@ export default defineType({
   title: 'Inventory Item',
   type: 'document',
   icon: () => <EmojiIcon>📸</EmojiIcon>,
+  components: {
+    preview: (props, context) => {
+      const status = getCheckoutStatus(context?.published)
+      const checkoutActionProps = checkoutActions[status]
+
+      return (
+        <Box color={checkoutActionProps?.color}>
+          <Flex padding={2}>{props?.renderDefault(props)}</Flex>
+        </Box>
+      )
+    },
+  },
   groups: [
     {
       name: 'qrCode',
@@ -83,23 +97,34 @@ export default defineType({
       title: 'Item Slug',
       type: 'slug',
       options: {
-        source: 'easyName',
+        source: 'manufacturerDetails',
+        slugify: (input: { make: string; model: string }) =>
+          slugify(`${input.make} ${input.model}`, {
+            lower: true,
+            strict: true,
+          }),
         maxLength: 96,
       },
     },
     {
+      name: 'showMoreDetails',
+      title: 'Show More Details',
+      type: 'boolean',
+      group: 'details',
+    },
+    {
+      hidden: ({ parent }) => !parent?.showMoreDetails,
       group: 'details',
       name: 'sku',
       title: 'Item SKU',
       type: 'string',
-      validation: (Rule) => Rule.required(),
     },
     {
+      hidden: ({ parent }) => !parent?.showMoreDetails,
       group: 'details',
       name: 'description',
       title: 'Item Description',
       type: 'text',
-      validation: (Rule) => Rule.required(),
     },
     {
       group: 'images',
@@ -150,7 +175,7 @@ export default defineType({
   ],
   preview: {
     select: {
-      subtitle: 'easyName',
+      subtitle: 'name',
       manufacturerMake: 'manufacturerDetails.make',
       manufacturerModel: 'manufacturerDetails.model',
       media: 'images.0',
@@ -159,7 +184,6 @@ export default defineType({
       stock: 'stock',
     },
     prepare: ({
-      media,
       category,
       parentCategory,
       subtitle,

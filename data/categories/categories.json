@@ -1,0 +1,892 @@
+[
+  {
+    "parent": {
+      "_ref": "f9518b12-e6d1-422a-9acc-5e406f24df5c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:21:47Z",
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_type": "category",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|10000w:",
+    "slug": {
+      "current": "accessories-computing",
+      "_type": "slug"
+    },
+    "name": "Accessories (Computing)",
+    "_id": "0237f0f0-f0ca-4c1c-a104-2c4616c43f19"
+  },
+  {
+    "slug": {
+      "current": "medium-format",
+      "_type": "slug"
+    },
+    "_createdAt": "2023-08-10T15:11:09Z",
+    "_type": "category",
+    "name": "Medium Format",
+    "_id": "051b8141-80b9-4fba-ac5f-1d898709eb5f",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|10000o:",
+    "parent": {
+      "_ref": "4acb51ef-a5c3-4670-ab6c-b745dda9d30c",
+      "_type": "reference"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK"
+  },
+  {
+    "name": "Cables, Cords, & Adaptors (Computing)",
+    "slug": {
+      "current": "cables-cords-and-adaptors-computing",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "0237f0f0-f0ca-4c1c-a104-2c4616c43f19",
+      "_type": "reference"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_id": "1059ebd3-acc9-4b0c-94fc-da47ef75c317",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|100014:",
+    "_createdAt": "2023-08-10T15:23:56Z",
+    "_type": "category"
+  },
+  {
+    "_createdAt": "2023-10-08T21:28:36Z",
+    "_rev": "GvGCgrdS2gVhQojuWJBXGM",
+    "_type": "category",
+    "name": "Miscellaneous",
+    "_id": "15a95182-c9ab-4b5f-a28c-913c6b3743e8",
+    "_updatedAt": "2023-10-08T21:28:36Z",
+    "slug": {
+      "current": "miscellaneous",
+      "_type": "slug"
+    }
+  },
+  {
+    "parent": {
+      "_ref": "845cd0bd-143a-4e0d-b999-81d9c2c0fc2b",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:13:55Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "name": "Rangefinder",
+    "orderRank": "0|10001k:",
+    "slug": {
+      "current": "rangefinder",
+      "_type": "slug"
+    },
+    "_type": "category",
+    "_id": "1e816353-aaa2-4a18-8b54-097ea1abc732",
+    "_updatedAt": "2023-10-08T21:01:58Z"
+  },
+  {
+    "_createdAt": "2023-08-10T15:13:13Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category",
+    "_id": "22f4ee5d-1742-4450-9bde-23514175abde",
+    "orderRank": "0|100020:",
+    "parent": {
+      "_ref": "845cd0bd-143a-4e0d-b999-81d9c2c0fc2b",
+      "_type": "reference"
+    },
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "slug": {
+      "current": "mirrorless-lenses",
+      "_type": "slug"
+    },
+    "name": "Mirrorless"
+  },
+  {
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category",
+    "parent": {
+      "_ref": "4acb51ef-a5c3-4670-ab6c-b745dda9d30c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:09:54Z",
+    "name": "Mirrorless",
+    "_id": "40f9d069-1688-463e-9c5d-5f65b67b0ebd",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|10002g:",
+    "slug": {
+      "current": "mirrorless",
+      "_type": "slug"
+    }
+  },
+  {
+    "_createdAt": "2023-10-08T21:30:12Z",
+    "_rev": "r59BsaNEiG11fP8uJssc5L",
+    "_type": "category",
+    "name": "Music & Sound Design",
+    "_id": "46392c0e-5311-4e2c-89ab-37245aa378c2",
+    "_updatedAt": "2023-10-08T21:30:12Z",
+    "slug": {
+      "current": "music-and-sound-design",
+      "_type": "slug"
+    }
+  },
+  {
+    "parent": {
+      "_ref": "68e4d3b0-5eb5-458d-9329-18feceb80e9c",
+      "_type": "reference"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category",
+    "name": "Batteries & Power",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "_createdAt": "2023-08-10T15:15:31Z",
+    "_id": "4655462b-d46e-4ee8-8fc0-7e4de79da673",
+    "orderRank": "0|10002w:",
+    "slug": {
+      "current": "batteries-and-power",
+      "_type": "slug"
+    }
+  },
+  {
+    "orderRank": "0|10003c:",
+    "slug": {
+      "current": "point-and-shoot",
+      "_type": "slug"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category",
+    "_id": "465ffaa9-f65b-4c20-9876-10d6977b1dc6",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "parent": {
+      "_ref": "4acb51ef-a5c3-4670-ab6c-b745dda9d30c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:10:42Z",
+    "name": "Point & Shoot"
+  },
+  {
+    "_type": "category",
+    "_id": "4acb51ef-a5c3-4670-ab6c-b745dda9d30c",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "slug": {
+      "current": "cameras",
+      "_type": "slug"
+    },
+    "_createdAt": "2023-08-10T15:09:17Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "name": "Cameras",
+    "orderRank": "0|10003s:",
+    "parent": {
+      "_ref": "85a9d68e-f190-45a7-9a3e-822ea38afe1c",
+      "_type": "reference"
+    }
+  },
+  {
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "slug": {
+      "current": "accessories-audio",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "52383f3a-f574-4820-9444-6f90d2b83ae8",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-10-08T20:41:48Z",
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_type": "category",
+    "name": "Accessories (Audio)",
+    "_id": "4e4612e6-c11b-4d35-8a84-801e11687d62"
+  },
+  {
+    "_createdAt": "2023-08-10T15:18:47Z",
+    "_rev": "r59BsaNEiG11fP8uJsp0xQ",
+    "_type": "category",
+    "name": "Audio & Visual",
+    "_id": "52383f3a-f574-4820-9444-6f90d2b83ae8",
+    "_updatedAt": "2023-10-08T21:01:57Z",
+    "orderRank": "0|100048:",
+    "slug": {
+      "current": "audio-and-visual",
+      "_type": "slug"
+    }
+  },
+  {
+    "_createdAt": "2023-08-10T15:21:10Z",
+    "_type": "category",
+    "name": "Laptops",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "slug": {
+      "current": "laptops",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "f9518b12-e6d1-422a-9acc-5e406f24df5c",
+      "_type": "reference"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_id": "5255db79-a826-4517-b3ca-1138f69c8d45",
+    "orderRank": "0|10004o:"
+  },
+  {
+    "name": "Video",
+    "orderRank": "0|100054:",
+    "slug": {
+      "current": "video",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "4acb51ef-a5c3-4670-ab6c-b745dda9d30c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:11:23Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category",
+    "_id": "52dc072c-6c89-4be6-96cc-b8004b535b2b",
+    "_updatedAt": "2023-10-08T21:01:58Z"
+  },
+  {
+    "slug": {
+      "current": "drones-and-aerial",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "4acb51ef-a5c3-4670-ab6c-b745dda9d30c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:11:38Z",
+    "_id": "58a3f241-ccdc-430f-a9f8-6d6791421029",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category",
+    "name": "Drones & Aerial",
+    "orderRank": "0|10005k:"
+  },
+  {
+    "_type": "category",
+    "orderRank": "0|100060:",
+    "slug": {
+      "current": "slr",
+      "_type": "slug"
+    },
+    "name": "SLR",
+    "_id": "59675512-2702-4520-a768-4dc8010f9424",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "parent": {
+      "_ref": "845cd0bd-143a-4e0d-b999-81d9c2c0fc2b",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:12:53Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK"
+  },
+  {
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|10006g:",
+    "slug": {
+      "current": "lighting",
+      "_type": "slug"
+    },
+    "_createdAt": "2023-08-10T15:16:46Z",
+    "_type": "category",
+    "name": "Lighting",
+    "_id": "5b39d3e0-09bd-4d7b-9f25-642ac36234a0",
+    "parent": {
+      "_ref": "85a9d68e-f190-45a7-9a3e-822ea38afe1c",
+      "_type": "reference"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK"
+  },
+  {
+    "parent": {
+      "_ref": "68e4d3b0-5eb5-458d-9329-18feceb80e9c",
+      "_type": "reference"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "orderRank": "0|10006w:",
+    "slug": {
+      "_type": "slug",
+      "current": "memory-cards"
+    },
+    "_createdAt": "2023-08-10T15:15:15Z",
+    "_type": "category",
+    "name": "Memory Cards",
+    "_id": "5b4fe3ae-45e4-4be0-8a46-8e5eebc98b87",
+    "_updatedAt": "2023-10-08T21:01:58Z"
+  },
+  {
+    "parent": {
+      "_ref": "52383f3a-f574-4820-9444-6f90d2b83ae8",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:19:55Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "slug": {
+      "current": "pa-systems",
+      "_type": "slug"
+    },
+    "_type": "category",
+    "name": "PA Systems",
+    "_id": "5eca0eed-3b2e-4579-85dc-718d593cffe1",
+    "orderRank": "0|10007c:"
+  },
+  {
+    "parent": {
+      "_ref": "52383f3a-f574-4820-9444-6f90d2b83ae8",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:20:03Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "orderRank": "0|10007s:",
+    "_type": "category",
+    "name": "Speakers",
+    "_id": "6200cabe-9279-4de6-acbb-e5ac9b24e68f",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "slug": {
+      "_type": "slug",
+      "current": "speakers"
+    }
+  },
+  {
+    "parent": {
+      "_ref": "85a9d68e-f190-45a7-9a3e-822ea38afe1c",
+      "_type": "reference"
+    },
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_type": "category",
+    "name": "Vintage & Ephemera",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "_createdAt": "2023-08-10T15:18:36Z",
+    "_id": "65c1295e-2949-48b5-b5a7-dc4c20168750",
+    "orderRank": "0|100088:",
+    "slug": {
+      "current": "vintage-and-ephemera",
+      "_type": "slug"
+    }
+  },
+  {
+    "parent": {
+      "_ref": "85a9d68e-f190-45a7-9a3e-822ea38afe1c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:14:50Z",
+    "name": "Accessories (Photo)",
+    "_id": "68e4d3b0-5eb5-458d-9329-18feceb80e9c",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|10008o:",
+    "slug": {
+      "current": "accessories-photo",
+      "_type": "slug"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category"
+  },
+  {
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|100094:",
+    "parent": {
+      "_ref": "845cd0bd-143a-4e0d-b999-81d9c2c0fc2b",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:14:13Z",
+    "_type": "category",
+    "slug": {
+      "_type": "slug",
+      "current": "medium-format-lenses"
+    },
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "name": "Medium Format",
+    "_id": "73c114a5-dab2-446e-9f51-a590dc743ac0"
+  },
+  {
+    "parent": {
+      "_ref": "68e4d3b0-5eb5-458d-9329-18feceb80e9c",
+      "_type": "reference"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category",
+    "name": "Flashes",
+    "_createdAt": "2023-08-10T15:15:44Z",
+    "_id": "747c83f6-0139-41e8-a515-27046377e65c",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|10009k:",
+    "slug": {
+      "current": "flashes",
+      "_type": "slug"
+    }
+  },
+  {
+    "orderRank": "0|1000a0:",
+    "parent": {
+      "_ref": "f9518b12-e6d1-422a-9acc-5e406f24df5c",
+      "_type": "reference"
+    },
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_type": "category",
+    "name": "Desktops",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "_createdAt": "2023-08-10T15:21:20Z",
+    "_id": "749c1943-39d9-43da-90b1-8fb17454030c",
+    "slug": {
+      "current": "desktops",
+      "_type": "slug"
+    }
+  },
+  {
+    "_type": "category",
+    "name": "Keyboard & Mouse",
+    "_id": "7a00ef57-cba7-4c9f-bf6e-c4bfb539d129",
+    "orderRank": "0|1000ag:",
+    "slug": {
+      "current": "keyboard-and-mouse",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "f9518b12-e6d1-422a-9acc-5e406f24df5c",
+      "_type": "reference"
+    },
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "_createdAt": "2023-08-10T15:22:59Z"
+  },
+  {
+    "_createdAt": "2023-08-10T15:17:46Z",
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_type": "category",
+    "name": "Light Meters",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000aw:",
+    "slug": {
+      "current": "light-meters",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "5b39d3e0-09bd-4d7b-9f25-642ac36234a0",
+      "_type": "reference"
+    },
+    "_id": "7fb00d65-e5c2-4fa9-95b7-f2bd928cd9e2"
+  },
+  {
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "name": "Lenses",
+    "_id": "845cd0bd-143a-4e0d-b999-81d9c2c0fc2b",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000bc:",
+    "slug": {
+      "current": "lenses",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "85a9d68e-f190-45a7-9a3e-822ea38afe1c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:11:53Z",
+    "_type": "category"
+  },
+  {
+    "orderRank": "0|1000bs:",
+    "slug": {
+      "current": "microphones",
+      "_type": "slug"
+    },
+    "_createdAt": "2023-08-10T15:18:58Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "name": "Microphones",
+    "_id": "847e1607-33df-48dc-b39b-d2d4902646c7",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "parent": {
+      "_ref": "52383f3a-f574-4820-9444-6f90d2b83ae8",
+      "_type": "reference"
+    },
+    "_type": "category"
+  },
+  {
+    "slug": {
+      "_type": "slug",
+      "current": "photo-and-video"
+    },
+    "_createdAt": "2023-08-10T15:08:42Z",
+    "_rev": "r59BsaNEiG11fP8uJsp0xQ",
+    "_type": "category",
+    "name": "Photo & Video",
+    "_id": "85a9d68e-f190-45a7-9a3e-822ea38afe1c",
+    "_updatedAt": "2023-10-08T21:01:57Z",
+    "orderRank": "0|1000k8:"
+  },
+  {
+    "_type": "category",
+    "_id": "9b14b38f-b732-4efd-aa1c-565aae981a83",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000co:",
+    "slug": {
+      "current": "strobes",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "5b39d3e0-09bd-4d7b-9f25-642ac36234a0",
+      "_type": "reference"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "name": "Strobes",
+    "_createdAt": "2023-08-10T15:16:59Z"
+  },
+  {
+    "parent": {
+      "_ref": "85a9d68e-f190-45a7-9a3e-822ea38afe1c",
+      "_type": "reference"
+    },
+    "_type": "category",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000d4:",
+    "_createdAt": "2023-08-10T15:18:16Z",
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "name": "Darkroom",
+    "_id": "9d56c0b3-3598-4801-9652-b68375317b29",
+    "slug": {
+      "current": "darkroom",
+      "_type": "slug"
+    }
+  },
+  {
+    "parent": {
+      "_ref": "52383f3a-f574-4820-9444-6f90d2b83ae8",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:19:10Z",
+    "_type": "category",
+    "name": "Voice Recorders",
+    "_id": "9e6c2346-f989-490f-9a1a-d2389ef98aed",
+    "orderRank": "0|1000dk:",
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "slug": {
+      "current": "voice-recorders",
+      "_type": "slug"
+    }
+  },
+  {
+    "parent": {
+      "_ref": "68e4d3b0-5eb5-458d-9329-18feceb80e9c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:15:58Z",
+    "_type": "category",
+    "name": "Lens Filters",
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_id": "a021247e-2ec5-40c2-aa80-cc9bbed593bf",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000e0:",
+    "slug": {
+      "current": "lens-filters",
+      "_type": "slug"
+    }
+  },
+  {
+    "slug": {
+      "current": "flashes-and-on-camera",
+      "_type": "slug"
+    },
+    "name": "Flashes & On-Camera",
+    "_id": "a83373e7-acae-429b-af95-4819201bd65b",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000eg:",
+    "parent": {
+      "_ref": "5b39d3e0-09bd-4d7b-9f25-642ac36234a0",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:17:17Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category"
+  },
+  {
+    "slug": {
+      "current": "drives-and-storage",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "f9518b12-e6d1-422a-9acc-5e406f24df5c",
+      "_type": "reference"
+    },
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "name": "Drives & Storage",
+    "orderRank": "0|1000ew:",
+    "_createdAt": "2023-08-10T15:25:09Z",
+    "_type": "category",
+    "_id": "af40089a-e1c0-4783-91b8-c93bedf6804d",
+    "_updatedAt": "2023-10-08T21:01:58Z"
+  },
+  {
+    "_type": "category",
+    "name": "Projectors",
+    "_id": "b2c835f2-1461-485f-9e10-3faff08fbb23",
+    "orderRank": "0|1000fc:",
+    "parent": {
+      "_ref": "52383f3a-f574-4820-9444-6f90d2b83ae8",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:19:19Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "slug": {
+      "current": "projectors",
+      "_type": "slug"
+    }
+  },
+  {
+    "_type": "category",
+    "_id": "b626e316-499b-4c32-bcd6-1c6bad9e70d4",
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_createdAt": "2023-08-10T15:19:43Z",
+    "name": "Projection Screens",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000fs:",
+    "slug": {
+      "current": "projection-screens",
+      "_type": "slug"
+    },
+    "parent": {
+      "_type": "reference",
+      "_ref": "52383f3a-f574-4820-9444-6f90d2b83ae8"
+    }
+  },
+  {
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_type": "category",
+    "orderRank": "0|1000g8:",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "slug": {
+      "current": "monitors-and-displays",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "52383f3a-f574-4820-9444-6f90d2b83ae8",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:19:31Z",
+    "name": "Monitors & Displays",
+    "_id": "b72aad43-e947-462e-a9e4-a69ba99a2f81"
+  },
+  {
+    "_id": "b7f79ce3-4f88-444b-ae62-b7ad55de1358",
+    "_updatedAt": "2023-10-08T21:31:09Z",
+    "slug": {
+      "current": "other",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "4acb51ef-a5c3-4670-ab6c-b745dda9d30c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-10-08T21:31:09Z",
+    "_rev": "r59BsaNEiG11fP8uJssh4y",
+    "_type": "category",
+    "name": "Other"
+  },
+  {
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000go:",
+    "slug": {
+      "current": "scanners",
+      "_type": "slug"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category",
+    "name": "Scanners",
+    "parent": {
+      "_ref": "f9518b12-e6d1-422a-9acc-5e406f24df5c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:25:24Z",
+    "_id": "c030e39a-ef2a-4fe8-8e34-401c706474d6"
+  },
+  {
+    "orderRank": "0|1000h4:",
+    "slug": {
+      "current": "light-stands",
+      "_type": "slug"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "_type": "category",
+    "name": "Light Stands",
+    "_id": "c6cac705-0893-4f48-b174-cc13dbb10aa8",
+    "parent": {
+      "_ref": "5b39d3e0-09bd-4d7b-9f25-642ac36234a0",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:18:00Z"
+  },
+  {
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_id": "ce57f44f-1d80-4304-9524-a9ee6f2e7261",
+    "slug": {
+      "current": "dslr",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "4acb51ef-a5c3-4670-ab6c-b745dda9d30c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:09:36Z",
+    "_type": "category",
+    "name": "DSLR",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000hk:"
+  },
+  {
+    "_id": "d51057fe-d40b-4db8-805b-0152aaf986fd",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000i0:",
+    "slug": {
+      "current": "cables-cords-and-adaptors",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "68e4d3b0-5eb5-458d-9329-18feceb80e9c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:16:26Z",
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_type": "category",
+    "name": "Cables, Cords & Adaptors (Photo)"
+  },
+  {
+    "_id": "d7d67cd5-6eb2-43be-bc78-8b69a4573f88",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "_createdAt": "2023-08-10T15:15:01Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "name": "Tripods",
+    "slug": {
+      "current": "tripods",
+      "_type": "slug"
+    },
+    "parent": {
+      "_type": "reference",
+      "_ref": "68e4d3b0-5eb5-458d-9329-18feceb80e9c"
+    },
+    "_type": "category",
+    "orderRank": "0|1000ig:"
+  },
+  {
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "name": "Light Modifiers",
+    "_id": "d8a9a502-8973-4864-8d5f-554f58b98378",
+    "orderRank": "0|1000iw:",
+    "parent": {
+      "_ref": "5b39d3e0-09bd-4d7b-9f25-642ac36234a0",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:17:31Z",
+    "slug": {
+      "current": "light-modifiers",
+      "_type": "slug"
+    },
+    "_type": "category",
+    "_updatedAt": "2023-10-08T21:01:58Z"
+  },
+  {
+    "_createdAt": "2023-08-10T15:16:10Z",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000jc:",
+    "slug": {
+      "current": "backdrops",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "68e4d3b0-5eb5-458d-9329-18feceb80e9c",
+      "_type": "reference"
+    },
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_type": "category",
+    "name": "Backdrops",
+    "_id": "db33a1a6-f8af-43c5-90b4-273f69e12b8e"
+  },
+  {
+    "_createdAt": "2023-08-10T15:20:25Z",
+    "name": "Cables, Cords, & Adaptors (AV)",
+    "slug": {
+      "current": "cables-cords-and-adaptors-av",
+      "_type": "slug"
+    },
+    "_id": "dfd422d8-a10d-4adb-b1bb-21a68e8e0565",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000js:",
+    "parent": {
+      "_ref": "52383f3a-f574-4820-9444-6f90d2b83ae8",
+      "_type": "reference"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category"
+  },
+  {
+    "_createdAt": "2023-08-10T15:21:33Z",
+    "_rev": "GvGCgrdS2gVhQojuWJ9R68",
+    "_type": "category",
+    "_id": "e201b280-1cb0-4689-8d67-4d0ae8917725",
+    "orderRank": "0|1000ko:",
+    "parent": {
+      "_ref": "f9518b12-e6d1-422a-9acc-5e406f24df5c",
+      "_type": "reference"
+    },
+    "name": "Tablets",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "slug": {
+      "current": "tablets",
+      "_type": "slug"
+    }
+  },
+  {
+    "_updatedAt": "2023-10-08T21:01:57Z",
+    "orderRank": "0|1000l4:",
+    "slug": {
+      "current": "film",
+      "_type": "slug"
+    },
+    "_createdAt": "2023-08-10T15:10:52Z",
+    "_rev": "r59BsaNEiG11fP8uJsp0xQ",
+    "_type": "category",
+    "name": "Film",
+    "_id": "e45db3a3-80c9-4282-923d-2012e4b90f31"
+  },
+  {
+    "orderRank": "0|1000lk:",
+    "name": "Printers",
+    "_id": "f61a756a-ab52-40f9-9eed-2b11c41ac469",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "slug": {
+      "current": "printers",
+      "_type": "slug"
+    },
+    "parent": {
+      "_ref": "f9518b12-e6d1-422a-9acc-5e406f24df5c",
+      "_type": "reference"
+    },
+    "_createdAt": "2023-08-10T15:25:40Z",
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category"
+  },
+  {
+    "slug": {
+      "_type": "slug",
+      "current": "special-effects"
+    },
+    "_createdAt": "2023-08-10T15:14:30Z",
+    "name": "Special Effects",
+    "_id": "f6241803-c667-48fa-85c6-9d4136e6fb06",
+    "_updatedAt": "2023-10-08T21:01:58Z",
+    "orderRank": "0|1000m0:",
+    "parent": {
+      "_type": "reference",
+      "_ref": "845cd0bd-143a-4e0d-b999-81d9c2c0fc2b"
+    },
+    "_rev": "NX7TJHYQcrqcxPU9HQFtrK",
+    "_type": "category"
+  },
+  {
+    "_id": "f9518b12-e6d1-422a-9acc-5e406f24df5c",
+    "_updatedAt": "2023-10-08T21:01:57Z",
+    "orderRank": "0|1000mg:",
+    "slug": {
+      "current": "computers-and-tablets",
+      "_type": "slug"
+    },
+    "_createdAt": "2023-08-10T15:21:00Z",
+    "_rev": "r59BsaNEiG11fP8uJsp0xQ",
+    "_type": "category",
+    "name": "Computers & Tablets"
+  }
+]

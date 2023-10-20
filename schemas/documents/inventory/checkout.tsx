@@ -2,7 +2,7 @@ import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
 import dynamic from 'next/dynamic'
 import CheckoutPreview from 'schemas/components/preview/CheckoutPreview'
-import { checkoutStatuses, getCheckoutStatus } from './hooks/useInventory'
+import { getCheckoutStatus, getCheckoutStatusProps } from './hooks/useInventory'
 
 const dev = process.env.NODE_ENV !== 'production'
 
@@ -37,6 +37,9 @@ export default defineType({
       name: 'dates',
     },
     {
+      name: 'spotCheck',
+    },
+    {
       name: 'status',
     },
     {
@@ -68,17 +71,24 @@ export default defineType({
     },
     // TODO: confirm this feature or deprecate it
     {
-      group: 'status',
-      name: 'spotChecked',
+      group: 'spotCheck',
+      name: 'spotCheck',
       title: 'Item Spot Checked',
-      type: 'boolean',
-      readOnly: ({ document }) => Boolean(document?.isCheckedOut),
-      validation: (Rule) =>
-        Rule.custom(
-          (value, context) =>
-            value === true ||
-            'Item must be spot checked before it can be checked out.'
-        ),
+      type: 'object',
+      fields: [
+        {
+          name: 'isPreChecked',
+          title: 'Item is Spot Checked?',
+          type: 'boolean',
+          readOnly: ({ document }) => Boolean(document?.isCheckedOut),
+        },
+        {
+          name: 'isPostChecked',
+          title: 'Item is Spot Checked?',
+          type: 'boolean',
+          readOnly: ({ document }) => Boolean(document?.isCheckedOut),
+        },
+      ],
     },
     {
       group: 'details',
@@ -148,9 +158,14 @@ export default defineType({
     prepare(selection) {
       const { checkedOutTo, isCheckedOut, isReturned } = selection
 
+      const status = getCheckoutStatus(selection)
+      const statusProps = getCheckoutStatusProps(status, selection)
+
+      console.log({ status, statusProps })
+
       return {
         title: checkedOutTo || 'No user selected yet',
-        subtitle: checkoutStatuses[getCheckoutStatus(selection)].label,
+        subtitle: statusProps?.label,
         media: () => (
           <EmojiIcon>
             {!isCheckedOut && !isReturned
@@ -166,10 +181,35 @@ export default defineType({
   initialValue: {
     isCheckedOut: false,
     isReturned: false,
-    spotChecked: false,
+    spotChecked: {
+      isPreChecked: false,
+      isPostChecked: false,
+    },
   },
   components: {
     item: CheckoutPreview,
     preview: CheckoutPreview,
   },
+  orderings: [
+    {
+      title: 'Checkout Date',
+      name: 'checkoutDateDesc',
+      by: [{ field: 'checkoutDate', direction: 'desc' }],
+    },
+    {
+      title: 'Return Date',
+      name: 'returnDateDesc',
+      by: [{ field: 'returnDate', direction: 'desc' }],
+    },
+    {
+      title: 'User',
+      name: 'userAsc',
+      by: [{ field: 'user.name', direction: 'asc' }],
+    },
+    {
+      title: 'User',
+      name: 'userDesc',
+      by: [{ field: 'user.name', direction: 'desc' }],
+    },
+  ],
 })

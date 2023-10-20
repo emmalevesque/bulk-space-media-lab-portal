@@ -1,10 +1,10 @@
-import { processCheckout } from './processCheckout'
+import { ProcessCheckout } from './processCheckout'
 import resetCheckout from './resetCheckout'
 
-export default (prev, context) => {
+const documentActions = (prev, context) => {
   if (context.schemaType === 'checkout') {
     return [
-      processCheckout,
+      ProcessCheckout,
       resetCheckout,
       ...prev.filter((a) => {
         return a.name !== 'publish'
@@ -13,3 +13,5 @@ export default (prev, context) => {
   }
   return prev
 }
+
+export default documentActions
