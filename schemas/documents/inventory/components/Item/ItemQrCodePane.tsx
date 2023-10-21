@@ -2,12 +2,7 @@ import { Box } from '@sanity/ui'
 import QRCode from 'react-qr-code'
 import { useDataset } from 'sanity'
 
-import config from 'sanity.config'
-
 export default (props, context) => {
-  console.log({ props, context })
-  console.log({ config })
-
   const dataset = useDataset()
 
   const basePath = `/studio/${dataset}/desk`
