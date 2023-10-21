@@ -1,6 +1,10 @@
 import { ComponentType, ReactNode } from 'react'
 import { DocumentDefinition } from 'sanity'
-import { documentPreviewPanes, singletonDocumentTypes } from 'sanity.config'
+import {
+  documentPreviewPanes,
+  singletonDocumentTypes,
+  typesWithCustomFilters,
+} from 'sanity.config'
 import type {
   Divider,
   ListItemBuilder,
@@ -104,7 +108,11 @@ const documentListItemBuilder = (
               .title(type.title || type.name)
         : S.documentList()
             .title(type.title || type.name)
-            .filter(getFilter(type.title || ''))
+            .filter(
+              typesWithCustomFilters.includes(type.name)
+                ? getFilter(type.title || '')
+                : `_type == $type`
+            )
             .params({ type: type.name })
             .child((documentId) =>
               S.document()

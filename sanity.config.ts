@@ -28,6 +28,8 @@ const title =
 
 export const singletonDocumentTypes: string[] = ['menu', 'settings']
 
+export const typesWithCustomFilters: string[] = ['checkout']
+
 export const documentPreviewPanes: {
   [key: string]: { component: React.FC }
 }[] = [
