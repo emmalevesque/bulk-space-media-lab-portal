@@ -11,19 +11,35 @@ import MenuPreviewPane from 'schemas/components/preview/MenuPreviewPane'
 import category from 'schemas/documents/inventory/category'
 import navigationStructure from './navigationStructure'
 
+type FilteredDocumentDefinition = DocumentDefinition & {
+  filter: string
+}
+
 // define new deskStructure list item type for legibility and organization
 type TopLevelListDefinition = {
   type: 'list'
   title: string
   icon: JSX.Element | ComponentType | ReactNode
-  typeDefs: DocumentDefinition[]
+  typeDefs: DocumentDefinition[] | FilteredDocumentDefinition[]
+  filter?: string
 }
 
-type ListItem = (TopLevelListDefinition | Divider | DocumentDefinition)[]
+type ListItem = (TopLevelListDefinition | Divider | DocumentDefinition) & {
+  type: 'list' | 'divider' | 'document'
+}
 
-/***
- * This is the parent child taxonomy
- */
+const getFilter = (title: string) => {
+  switch (title) {
+    case 'Hot Checkouts':
+      return `_type == "checkout" && isCheckedOut && !isReturned`
+    case 'Cold Checkouts':
+      return `_type == "checkout" && isReturned`
+    case 'Pending Checkouts':
+      return `_type == "checkout" && !isCheckedOut`
+    default:
+      return '_type == "checkout"'
+  }
+}
 
 /***
  * This returns a list item builder for a singleton document type
@@ -86,8 +102,10 @@ const documentListItemBuilder = (
               .schemaType(type.name)
               .documentId(type.name)
               .title(type.title || type.name)
-        : S.documentTypeList(type.name)
+        : S.documentList()
             .title(type.title || type.name)
+            .filter(getFilter(type.title || ''))
+            .params({ type: type.name })
             .child((documentId) =>
               S.document()
                 .documentId(documentId)
@@ -123,7 +141,7 @@ const listItemBuilder = (
  */
 const deskStructure = (
   S: StructureBuilder,
-  listItems: ListItem,
+  listItems: ListItem[],
   context: StructureResolverContext
 ) => {
   const documentTypesStructure = listItems.map((listItem) => {

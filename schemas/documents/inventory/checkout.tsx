@@ -19,7 +19,7 @@ const QrScanner = dynamic(() => import('./components/QrScanner'), {
 
 export type CheckoutStatus =
   | 'SPOTCHECK_NEEDED'
-  | 'READY'
+  | 'PENDING'
   | 'CHECKED_OUT'
   | 'RETURNED'
 
@@ -27,6 +27,17 @@ export default defineType({
   name: 'checkout',
   title: 'Checkout',
   type: 'document',
+  validation: (Rule) => {
+    return Rule.custom((document) => {
+      const checkoutStatus = getCheckoutStatus(document)
+
+      if (checkoutStatus === 'SPOTCHECK_NEEDED') {
+        return getCheckoutStatusProps(checkoutStatus, document)
+      } else if (checkoutStatus === 'PENDING') {
+        return true
+      }
+    })
+  },
   icon: () => <EmojiIcon>📦</EmojiIcon>,
   groups: [
     {
@@ -55,7 +66,6 @@ export default defineType({
       description:
         'This field is handled autotically when processing a checkout.',
       type: 'boolean',
-      validation: (Rule) => Rule.required(),
       hidden: !dev,
     },
     {
@@ -66,29 +76,17 @@ export default defineType({
       description:
         'This field is handled autotically when processing a checkout.',
       type: 'boolean',
-      validation: (Rule) => Rule.required(),
       hidden: !dev,
     },
     // TODO: confirm this feature or deprecate it
     {
       group: 'spotCheck',
-      name: 'spotCheck',
-      title: 'Item Spot Checked',
-      type: 'object',
-      fields: [
-        {
-          name: 'isPreChecked',
-          title: 'Item is Spot Checked?',
-          type: 'boolean',
-          readOnly: ({ document }) => Boolean(document?.isCheckedOut),
-        },
-        {
-          name: 'isPostChecked',
-          title: 'Item is Spot Checked?',
-          type: 'boolean',
-          readOnly: ({ document }) => Boolean(document?.isCheckedOut),
-        },
-      ],
+      name: 'isSpotChecked',
+      title: 'Has this item been Spot Checked?',
+      description:
+        'All items must be spot-checked before being return can be processed.',
+      type: 'boolean',
+      readOnly: ({ document }) => Boolean(document?.isCheckedOut),
     },
     {
       group: 'details',
@@ -96,6 +94,7 @@ export default defineType({
       title: 'User',
       type: 'reference',
       to: [{ type: 'user' }],
+      validation: (Rule) => Rule.required(),
       components: {
         input: QrScanner,
       },
@@ -106,6 +105,7 @@ export default defineType({
       name: 'checkoutItems',
       title: 'Inventory Items',
       type: 'array',
+      validation: (Rule) => Rule.min(1).required(),
       components: {
         input: QrScanner,
       },
@@ -114,7 +114,6 @@ export default defineType({
           type: 'reference',
           weak: true,
           to: [{ type: 'item' }],
-          validation: (Rule) => Rule.min(1).required(),
           options: {
             filter: () => {
               return {
@@ -165,7 +164,7 @@ export default defineType({
 
       return {
         title: checkedOutTo || 'No user selected yet',
-        subtitle: statusProps?.label,
+        subtitle: getCheckoutStatusProps(status, selection).label,
         media: () => (
           <EmojiIcon>
             {!isCheckedOut && !isReturned
@@ -181,10 +180,7 @@ export default defineType({
   initialValue: {
     isCheckedOut: false,
     isReturned: false,
-    spotChecked: {
-      isPreChecked: false,
-      isPostChecked: false,
-    },
+    isSpotChecked: false,
   },
   components: {
     item: CheckoutPreview,

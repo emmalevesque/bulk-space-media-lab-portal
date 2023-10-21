@@ -1,5 +1,7 @@
 import { Card } from '@sanity/ui'
 
-export default (props) => {
+const CheckoutPreview = (props) => {
   return <Card tone="caution">{props.renderDefault(props)}</Card>
 }
+
+export default CheckoutPreview
