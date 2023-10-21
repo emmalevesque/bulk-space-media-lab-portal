@@ -31,9 +31,13 @@ export default defineType({
     return Rule.custom((document) => {
       const checkoutStatus = getCheckoutStatus(document)
 
+      if (!checkoutStatus) return true
+
       if (checkoutStatus === 'SPOTCHECK_NEEDED') {
-        return getCheckoutStatusProps(checkoutStatus, document)
+        return getCheckoutStatusProps(checkoutStatus, document).title
       } else if (checkoutStatus === 'PENDING') {
+        return true
+      } else {
         return true
       }
     })
