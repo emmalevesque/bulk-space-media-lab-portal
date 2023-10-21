@@ -5,7 +5,8 @@ import { useFormValue } from 'sanity'
 export default () => {
   const id = useFormValue(['_id']) as string
 
-  // TODO: the qrcode should also be able to function as a link to the editor page
+  const endpoint = `/api/qr-code/${id}`
+
   return (
     <Stack space={2}>
       <QRCode value={`${process.env.NEXT_PUBLIC_BASE_URL}?${id}`} />

@@ -17,7 +17,6 @@ import { schema } from 'schemas/schema'
 import 'styles/studio.css'
 import checkout from 'schemas/documents/inventory/checkout'
 import { previewDocumentNode } from 'plugins/previewPane'
-import MenuPreviewPane from 'schemas/components/preview/MenuPreviewPane'
 import NavigationStructure from 'tools/Navigation/NavigationStructure'
 import documentActions from 'plugins/documentActions'
 import settings from 'schemas/singletons/settings'
@@ -25,6 +24,9 @@ import {
   checkoutActions,
   getCheckoutStatusProps,
 } from 'schemas/documents/inventory/hooks/useCheckout'
+
+import dynamic from 'next/dynamic'
+import React from 'react'
 
 const title =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Next.js Blog with Sanity.io'
@@ -34,17 +36,18 @@ export const singletonDocumentTypes: string[] = ['menu', 'settings']
 export const typesWithCustomFilters: string[] = ['checkout', 'item']
 
 export const documentPreviewPanes: {
-  [key: string]: { component: React.FC }
-}[] = [
-  {
-    menu: {
-      component: MenuPreviewPane,
-    },
-    category: {
-      component: MenuPreviewPane,
-    },
+  [key: string]: {
+    component: React.ComponentType<any>
+    title: string
+  }
+} = {
+  item: {
+    title: 'QR Code',
+    component: dynamic(
+      () => import('schemas/documents/inventory/components/Item/ItemQrCodePane')
+    ),
   },
-]
+}
 
 const templates = (prev) => {
   const categoryChild = {
@@ -177,16 +180,19 @@ const commonConfig = {
   document,
 }
 
+// the basePath values here are extremely important
+// they're used to determine the QR Code urls
+// They must match the dataset name
 export default defineConfig([
   {
-    basePath: '/studio/demo',
-    name: 'demo',
+    basePath: '/studio/production',
+    name: 'production',
     dataset: 'production',
     title: `Demo Data`,
     ...commonConfig,
   },
   {
-    basePath: '/studio/production',
+    basePath: '/studio/development',
     name: 'development',
     dataset: 'development',
     title: `${title}`,

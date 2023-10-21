@@ -2,8 +2,8 @@ import { Card, Box } from '@sanity/ui'
 import { SanityDocument } from 'next-sanity'
 import { Slug } from 'sanity'
 import { CategoryInputCheckbox } from './CategoryInputCheckbox'
-import { useCategoryInputContext } from '../hooks/useCategoryInputContext'
-import { useCallback } from 'react'
+import { useCategoryInputContext } from '../../hooks/useCategoryInputContext'
+import { ChangeEvent, useCallback } from 'react'
 import { uuid } from '@sanity/uuid'
 
 export type CategoryInputContainerProps = SanityDocument & {
@@ -29,7 +29,7 @@ export default function CategoryInputContainer({
 
   // handle the click event on the input checkbox
   const handleChange = useCallback(
-    (event) => {
+    (event: ChangeEvent<HTMLInputElement>) => {
       const isSelected = value?.some((item) => item._ref === event.target.id)
       const hasChildren = childrenCategories
         ? childrenCategories?.length > 0

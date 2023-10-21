@@ -1,13 +1,13 @@
 import { Checkbox, Inline, Stack } from '@sanity/ui'
 import { CategoryChildren } from './CategoryChildren'
 import { CategoryInputContainerProps } from './CategoryInputContainer'
-import { useCategoryInputContext } from '../hooks/useCategoryInputContext'
+import { useCategoryInputContext } from '../../hooks/useCategoryInputContext'
 
 type CategoryInputCheckboxProps = Partial<HTMLInputElement> & {
   id: string
   slug: string
   label: string
-  onClick?: (event) => void
+  onClick?: any
   childCategories?: CategoryInputContainerProps[] | undefined
 }
 
@@ -17,9 +17,8 @@ export const CategoryInputCheckbox = ({
   label,
   childCategories,
   onClick,
-  checked,
 }: CategoryInputCheckboxProps) => {
-  const { onChange, set, unset, value = [] } = useCategoryInputContext()
+  const { value = [] } = useCategoryInputContext()
 
   const isSelected = value ? value?.some((item) => item._ref === id) : false
 

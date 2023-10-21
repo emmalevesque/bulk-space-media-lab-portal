@@ -1,7 +1,7 @@
 import { defineType } from 'sanity'
 
 import EmojiIcon from 'components/Icon/Emoji'
-import { CategoryInputComponent } from './components/CategoryInput'
+import { CategoryInputComponent } from './components/Category/CategoryInput'
 import StatusIcon from './components/StatusIcon'
 import slugify from 'slugify'
 import { Box, Flex } from '@sanity/ui'
@@ -49,9 +49,6 @@ export default defineType({
   },
   groups: [
     {
-      name: 'qrCode',
-    },
-    {
       name: 'details',
       default: true,
     },
@@ -70,7 +67,6 @@ export default defineType({
   ],
   fields: [
     {
-      group: 'qrCode',
       name: 'qrCode',
       title: 'QR Code',
       type: 'qrCode',

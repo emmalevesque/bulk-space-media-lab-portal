@@ -6,7 +6,7 @@ import { useClient } from 'sanity'
 import useSWR from 'swr'
 import { childrenQuery } from 'tools/Navigation/NavigationStructure'
 import CategoryInputContainer from './CategoryInputContainer'
-import { CategoryInputContextProvider } from '../hooks/useCategoryInputContext'
+import { CategoryInputContextProvider } from '../../hooks/useCategoryInputContext'
 import { set, unset } from 'sanity'
 
 export const CategoryInputComponent = (props) => {

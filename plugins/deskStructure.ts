@@ -11,7 +11,6 @@ import type {
   StructureBuilder,
   StructureResolverContext,
 } from 'sanity/desk'
-import MenuPreviewPane from 'schemas/components/preview/MenuPreviewPane'
 import category from 'schemas/documents/inventory/category'
 import navigationStructure from './navigationStructure'
 import { uuid } from '@sanity/uuid'
@@ -59,6 +58,12 @@ const getFilter = (title: string) => {
   }
 }
 
+const previewPane = (S, type) =>
+  S.view
+    .component(documentPreviewPanes[type.name || ''].component)
+    .title(documentPreviewPanes[type.name || ''].title || 'Preview')
+    .options({ previewMode: true })
+
 /***
  * This returns a list item builder for a singleton document type
  */
@@ -76,13 +81,7 @@ const singletonListItemBuilder = (
             .schemaType(type.name)
             .documentId(type.name)
             .title('type.title || type.name')
-            .views([
-              S.view.form().title('Edit'),
-              S.view
-                .component(MenuPreviewPane)
-                .title('Preview')
-                .options({ previewMode: true }),
-            ])
+            .views([S.view.form().title('Edit'), previewPane(S, type)])
         : S.editor()
             .id(type.name)
             .schemaType(type.name)
@@ -115,13 +114,7 @@ const documentListItemBuilder = (
               .schemaType(type.name)
               .documentId(type.name)
               .title(type.title || type.name)
-              .views([
-                S.view.form().title('Edit'),
-                S.view
-                  .component(documentPreviewPanes[type.name])
-                  .title('Preview')
-                  .options({ previewMode: true }),
-              ])
+              .views([S.view.form().title('Edit'), previewPane(S, type)])
           : S.editor()
               .id(type.name)
               .schemaType(type.name)
@@ -139,7 +132,7 @@ const documentListItemBuilder = (
               S.document()
                 .documentId(documentId)
                 .schemaType(type.name)
-                .views([S.view.form()])
+                .views([S.view.form().title('Edit'), previewPane(S, type)])
             )
     )
 

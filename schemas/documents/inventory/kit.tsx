@@ -1,6 +1,6 @@
 import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
-import { CategoryInputComponent } from './components/CategoryInput'
+import { CategoryInputComponent } from './components/Category/CategoryInput'
 
 export default defineType({
   name: 'kit',
