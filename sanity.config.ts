@@ -28,7 +28,7 @@ const title =
 
 export const singletonDocumentTypes: string[] = ['menu', 'settings']
 
-export const typesWithCustomFilters: string[] = ['checkout']
+export const typesWithCustomFilters: string[] = ['checkout', 'item']
 
 export const documentPreviewPanes: {
   [key: string]: { component: React.FC }
@@ -108,7 +108,30 @@ const plugins = [
             type: 'list',
             title: 'Manage Inventory',
             icon: kit.icon,
-            typeDefs: [item, kit, category, tag],
+            typeDefs: [
+              {
+                type: 'list',
+                title: 'Inventory Items',
+                icon: item.icon,
+                typeDefs: [
+                  {
+                    ...item,
+                    title: 'All Items',
+                  },
+                  {
+                    ...item,
+                    title: 'Available Items',
+                  },
+                  {
+                    ...item,
+                    title: 'Unavailable Items',
+                  },
+                ],
+              },
+              kit,
+              category,
+              tag,
+            ],
           },
           {
             type: 'list',

@@ -23,8 +23,13 @@ type FilteredDocumentDefinition = DocumentDefinition & {
 type TopLevelListDefinition = {
   type: 'list'
   title: string
+  name?: string
   icon: JSX.Element | ComponentType | ReactNode
-  typeDefs: DocumentDefinition[] | FilteredDocumentDefinition[]
+  typeDefs: (
+    | DocumentDefinition
+    | FilteredDocumentDefinition
+    | TopLevelListDefinition
+  )[]
   filter?: string
 }
 
@@ -40,8 +45,12 @@ const getFilter = (title: string) => {
       return `_type == "checkout" && isReturned`
     case 'Pending Checkouts':
       return `_type == "checkout" && !isCheckedOut`
+    case 'Available Items':
+      return `_type == "item" && stock > 0`
+    case 'Unavailable Items':
+      return `_type == "item" && stock == 0`
     default:
-      return '_type == "checkout"'
+      return `_type == $type`
   }
 }
 
@@ -137,8 +146,10 @@ const listItemBuilder = (
         .title(listItem.title)
         .items(
           listItem.typeDefs.map((type) =>
-            singletonDocumentTypes.includes(type.name)
+            type.type !== 'list' && singletonDocumentTypes.includes(type.name)
               ? singletonListItemBuilder(S, type)
+              : type.type === 'list'
+              ? listItemBuilder(S, type)
               : documentListItemBuilder(S, type)
           )
         )
