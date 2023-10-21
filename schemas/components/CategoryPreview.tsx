@@ -51,18 +51,12 @@ const useChildCategories = (children: CategoryPreviewProps['children']) => {
     fetchChildren()
   }, [children, client])
 
-  return useMemo(() => childCategories, [])
+  return useMemo(() => childCategories, [childCategories])
 }
 
 export function CategoryPreview(props: CategoryPreviewProps) {
-  const {
-    isLoading,
-    error,
-    value,
-  }: LoadableState<CategoryPreviewProps | undefined> = useDocumentValues(
-    props._id,
-    ['children']
-  )
+  const { value }: LoadableState<CategoryPreviewProps | undefined> =
+    useDocumentValues(props._id, ['children'])
 
   const childCategories = useChildCategories(value?.children || [])
 

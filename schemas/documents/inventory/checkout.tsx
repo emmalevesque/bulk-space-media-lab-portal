@@ -1,8 +1,7 @@
 import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
 import dynamic from 'next/dynamic'
-import CheckoutPreview from 'schemas/components/preview/CheckoutPreview'
-import { getCheckoutStatus, getCheckoutStatusProps } from './hooks/useInventory'
+import { getCheckoutStatusProps } from './hooks/useCheckout'
 
 const dev = process.env.NODE_ENV !== 'production'
 
@@ -10,38 +9,15 @@ const QrScanner = dynamic(() => import('./components/QrScanner'), {
   ssr: false,
 })
 
-// TODO: add hot and cold feature (hot means checked out, cold means returned)
-
 // TODO: create a guided checkout flow and add custom actions to the "publish" menu that remaps Publish to Checkout
 //     and adds a "Return" button to the checkout document
 
 // TODO: move qrScanner into a modal'
 
-export type CheckoutStatus =
-  | 'SPOTCHECK_NEEDED'
-  | 'PENDING'
-  | 'CHECKED_OUT'
-  | 'RETURNED'
-
 export default defineType({
   name: 'checkout',
   title: 'Checkout',
   type: 'document',
-  validation: (Rule) => {
-    return Rule.custom((document) => {
-      const checkoutStatus = getCheckoutStatus(document)
-
-      if (!checkoutStatus) return true
-
-      if (checkoutStatus === 'SPOTCHECK_NEEDED') {
-        return getCheckoutStatusProps(checkoutStatus, document).title
-      } else if (checkoutStatus === 'PENDING') {
-        return true
-      } else {
-        return true
-      }
-    })
-  },
   icon: () => <EmojiIcon>📦</EmojiIcon>,
   groups: [
     {
@@ -151,44 +127,29 @@ export default defineType({
   ],
   preview: {
     select: {
+      checkoutItems: 'checkoutItems',
       checkedOutTo: 'user.name',
       checkoutDate: 'checkoutDate',
       returnDate: 'returnDate',
-      spotChecked: 'spotChecked',
+      isSpotChecked: 'isSpotChecked',
       isCheckedOut: 'isCheckedOut',
       isReturned: 'isReturned',
+      user: 'user',
     },
     prepare(selection) {
-      const { checkedOutTo, isCheckedOut, isReturned } = selection
-
-      const status = getCheckoutStatus(selection)
-      const statusProps = getCheckoutStatusProps(status, selection)
-
-      console.log({ status, statusProps })
-
+      const props = getCheckoutStatusProps(selection)
       return {
-        title: checkedOutTo || 'No user selected yet',
-        subtitle: getCheckoutStatusProps(status, selection).label,
-        media: () => (
-          <EmojiIcon>
-            {!isCheckedOut && !isReturned
-              ? `📦`
-              : isCheckedOut && !isReturned
-              ? `🟥`
-              : `✅`}
-          </EmojiIcon>
-        ),
+        title: selection.checkedOutTo,
+        subtitle: props?.name,
+        media: props?.icon,
       }
     },
   },
+
   initialValue: {
     isCheckedOut: false,
     isReturned: false,
     isSpotChecked: false,
-  },
-  components: {
-    item: CheckoutPreview,
-    preview: CheckoutPreview,
   },
   orderings: [
     {

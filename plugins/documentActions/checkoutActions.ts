@@ -11,11 +11,11 @@ export function CheckoutActions(props) {
     if (props.type == 'checkout') {
       // if the isPublishing state was set to true and the draft has changed
       // to become `null` the document has been published
-      if (isPublishing && !props.draft) {
+      if (!props.draft) {
         setIsPublishing(false)
       }
     }
-  }, [isPublishing, props.draft, props.type])
+  }, [props.draft, props.type])
 
   return {
     disabled: publish.disabled,

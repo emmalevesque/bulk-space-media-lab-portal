@@ -1,42 +1,35 @@
+import { client } from 'lib/sanity.client'
 import { useEffect } from 'react'
-import { useClient, useDocumentOperation } from 'sanity'
+import { useDocumentOperation } from 'sanity'
+import {
+  checkoutActions,
+  getCheckoutStatus,
+} from 'schemas/documents/inventory/hooks/useCheckout'
 import {
   patchStock,
   useInventory,
 } from 'schemas/documents/inventory/hooks/useInventory'
 
-import { checkoutActions } from 'schemas/documents/inventory/hooks/useInventory'
-
-export function ProcessCheckout(props) {
-  const client = useClient({
-    apiVersion: '2021-03-25',
-  })
+export default function ProcessCheckout(props) {
   const latestDocument = props?.draft || props?.published
 
   const { patch, publish } = useDocumentOperation(props.id, props.type)
 
-  const { getCheckoutStatus, isPublishing, setIsPublishing } = useInventory(
-    latestDocument,
-    client,
-    patch
-  )
+  const { setIsPublishing } = useInventory(latestDocument, client, patch)
 
   useEffect(() => {
     // if the isPublishing state was set to true and the draft has changed
     // to become `null` the document has been published
-    if (isPublishing && !props.draft) {
+    if (!props.draft) {
       setIsPublishing(false)
     }
-  }, [props.draft, isPublishing, setIsPublishing])
+  }, [props.draft, setIsPublishing])
 
-  console.log({
-    getCheckoutStatus,
-    checkoutActions: checkoutActions[getCheckoutStatus],
-  })
+  const checkoutStatus = getCheckoutStatus(latestDocument)
+  const action = checkoutActions[checkoutStatus]
 
   return {
-    ...{ ...checkoutActions(getCheckoutStatus), icon: undefined },
-    disabled: getCheckoutStatus === 'RETURNED' || isPublishing,
+    ...action,
     onHandle: async () => {
       if (!client || !latestDocument) console.error('missing client or doc')
 

@@ -5,18 +5,32 @@ import { CategoryInputComponent } from './components/CategoryInput'
 import StatusIcon from './components/StatusIcon'
 import slugify from 'slugify'
 import { Box, Flex } from '@sanity/ui'
-import { checkoutActions, getCheckoutStatus } from './hooks/useInventory'
 
-export type TItem = {
+export type ItemType = {
   name: string
-  description: string
-  images: any[]
-  cost: number
-  stock: number
-  active: boolean
+  manufacturerDetails: {
+    make: string
+    model: string
+  }
   slug: {
     current: string
   }
+  showMoreDetails: boolean
+  sku: string
+  description: string
+  images: {
+    asset: {
+      _ref: string
+    }
+  }[]
+  category: {
+    title: string
+    parent: {
+      title: string
+    }
+  }
+  stock: number
+  productManualUrl: string
 }
 
 export default defineType({
@@ -26,11 +40,10 @@ export default defineType({
   icon: () => <EmojiIcon>📸</EmojiIcon>,
   components: {
     preview: (props, context) => {
-      const status = getCheckoutStatus(context?.published)
-      const checkoutActionProps = checkoutActions[status]
+      console.log({ props, context })
 
       return (
-        <Box color={checkoutActionProps?.color}>
+        <Box color={'primary'}>
           <Flex padding={2}>{props?.renderDefault(props)}</Flex>
         </Box>
       )

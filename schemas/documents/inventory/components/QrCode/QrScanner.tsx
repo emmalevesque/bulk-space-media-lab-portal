@@ -7,15 +7,9 @@ import { uuid } from '@sanity/uuid'
 export default (props) => {
   const { onChange, value, schemaType } = props
   const [showScanner, setShowScanner] = useState<boolean>(false)
-  const [open, setOpen] = useState(false)
-  const onClose = useCallback(() => setOpen(false), [])
   const [itemToBeAdded, setItemToBeAdded] = useState<string>('')
   const [triggerAddItem, setTriggerAddItem] = useState<boolean>(false)
-  const [result, setResult] = useState('No result')
-
-  const handleWarn = () => {
-    setOpen(true)
-  }
+  const [result] = useState('No result')
 
   const handleAddToCheckout = useCallback(() => {
     if (!triggerAddItem) return
@@ -45,7 +39,7 @@ export default (props) => {
         return onChange(newReference ? set([newReference]) : unset())
       }
     }
-  }, [itemToBeAdded, triggerAddItem, onchange])
+  }, [itemToBeAdded, triggerAddItem, onChange, schemaType.name, value])
 
   useEffect(() => {
     setTriggerAddItem(false)
@@ -76,11 +70,6 @@ export default (props) => {
   }
 
   const [tone, setTone] = useState<BadgeTone>('default')
-
-  const handleConfirm = () => {
-    setTriggerAddItem(true)
-    setOpen(false)
-  }
 
   return (
     <>

@@ -17,6 +17,24 @@ export const client = createClient({
   useCdn,
 })
 
+export const _readClient = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn,
+  withCredentials: true,
+  token: process.env.NEXT_PUBLIC_SANITY_READ_TOKEN,
+})
+
+export const _writeClient = createClient({
+  projectId,
+  dataset,
+  apiVersion,
+  useCdn,
+  withCredentials: true,
+  token: process.env.NEXT_PUBLIC_SANITY_WRITE_TOKEN,
+})
+
 export function getClient(preview?: { token: string }): SanityClient {
   const client = createClient({
     projectId,

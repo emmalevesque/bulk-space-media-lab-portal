@@ -44,6 +44,7 @@
     "husky": "^8.0.3",
     "intl-segmenter-polyfill": "0.4.4",
     "lint-staged": "^13.2.3",
+    "moment": "^2.29.4",
     "next": "^13.5.6",
     "next-sanity": "^5.5.8",
     "next-sanity-image": "6.1.0",
