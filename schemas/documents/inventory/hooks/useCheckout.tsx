@@ -77,6 +77,14 @@ export const getCheckoutStatus = (document): CheckoutStatus => {
 }
 
 export const checkoutActions = {
+  NEW: {
+    label: 'Begin Checkout',
+    color: 'primary',
+    title: 'This item is available to be checked out',
+    tone: 'primary',
+    icon: EllipsisHorizontalIcon,
+    emoji: () => <EmojiIcon>➕</EmojiIcon>,
+  },
   PENDING: {
     label: 'Begin Checkout',
     color: 'primary',

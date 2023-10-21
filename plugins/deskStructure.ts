@@ -37,6 +37,10 @@ type ListItem = (TopLevelListDefinition | Divider | DocumentDefinition) & {
   type: 'list' | 'divider' | 'document'
 }
 
+const createNewDocumentFromTopLevelTypes = {
+  'New Checkout': 'checkout',
+}
+
 const getFilter = (title: string) => {
   switch (title) {
     case 'Hot Checkouts':
@@ -96,7 +100,14 @@ const documentListItemBuilder = (
     .title(type.title || type.name)
     .icon(type.icon)
     .child(
-      singletonDocumentTypes.includes(type.name)
+      createNewDocumentFromTopLevelTypes.hasOwnProperty(type.title || '')
+        ? S.editor()
+            .id(type.name)
+            .schemaType(type.name)
+            .documentId(type.name)
+            .title(type.title || type.name)
+            .views([S.view.form().title('Edit')])
+        : singletonDocumentTypes.includes(type.name)
         ? Object.keys(documentPreviewPanes).includes(type.name)
           ? S.editor()
               .id(type.name)

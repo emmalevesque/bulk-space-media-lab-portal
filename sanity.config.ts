@@ -74,6 +74,11 @@ const plugins = [
         S,
         [
           {
+            ...checkout,
+            title: 'New Checkout',
+            icon: checkoutActions.NEW.emoji,
+          },
+          {
             type: 'list',
             title: 'Manage Checkouts',
             icon: checkout.icon,
@@ -98,12 +103,6 @@ const plugins = [
                 title: 'Cold Checkouts',
                 icon: getCheckoutStatusProps(null, 'RETURNED').icon,
               },
-              // TODO: add due dates to checkouts
-              // {
-              //   ...checkout,
-              //   title: 'Past Due Checkouts',
-              //   icon: checkoutActions['PAST_DUE'].icon,
-              // }
             ],
           },
           S.divider(),
