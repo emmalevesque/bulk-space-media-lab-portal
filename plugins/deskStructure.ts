@@ -14,6 +14,7 @@ import type {
 import MenuPreviewPane from 'schemas/components/preview/MenuPreviewPane'
 import category from 'schemas/documents/inventory/category'
 import navigationStructure from './navigationStructure'
+import { uuid } from '@sanity/uuid'
 
 type FilteredDocumentDefinition = DocumentDefinition & {
   filter: string
@@ -104,7 +105,7 @@ const documentListItemBuilder = (
         ? S.editor()
             .id(type.name)
             .schemaType(type.name)
-            .documentId(type.name)
+            .documentId(uuid())
             .title(type.title || type.name)
             .views([S.view.form().title('Edit')])
         : singletonDocumentTypes.includes(type.name)
