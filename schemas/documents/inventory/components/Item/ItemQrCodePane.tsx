@@ -18,7 +18,6 @@ export default (props, context) => {
 
   return document ? (
     <Box padding={4}>
-      {url}
       <QRCode value={url} />
     </Box>
   ) : null
