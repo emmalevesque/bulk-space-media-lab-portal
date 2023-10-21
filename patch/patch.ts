@@ -31,9 +31,7 @@ const queryAndPatchDocuments = async () => {
       })
 
       .commit()
-      .then((updatedDoc) => {
-        console.log(`Successfully updated document: ${updatedDoc._id}`)
-      })
+      .then((updatedDoc) => {})
       .catch((err) => {
         console.error('Update failed: ', err.message)
       })
@@ -43,7 +41,7 @@ const queryAndPatchDocuments = async () => {
   // await client
   //   .delete(doc._id)
   //   .then(() => {
-  //     console.log(`Successfully deleted ${doc._id}`)
+  //
   //   })
   //   .catch((err) => {
   //     console.error('Delete failed: ', err.message)

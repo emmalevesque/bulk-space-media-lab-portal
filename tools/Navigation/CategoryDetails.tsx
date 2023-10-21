@@ -12,8 +12,6 @@ type CategoryProps = SanityDocument & {
 }
 
 export default function CategoryDetails({ name, children }: CategoryProps) {
-  console.log({ name, children })
-
   return Array.isArray(children) ? (
     <Card paddingX={4}>
       {Array.isArray(children) ? (

@@ -59,7 +59,6 @@ const migrateNextBatch = async () => {
   const documents = await fetchDocuments()
   const patches = buildPatches(documents)
   if (patches.length === 0) {
-    console.log('No more documents to migrate!')
     return null
   }
   console.log(

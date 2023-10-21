@@ -24,7 +24,6 @@ export default function CategoryInputContainer({
   children,
 }: CategoryInputContainerProps) {
   const { value, onChange, set } = useCategoryInputContext()
-  console.log({ childrenCategories })
 
   // instantiate the client
 

@@ -39,9 +39,7 @@ export default defineType({
   type: 'document',
   icon: () => <EmojiIcon>📸</EmojiIcon>,
   components: {
-    preview: (props, context) => {
-      console.log({ props, context })
-
+    preview: (props) => {
       return (
         <Box color={'primary'}>
           <Flex padding={2}>{props?.renderDefault(props)}</Flex>

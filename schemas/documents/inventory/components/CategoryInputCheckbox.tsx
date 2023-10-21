@@ -21,8 +21,6 @@ export const CategoryInputCheckbox = ({
 }: CategoryInputCheckboxProps) => {
   const { onChange, set, unset, value = [] } = useCategoryInputContext()
 
-  console.log({ value })
-
   const isSelected = value ? value?.some((item) => item._ref === id) : false
 
   return (

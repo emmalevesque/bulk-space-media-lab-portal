@@ -4,8 +4,6 @@ import QRCode from 'react-qr-code'
 import { useFormValue } from 'sanity'
 
 export default (props) => {
-  console.log({ props })
-
   const id = useFormValue(['_id']) as string
 
   const qrCodeText = {

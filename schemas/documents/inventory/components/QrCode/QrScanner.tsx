@@ -45,13 +45,9 @@ export default (props) => {
     setTriggerAddItem(false)
   }, [value])
 
-  useEffect(() => {
-    console.log({ itemToBeAdded })
-  }, [itemToBeAdded])
+  useEffect(() => {}, [itemToBeAdded])
 
-  useEffect(() => {
-    console.log({ triggerAddItem })
-  }, [triggerAddItem])
+  useEffect(() => {}, [triggerAddItem])
 
   useEffect(() => {
     handleAddToCheckout()
