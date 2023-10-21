@@ -13,7 +13,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      " npm run lint"
+      " npm run lint:fix"
     ]
   },
   "prettier": {
