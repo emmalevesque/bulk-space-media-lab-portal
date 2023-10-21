@@ -25,7 +25,7 @@
     "@next/env": "^13.4.12",
     "@portabletext/react": "3.0.4",
     "@radix-ui/react-slot": "^1.0.2",
-    "@sanity/cli": "^3.17.0",
+    "@sanity/cli": "^3.18.1",
     "@sanity/client": "6.1.7",
     "@sanity/cross-dataset-duplicator": "^1.2.1",
     "@sanity/dashboard": "^3.1.5",
