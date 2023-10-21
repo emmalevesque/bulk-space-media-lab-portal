@@ -39,14 +39,31 @@ export const documentPreviewPanes: {
   [key: string]: {
     component: React.ComponentType<any>
     title: string
-  }
+  }[]
 } = {
-  item: {
-    title: 'QR Code',
-    component: dynamic(
-      () => import('schemas/documents/inventory/components/Item/ItemQrCodePane')
-    ),
-  },
+  item: [
+    {
+      title: 'Status',
+      component: dynamic(
+        () =>
+          import('schemas/documents/inventory/components/Item/ItemStatusPane')
+      ),
+    },
+    {
+      title: 'History',
+      component: dynamic(
+        () =>
+          import('schemas/documents/inventory/components/Item/ItemHistoryPane')
+      ),
+    },
+    {
+      title: 'QR Code',
+      component: dynamic(
+        () =>
+          import('schemas/documents/inventory/components/Item/ItemQrCodePane')
+      ),
+    },
+  ],
 }
 
 const templates = (prev) => {

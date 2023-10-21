@@ -58,11 +58,13 @@ const getFilter = (title: string) => {
   }
 }
 
-const previewPane = (S, type) =>
-  S.view
-    .component(documentPreviewPanes[type.name || ''].component)
-    .title(documentPreviewPanes[type.name || ''].title || 'Preview')
-    .options({ previewMode: true })
+const previewPanes = (S, type) =>
+  documentPreviewPanes[type.name || '']?.map((pane) =>
+    S.view
+      .component(pane.component)
+      .title(pane.title || 'Preview')
+      .options({ previewMode: true })
+  )
 
 /***
  * This returns a list item builder for a singleton document type
@@ -81,7 +83,7 @@ const singletonListItemBuilder = (
             .schemaType(type.name)
             .documentId(type.name)
             .title('type.title || type.name')
-            .views([S.view.form().title('Edit'), previewPane(S, type)])
+            .views([S.view.form().title('Edit'), ...previewPanes(S, type)])
         : S.editor()
             .id(type.name)
             .schemaType(type.name)
@@ -114,7 +116,7 @@ const documentListItemBuilder = (
               .schemaType(type.name)
               .documentId(type.name)
               .title(type.title || type.name)
-              .views([S.view.form().title('Edit'), previewPane(S, type)])
+              .views([S.view.form().title('Edit'), ...previewPanes(S, type)])
           : S.editor()
               .id(type.name)
               .schemaType(type.name)
@@ -132,7 +134,7 @@ const documentListItemBuilder = (
               S.document()
                 .documentId(documentId)
                 .schemaType(type.name)
-                .views([S.view.form().title('Edit'), previewPane(S, type)])
+                .views([S.view.form().title('Edit'), ...previewPanes(S, type)])
             )
     )
 
