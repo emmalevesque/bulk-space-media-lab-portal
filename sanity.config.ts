@@ -21,7 +21,10 @@ import MenuPreviewPane from 'schemas/components/preview/MenuPreviewPane'
 import NavigationStructure from 'tools/Navigation/NavigationStructure'
 import documentActions from 'plugins/documentActions'
 import settings from 'schemas/singletons/settings'
-import { getCheckoutStatusProps } from 'schemas/documents/inventory/hooks/useCheckout'
+import {
+  checkoutActions,
+  getCheckoutStatusProps,
+} from 'schemas/documents/inventory/hooks/useCheckout'
 
 const title =
   process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Next.js Blog with Sanity.io'
@@ -121,10 +124,12 @@ const plugins = [
                   {
                     ...item,
                     title: 'Available Items',
+                    icon: checkoutActions.RETURNED.emoji,
                   },
                   {
                     ...item,
                     title: 'Unavailable Items',
+                    icon: checkoutActions.CHECKED_OUT.emoji,
                   },
                 ],
               },

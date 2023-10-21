@@ -83,6 +83,7 @@ export const checkoutActions = {
     title: 'This item is available to be checked out',
     tone: 'primary',
     icon: EllipsisHorizontalIcon,
+    emoji: () => <EmojiIcon>⋯</EmojiIcon>,
   },
   NO_STOCK: {
     label: 'No Stock',
@@ -91,6 +92,7 @@ export const checkoutActions = {
     tone: 'caution',
     icon: WarningOutlineIcon,
     disabled: true,
+    emoji: () => <EmojiIcon>🟥</EmojiIcon>,
   },
   SPOTCHECK_NEEDED: {
     label: 'Spotcheck Needed',
@@ -99,6 +101,7 @@ export const checkoutActions = {
     tone: 'caution',
     icon: WarningOutlineIcon,
     disabled: true,
+    emoji: () => <EmojiIcon>🔎</EmojiIcon>,
   },
   CHECKED_OUT: {
     label: 'Process Return',
@@ -106,6 +109,7 @@ export const checkoutActions = {
     title: 'This is checked out',
     tone: 'caution',
     icon: EllipsisHorizontalIcon,
+    emoji: () => <EmojiIcon>❌</EmojiIcon>,
   },
   RETURNED: {
     label: 'Checkout Complete',
@@ -114,6 +118,7 @@ export const checkoutActions = {
     tone: 'positive',
     icon: CheckmarkCircleIcon,
     disabled: true,
+    emoji: () => <EmojiIcon>🟩</EmojiIcon>,
   },
   USER_NEEDED: {
     label: 'Select User',
@@ -122,6 +127,7 @@ export const checkoutActions = {
     tone: 'caution',
     icon: UserIcon,
     disabled: true,
+    emoji: () => <EmojiIcon>👤</EmojiIcon>,
   },
   ITEMS_NEEDED: {
     label: 'Select Items',
@@ -129,6 +135,7 @@ export const checkoutActions = {
     title: 'Please select inventory items before checking this item out',
     tone: 'caution',
     disabled: true,
+    emoji: () => <EmojiIcon>📸</EmojiIcon>,
   },
 }
 
