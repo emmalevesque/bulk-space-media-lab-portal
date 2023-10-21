@@ -1,6 +1,5 @@
 import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
-import contactInformation from 'schemas/objects/contact'
 
 export default defineType({
   name: 'staff',
