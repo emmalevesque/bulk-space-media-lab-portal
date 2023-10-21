@@ -113,6 +113,12 @@ export default defineType({
     },
     {
       group: 'dates',
+      name: 'scheduledReturnDate',
+      title: 'Scheduled Return Date',
+      type: 'datetime',
+    },
+    {
+      group: 'dates',
       name: 'returnDate',
       title: 'Return Date',
       type: 'datetime',
