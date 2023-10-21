@@ -4,17 +4,15 @@ import { QrScanner } from '@yudiel/react-qr-scanner'
 import { set, unset } from 'sanity'
 
 export default (props) => {
-  const { onChange, value, schemaType } = props
+  const { onChange } = props
   const [showScanner, setShowScanner] = useState<boolean>(false)
-
-  const delay = 100
 
   const [result, setResult] = useState('No result')
 
   const handleScan = useCallback(
     (data) => {
       if (data) {
-        const id = data.split('?')[1]
+        const id = data.split(';').pop()
         setResult(id)
         setTone('positive')
 
@@ -26,21 +24,13 @@ export default (props) => {
         onChange(newReference._ref ? set(newReference) : unset())
       }
     },
-    [showScanner]
+    [onChange]
   )
 
-  const handleError = useCallback(
-    (err) => {
-      console.error(err)
-      setTone('critical')
-    },
-    [showScanner]
-  )
-
-  const previewStyle = {
-    height: 240,
-    width: 320,
-  }
+  const handleError = useCallback((err) => {
+    console.error(err)
+    setTone('critical')
+  }, [])
 
   const [tone, setTone] = useState<BadgeTone>('default')
 
