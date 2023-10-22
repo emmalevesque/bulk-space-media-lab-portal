@@ -49,8 +49,11 @@ export default defineType({
   },
   groups: [
     {
-      name: 'details',
+      name: 'overview',
       default: true,
+    },
+    {
+      name: 'details',
     },
     {
       name: 'images',
@@ -58,18 +61,18 @@ export default defineType({
     {
       name: 'taxonomy',
     },
-    {
-      name: 'stock',
-    },
+
     {
       name: 'miscellaneous',
     },
   ],
   fields: [
     {
-      name: 'qrCode',
-      title: 'QR Code',
-      type: 'qrCode',
+      name: 'stock',
+      title: 'Stock Quanity',
+      type: 'number',
+      group: 'overview',
+      initialValue: 1,
     },
     {
       name: 'name',
@@ -163,13 +166,6 @@ export default defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'tag' }] }],
       title: 'Item Tags',
-    },
-    {
-      name: 'stock',
-      title: 'Stock Quanity',
-      type: 'number',
-      group: 'stock',
-      initialValue: 1,
     },
     {
       group: 'miscellaneous',

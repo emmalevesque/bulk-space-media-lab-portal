@@ -31,7 +31,9 @@ const queryAndPatchDocuments = async () => {
       })
 
       .commit()
-      .then((updatedDoc) => {})
+      .then((updatedDoc) => {
+        console.log('Update success: ', updatedDoc.title)
+      })
       .catch((err) => {
         console.error('Update failed: ', err.message)
       })

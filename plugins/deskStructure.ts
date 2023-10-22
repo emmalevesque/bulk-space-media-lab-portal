@@ -1,10 +1,5 @@
 import { ComponentType, ReactNode } from 'react'
 import { DocumentDefinition } from 'sanity'
-import {
-  documentPreviewPanes,
-  singletonDocumentTypes,
-  typesWithCustomFilters,
-} from 'sanity.config'
 import type {
   Divider,
   ListItemBuilder,
@@ -14,6 +9,12 @@ import type {
 import category from 'schemas/documents/inventory/category'
 import navigationStructure from './navigationStructure'
 import { uuid } from '@sanity/uuid'
+
+import {
+  singletonDocumentTypes,
+  typesWithCustomFilters,
+  documentPreviewPanes,
+} from 'lib/constants'
 
 type FilteredDocumentDefinition = DocumentDefinition & {
   filter: string
@@ -58,13 +59,15 @@ const getFilter = (title: string) => {
   }
 }
 
-const previewPanes = (S, type) =>
-  documentPreviewPanes[type.name || '']?.map((pane) =>
+const previewPanes = (S, type) => [
+  ...documentPreviewPanes[type.name || '']?.map((pane) =>
     S.view
       .component(pane.component)
       .title(pane.title || 'Preview')
       .options({ previewMode: true })
-  )
+  ),
+  S.view.form().title('Edit'),
+]
 
 /***
  * This returns a list item builder for a singleton document type
@@ -83,7 +86,7 @@ const singletonListItemBuilder = (
             .schemaType(type.name)
             .documentId(type.name)
             .title('type.title || type.name')
-            .views([S.view.form().title('Edit'), ...previewPanes(S, type)])
+            .views([...previewPanes(S, type)])
         : S.editor()
             .id(type.name)
             .schemaType(type.name)
@@ -116,7 +119,7 @@ const documentListItemBuilder = (
               .schemaType(type.name)
               .documentId(type.name)
               .title(type.title || type.name)
-              .views([S.view.form().title('Edit'), ...previewPanes(S, type)])
+              .views([...previewPanes(S, type)])
           : S.editor()
               .id(type.name)
               .schemaType(type.name)
@@ -134,7 +137,7 @@ const documentListItemBuilder = (
               S.document()
                 .documentId(documentId)
                 .schemaType(type.name)
-                .views([S.view.form().title('Edit'), ...previewPanes(S, type)])
+                .views([...previewPanes(S, type)])
             )
     )
 
@@ -183,7 +186,7 @@ const deskStructure = (
   })
 
   return S.list()
-    .title('Content')
+    .title('Desk')
     .items([
       navigationStructure(category.name, S, context.documentStore),
       S.divider(),

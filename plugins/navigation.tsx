@@ -1,6 +1,6 @@
 import EmojiIcon from 'components/Icon/Emoji'
 import { definePlugin } from 'sanity'
-import { singletonDocumentTypes } from 'sanity.config'
+import { singletonDocumentTypes } from 'lib/constants'
 
 export const icon = () => <EmojiIcon>📦</EmojiIcon>
 

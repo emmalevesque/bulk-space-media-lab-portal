@@ -24,62 +24,9 @@ import {
   checkoutActions,
   getCheckoutStatusProps,
 } from 'schemas/documents/inventory/hooks/useCheckout'
+import { templates } from 'lib/constants'
 
-import dynamic from 'next/dynamic'
-import React from 'react'
-
-const title =
-  process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Next.js Blog with Sanity.io'
-
-export const singletonDocumentTypes: string[] = ['menu', 'settings']
-
-export const typesWithCustomFilters: string[] = ['checkout', 'item']
-
-export const documentPreviewPanes: {
-  [key: string]: {
-    component: React.ComponentType<any>
-    title: string
-  }[]
-} = {
-  item: [
-    {
-      title: 'Status',
-      component: dynamic(
-        () =>
-          import('schemas/documents/inventory/components/Item/ItemStatusPane')
-      ),
-    },
-    {
-      title: 'History',
-      component: dynamic(
-        () =>
-          import('schemas/documents/inventory/components/Item/ItemHistoryPane')
-      ),
-    },
-    {
-      title: 'QR Code',
-      component: dynamic(
-        () =>
-          import('schemas/documents/inventory/components/Item/ItemQrCodePane')
-      ),
-    },
-  ],
-}
-
-const templates = (prev) => {
-  const categoryChild = {
-    id: 'category-child',
-    title: 'Category: Child',
-    schemaType: 'category',
-    parameters: [{ name: `parentId`, title: `Parent ID`, type: `string` }],
-    // This value will be passed-in from desk structure
-    value: ({ parentId }: { parentId: string }) => ({
-      parent: { _type: 'reference', _ref: parentId },
-    }),
-  }
-
-  return [...prev, categoryChild]
-}
+import { TITLE } from 'lib/constants'
 
 const document = {
   actions: documentActions,
@@ -89,6 +36,7 @@ const tools = [NavigationStructure()]
 
 const plugins = [
   deskTool({
+    title: 'Manage',
     structure: (S, context) =>
       deskStructure(
         S,
@@ -202,17 +150,17 @@ const commonConfig = {
 // They must match the dataset name
 export default defineConfig([
   {
-    basePath: '/studio/production',
-    name: 'production',
-    dataset: 'production',
+    basePath: '/studio/demo',
+    name: 'demo',
+    dataset: 'demo',
     title: `Demo Data`,
     ...commonConfig,
   },
   {
-    basePath: '/studio/development',
-    name: 'development',
-    dataset: 'development',
-    title: `${title}`,
+    basePath: '/studio/production',
+    name: 'production',
+    dataset: 'production',
+    title: `${TITLE}`,
     ...commonConfig,
   },
 ])
