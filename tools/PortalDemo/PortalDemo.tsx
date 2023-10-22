@@ -3,12 +3,11 @@ import { Box } from '@sanity/ui'
 import { LeaveIcon } from '@sanity/icons'
 import { NavigationProvider } from './hooks/useNavigation'
 import PortalHomePage from './pages/Home'
+import { Tool } from 'sanity'
 
 export const PORTAL_BASE_PATH = '/portal-demo'
 
 export function PortalDemoTool(props) {
-  console.log({ props })
-
   return (
     <NavigationProvider>
       <Box padding={4}>
@@ -23,4 +22,4 @@ export default {
   title: 'Portal Demo',
   icon: LeaveIcon,
   component: PortalDemoTool,
-}
+} as Tool
