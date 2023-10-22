@@ -7,7 +7,6 @@ import { apiVersion, projectId } from 'lib/sanity.api'
 import { defineConfig } from 'sanity'
 import deskStructure from 'plugins/deskStructure'
 import { deskTool } from 'sanity/desk'
-import { contentGraphView } from 'sanity-plugin-graph-view'
 
 // schema related items
 import { schema } from 'schemas/schema'
@@ -20,7 +19,6 @@ import user from 'schemas/documents/user/user'
 
 import checkout from 'schemas/documents/inventory/checkout'
 import { previewDocumentNode } from 'plugins/previewPane'
-import NavigationStructure from 'tools/Navigation/NavigationStructure'
 import documentActions from 'plugins/documentActions'
 import settings from 'schemas/singletons/settings'
 import {
@@ -33,12 +31,13 @@ import { templates } from 'lib/constants'
 import { TITLE } from 'lib/constants'
 
 import 'styles/studio.css'
+import PortalDemo from 'tools/PortalDemo/PortalDemo'
 
 const document = {
   actions: documentActions,
 }
 
-const tools = [NavigationStructure()]
+const tools = [PortalDemo]
 
 const plugins = [
   deskTool({
@@ -137,7 +136,6 @@ const plugins = [
   // Vision lets you query your content with GROQ in the studio
   // https://www.sanity.io/docs/the-vision-plugin
   visionTool({ defaultApiVersion: apiVersion }),
-  contentGraphView({}),
 ]
 
 const commonConfig = {

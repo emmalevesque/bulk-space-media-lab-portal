@@ -66,12 +66,5 @@ export default defineType({
       of: [{ type: 'string' }],
       validation: (Rule) => Rule.required(),
     },
-    {
-      group: 'details',
-      name: 'active',
-      title: 'Item Active',
-      type: 'boolean',
-      validation: (Rule) => Rule.required(),
-    },
   ],
 })
