@@ -56,6 +56,7 @@
     "sanity": "^3.18.1",
     "sanity-algolia": "^1.1.0",
     "sanity-plugin-asset-source-unsplash": "1.1.0",
+    "sanity-plugin-graph-view": "^2.0.1",
     "sanity-plugin-iframe-pane": "^2.5.4",
     "sanity-plugin-webhooks": "^1.0.0",
     "slugify": "^1.6.6",

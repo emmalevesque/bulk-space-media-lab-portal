@@ -1,20 +1,23 @@
 /**
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
+// plugins
 import { visionTool } from '@sanity/vision'
 import { apiVersion, projectId } from 'lib/sanity.api'
 import { defineConfig } from 'sanity'
 import deskStructure from 'plugins/deskStructure'
 import { deskTool } from 'sanity/desk'
+import { contentGraphView } from 'sanity-plugin-graph-view'
+
+// schema related items
+import { schema } from 'schemas/schema'
 import category from 'schemas/documents/inventory/category'
 import item from 'schemas/documents/inventory/item'
 import kit from 'schemas/documents/inventory/kit'
 import staff from 'schemas/documents/user/staff'
 import tag from 'schemas/documents/inventory/tag'
 import user from 'schemas/documents/user/user'
-import { schema } from 'schemas/schema'
 
-import 'styles/studio.css'
 import checkout from 'schemas/documents/inventory/checkout'
 import { previewDocumentNode } from 'plugins/previewPane'
 import NavigationStructure from 'tools/Navigation/NavigationStructure'
@@ -24,9 +27,12 @@ import {
   checkoutActions,
   getCheckoutStatusProps,
 } from 'schemas/documents/inventory/hooks/useCheckout'
+
 import { templates } from 'lib/constants'
 
 import { TITLE } from 'lib/constants'
+
+import 'styles/studio.css'
 
 const document = {
   actions: documentActions,
@@ -131,6 +137,7 @@ const plugins = [
   // Vision lets you query your content with GROQ in the studio
   // https://www.sanity.io/docs/the-vision-plugin
   visionTool({ defaultApiVersion: apiVersion }),
+  contentGraphView({}),
 ]
 
 const commonConfig = {

@@ -50,3 +50,6 @@ studio/.env.development
 assets*.json
 # ignore any files that start with a number and end with .ndjson
 \d{6}\..*\.ndjson
+
+# ignore the json directory
+json
