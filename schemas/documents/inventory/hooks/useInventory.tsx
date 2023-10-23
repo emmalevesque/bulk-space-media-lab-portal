@@ -115,49 +115,49 @@ export const useInventory = (
     return relatedCheckouts
   }
 
-  const getCheckoutHistory = async (): Promise<CheckoutType> => {
-    const checkoutHistory = await client.fetch(
-      groq`
-        *[
-          $id == _id
-        ][0]
-        {
-          ...,
-          "user": user->name,
-          "checkoutItems": checkoutItems[]->,
-          "totalReplacementValue": math::sum(checkoutItems[]->.replacementValue),
-        }
-    `,
-      {
-        id: document?._id,
-      }
-    )
+  // const getCheckoutHistory = async (): Promise<CheckoutType> => {
+  //   const checkoutHistory = await client.fetch(
+  //     groq`
+  //       *[
+  //         $id == _id
+  //       ][0]
+  //       {
+  //         ...,
+  //         "user": user->name,
+  //         "checkoutItems": checkoutItems[]->,
+  //         "totalReplacementValue": math::sum(checkoutItems[]->.replacementValue),
+  //       }
+  //   `,
+  //     {
+  //       id: document?._id,
+  //     }
+  //   )
 
-    return checkoutHistory
-  }
+  //   return checkoutHistory
+  // }
 
   const [itemAvailability, setItemAvailability] = useState<number>(0)
   const [relatedCheckouts, setRelatedCheckouts] =
     useState<Pick<InventoryHook, 'relatedCheckouts'>>()
-  const [checkoutHistory, setCheckoutHistory] = useState<CheckoutType>()
+  // const [checkoutHistory, setCheckoutHistory] = useState<CheckoutType>()
 
   useEffect(() => {
-    getItemAvailability().then(setItemAvailability)
+    if (document?._id) getItemAvailability().then(setItemAvailability)
   }, [document?._id])
 
   useEffect(() => {
-    getRelatedCheckouts().then(setRelatedCheckouts)
+    if (document?._id) getRelatedCheckouts().then(setRelatedCheckouts)
   }, [document?._id])
 
-  useEffect(() => {
-    getCheckoutHistory().then(setCheckoutHistory)
-  }, [document?._id])
+  // useEffect(() => {
+  //   getCheckoutHistory().then(setCheckoutHistory)
+  // }, [document?._id])
 
   return {
     handleProcessCheckout,
     itemAvailability,
     relatedCheckouts,
-    checkoutHistory,
+    // checkoutHistory,
     isPublishing,
     setIsPublishing,
   }

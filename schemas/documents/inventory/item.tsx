@@ -5,6 +5,7 @@ import { CategoryInputComponent } from './components/Category/CategoryInput'
 import StatusIcon from './components/StatusIcon'
 import slugify from 'slugify'
 import ItemPreviewComponent from './components/Item/ItemPreviewComponent'
+import { Box, Card, Grid, Inline, Text } from '@sanity/ui'
 
 export type ItemType = {
   name: string
@@ -50,13 +51,13 @@ export default defineType({
       name: 'images',
     },
     {
+      name: 'description',
+    },
+    {
       name: 'taxonomy',
     },
     {
       name: 'condition',
-    },
-    {
-      name: 'moreDetails',
     },
   ],
   fields: [
@@ -64,7 +65,7 @@ export default defineType({
       name: 'stock',
       title: 'Stock Quanity',
       type: 'number',
-      group: 'moreDetails',
+      group: 'details',
       initialValue: 1,
     },
     {
@@ -146,10 +147,43 @@ export default defineType({
     },
     {
       hidden: ({ parent }) => !parent?.showMoreDetails,
-      group: 'details',
+      group: 'description',
       name: 'description',
       title: 'Item Description',
       type: 'text',
+    },
+    {
+      hidden: ({ parent }) => !parent?.showMoreDetails,
+      name: 'replacementCost',
+      title: 'Replacement Cost',
+      group: 'details',
+      description: 'The cost to replace this item',
+      type: 'number',
+      components: {
+        input: (props) => {
+          return (
+            <Box>
+              <Grid columns={2}>
+                <Inline>
+                  <Card padding={3} tone="positive">
+                    <Text size={2}>$</Text>
+                  </Card>
+                  {props?.renderDefault(props)}
+                </Inline>
+              </Grid>
+            </Box>
+          )
+        },
+      },
+    },
+    {
+      group: 'details',
+      hidden: ({ parent }) => !parent?.showMoreDetails,
+      name: 'productManualUrl',
+      title: 'Product Manual URL',
+      description:
+        'Product Manual URL (if applicable) OR revelvant and helpful links',
+      type: 'url',
     },
     {
       group: 'images',
@@ -157,13 +191,6 @@ export default defineType({
       title: 'Item Images',
       type: 'array',
       of: [{ type: 'image' }],
-    },
-    {
-      group: 'taxonomy',
-      name: 'category',
-      title: 'Item Category',
-      type: 'reference',
-      to: [{ type: 'category' }],
     },
     {
       group: 'taxonomy',
@@ -175,21 +202,13 @@ export default defineType({
         input: CategoryInputComponent,
       },
     },
-    {
-      group: 'taxonomy',
-      name: 'tags',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'tag' }] }],
-      title: 'Item Tags',
-    },
-    {
-      group: 'moreDetails',
-      name: 'productManualUrl',
-      title: 'Product Manual URL',
-      description:
-        'Product Manual URL (if applicable) OR revelvant and helpful links',
-      type: 'url',
-    },
+    // {
+    //   group: 'taxonomy',
+    //   name: 'tags',
+    //   type: 'array',
+    //   of: [{ type: 'reference', to: [{ type: 'tag' }] }],
+    //   title: 'Item Tags',
+    // },
   ],
   preview: {
     select: {
