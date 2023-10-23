@@ -66,7 +66,7 @@ export default defineType({
       description:
         'All items must be spot-checked before being return can be processed.',
       type: 'boolean',
-      readOnly: ({ document }) => Boolean(document?.isCheckedOut),
+      readOnly: ({ document }) => Boolean(!document?.isCheckedOut),
     },
     {
       group: 'details',
