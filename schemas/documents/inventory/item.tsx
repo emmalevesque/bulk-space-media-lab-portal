@@ -43,11 +43,8 @@ export default defineType({
   },
   groups: [
     {
-      name: 'overview',
-      default: true,
-    },
-    {
       name: 'details',
+      default: true,
     },
     {
       name: 'images',
@@ -55,9 +52,11 @@ export default defineType({
     {
       name: 'taxonomy',
     },
-
     {
-      name: 'miscellaneous',
+      name: 'condition',
+    },
+    {
+      name: 'moreDetails',
     },
   ],
   fields: [
@@ -65,7 +64,7 @@ export default defineType({
       name: 'stock',
       title: 'Stock Quanity',
       type: 'number',
-      group: 'overview',
+      group: 'moreDetails',
       initialValue: 1,
     },
     {
@@ -92,6 +91,28 @@ export default defineType({
           name: 'model',
           title: 'Model',
           type: 'string',
+        },
+      ],
+    },
+    {
+      name: 'condition',
+      title: 'Condition',
+      type: 'object',
+      group: 'condition',
+      fields: [
+        {
+          name: 'report',
+          title: 'Condition Report',
+          type: 'array',
+          of: [{ type: 'block' }],
+        },
+        {
+          name: 'rating',
+          title: 'Condition Rating',
+          type: 'number',
+          description: '1 = Poor, 10 = Excellent',
+          initialValue: 10,
+          validation: (Rule) => [Rule.min(1), Rule.max(10)],
         },
       ],
     },
@@ -162,7 +183,7 @@ export default defineType({
       title: 'Item Tags',
     },
     {
-      group: 'miscellaneous',
+      group: 'moreDetails',
       name: 'productManualUrl',
       title: 'Product Manual URL',
       description:

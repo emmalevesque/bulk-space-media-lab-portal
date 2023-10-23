@@ -1,8 +1,6 @@
 import { Box, Heading } from '@sanity/ui'
 
-export default function PortalRentPage(props) {
-  console.log({ props })
-
+export default function PortalRentPage() {
   return (
     <Box padding={2}>
       <Heading as={`h2`} size={2}>

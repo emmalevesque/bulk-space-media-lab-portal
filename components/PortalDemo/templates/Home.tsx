@@ -2,8 +2,6 @@ import { Box, Flex, Text } from '@sanity/ui'
 import Header from '../Header'
 
 export default function PortalHomePage(props) {
-  console.log({ props })
-
   return (
     <Flex direction={`column`} gap={4}>
       <Header {...props} />

@@ -1,8 +1,6 @@
 import { Box } from '@sanity/ui'
 
-export default (props, context) => {
-  console.log({ props, context })
-
+export default () => {
   return (
     <Box>
       <p>status</p>

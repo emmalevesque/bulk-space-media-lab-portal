@@ -42,7 +42,17 @@ export const documentPreviewPanes: {
       ),
     },
   ],
-  checkout: [],
+  checkout: [
+    {
+      title: 'History',
+      component: dynamic(
+        () =>
+          import(
+            'schemas/documents/inventory/components/Checkout/CheckoutHistoryPane'
+          )
+      ),
+    },
+  ],
   kit: [],
   user: [],
   staff: [],

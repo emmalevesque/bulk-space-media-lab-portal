@@ -39,6 +39,7 @@ export type InventoryHook = {
   handleProcessCheckout: () => void
   itemAvailability: number
   relatedCheckouts: CheckoutType[] | null
+  checkoutHistory: CheckoutType | null
   isPublishing: boolean
   // eslint-disable-next-line no-unused-vars
   setIsPublishing: (value: boolean) => void
@@ -114,9 +115,31 @@ export const useInventory = (
     return relatedCheckouts
   }
 
+  const getCheckoutHistory = async (): Promise<CheckoutType> => {
+    const checkoutHistory = await client.fetch(
+      groq`
+        *[
+          $id == _id
+        ][0]
+        {
+          ...,
+          "user": user->name,
+          "checkoutItems": checkoutItems[]->,
+          "totalReplacementValue": math::sum(checkoutItems[]->.replacementValue),
+        }
+    `,
+      {
+        id: document?._id,
+      }
+    )
+
+    return checkoutHistory
+  }
+
   const [itemAvailability, setItemAvailability] = useState<number>(0)
   const [relatedCheckouts, setRelatedCheckouts] =
     useState<Pick<InventoryHook, 'relatedCheckouts'>>()
+  const [checkoutHistory, setCheckoutHistory] = useState<CheckoutType>()
 
   useEffect(() => {
     getItemAvailability().then(setItemAvailability)
@@ -126,10 +149,15 @@ export const useInventory = (
     getRelatedCheckouts().then(setRelatedCheckouts)
   }, [document?._id])
 
+  useEffect(() => {
+    getCheckoutHistory().then(setCheckoutHistory)
+  }, [document?._id])
+
   return {
     handleProcessCheckout,
     itemAvailability,
     relatedCheckouts,
+    checkoutHistory,
     isPublishing,
     setIsPublishing,
   }
