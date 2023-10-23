@@ -14,7 +14,22 @@ export default function navigationStructure(
   documentStore: DocumentStore
 ) {
   const filter = groq`_type == "${schemaType}" && !defined(parent) && !(_id in path("drafts.**"))`
-  const query = groq`*[${filter}]{ _id, name}`
+  const query = groq`
+    *[
+      ${filter}
+    ]
+    {
+      _id,
+      name,
+      "childrenCount": count(
+        *[
+          _type == "${schemaType}" 
+          && parent._ref == ^._id 
+          && !(_id in path("drafts.**"))
+         ]
+       )
+    } | order(childrenCount desc)
+    `
   const options = { apiVersion: `2023-01-01` }
 
   function createChildList(
