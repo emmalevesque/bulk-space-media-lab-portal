@@ -212,32 +212,39 @@ export default defineType({
   ],
   preview: {
     select: {
-      subtitle: 'name',
+      name: 'name',
       manufacturerMake: 'manufacturerDetails.make',
       manufacturerModel: 'manufacturerDetails.model',
       media: 'images.0',
-      category: 'category.title',
-      parentCategory: 'category.parent.title',
+      category: 'categories.0.title',
+      parentCategory: 'categories.0.parent.title',
+      firstCategory: 'categories.0.title',
+      secondCategory: 'categories.1.title',
       stock: 'stock',
     },
     prepare: ({
-      category,
       parentCategory,
-      subtitle,
+      name,
       manufacturerMake,
       manufacturerModel,
       stock,
+      firstCategory,
+      secondCategory,
+      ...rest
     }) => {
       return {
+        ...rest,
         subtitle: `${parentCategory ? `${parentCategory} > ` : ''}${
-          category || ''
+          firstCategory || ''
         }`,
         title:
           manufacturerMake && manufacturerModel
-            ? `${manufacturerMake} ${manufacturerModel}`
-            : subtitle,
+            ? `${manufacturerMake} ${manufacturerModel} ${name}`
+            : name,
         media: <StatusIcon stock={stock} />,
-        stock,
+        stock: stock,
+        secondCategory,
+        firstCategory,
         parentCategory,
       }
     },
