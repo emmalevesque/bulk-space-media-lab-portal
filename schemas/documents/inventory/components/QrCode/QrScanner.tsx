@@ -55,7 +55,7 @@ export default (props) => {
 
   const handleScan = (data) => {
     if (data && data?.includes('?')) {
-      setItemToBeAdded(data?.split('?')[1])
+      setItemToBeAdded(data?.split(';').pop())
       setTriggerAddItem(true)
     }
   }
