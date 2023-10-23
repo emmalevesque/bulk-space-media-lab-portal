@@ -54,7 +54,15 @@ export const documentPreviewPanes: {
     },
   ],
   kit: [],
-  user: [],
+  user: [
+    {
+      title: 'QR Code',
+      component: dynamic(
+        () =>
+          import('schemas/documents/inventory/components/User/UserQrCodePane')
+      ),
+    },
+  ],
   staff: [],
   category: [],
   tag: [],

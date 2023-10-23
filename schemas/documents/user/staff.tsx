@@ -7,4 +7,27 @@ export default defineType({
   name: 'staff',
   title: 'Staff',
   icon: () => <EmojiIcon>🫂</EmojiIcon>,
+  initialValue: {
+    role: 'staff',
+  },
+  fields: [
+    ...user.fields,
+    {
+      readOnly: true,
+      name: 'role',
+      type: 'string',
+      options: {
+        list: [
+          {
+            title: 'Administrator',
+            value: 'administrator',
+          },
+          {
+            title: 'Staff',
+            value: 'staff',
+          },
+        ],
+      },
+    },
+  ],
 })
