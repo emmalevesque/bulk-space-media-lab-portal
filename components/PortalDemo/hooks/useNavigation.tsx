@@ -1,6 +1,5 @@
 import { BASE_URL } from 'lib/constants'
 import { createContext, useContext } from 'react'
-import { useDataset } from 'sanity'
 import { PORTAL_BASE_PATH } from '../PortalDemo'
 
 // create the context
@@ -10,9 +9,7 @@ export const NavigationContext = createContext({
 
 // create the provider
 export const NavigationProvider = ({ children }) => {
-  const dataset = useDataset()
-
-  const urlPrefix = `${BASE_URL}/studio/${dataset}${PORTAL_BASE_PATH}`
+  const urlPrefix = `${BASE_URL}${PORTAL_BASE_PATH}`
 
   const value = {
     urlPrefix,

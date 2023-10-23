@@ -1,3 +1,7 @@
 span[data-testid='Media'] > *:not(svg) + span {
   box-shadow: none;
 }
+
+[data-testid='PreviewCard'] {
+  width: '100%';
+}

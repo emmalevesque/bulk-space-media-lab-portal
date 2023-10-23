@@ -32,7 +32,7 @@ export const _writeClient = createClient({
   apiVersion,
   useCdn,
   withCredentials: true,
-  token: process.env.NEXT_PUBLIC_SANITY_WRITE_TOKEN,
+  token: process.env.NEXT_PUBLIC_SANITY_PATCH_TOKEN,
 })
 
 export function getClient(preview?: { token: string }): SanityClient {

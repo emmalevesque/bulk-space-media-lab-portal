@@ -4,7 +4,7 @@ import EmojiIcon from 'components/Icon/Emoji'
 import { CategoryInputComponent } from './components/Category/CategoryInput'
 import StatusIcon from './components/StatusIcon'
 import slugify from 'slugify'
-import { Box, Flex } from '@sanity/ui'
+import ItemPreviewComponent from './components/Item/ItemPreviewComponent'
 
 export type ItemType = {
   name: string
@@ -39,13 +39,7 @@ export default defineType({
   type: 'document',
   icon: () => <EmojiIcon>📸</EmojiIcon>,
   components: {
-    preview: (props) => {
-      return (
-        <Box color={'primary'}>
-          <Flex padding={2}>{props?.renderDefault(props)}</Flex>
-        </Box>
-      )
-    },
+    preview: ItemPreviewComponent,
   },
   groups: [
     {
@@ -203,6 +197,8 @@ export default defineType({
             ? `${manufacturerMake} ${manufacturerModel}`
             : subtitle,
         media: <StatusIcon stock={stock} />,
+        stock,
+        parentCategory,
       }
     },
   },

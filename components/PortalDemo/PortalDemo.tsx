@@ -2,7 +2,7 @@ import { Box } from '@sanity/ui'
 
 import { LeaveIcon } from '@sanity/icons'
 import { NavigationProvider } from './hooks/useNavigation'
-import PortalHomePage from './pages/Home'
+import PortalHomePage from './templates/Home'
 import { Tool } from 'sanity'
 
 export const PORTAL_BASE_PATH = '/portal-demo'

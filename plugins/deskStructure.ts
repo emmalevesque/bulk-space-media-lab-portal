@@ -14,6 +14,7 @@ import {
   singletonDocumentTypes,
   typesWithCustomFilters,
   documentPreviewPanes,
+  DESK_NAME,
 } from 'lib/constants'
 
 type FilteredDocumentDefinition = DocumentDefinition & {
@@ -186,7 +187,7 @@ const deskStructure = (
   })
 
   return S.list()
-    .title('Desk')
+    .title(DESK_NAME)
     .items([
       navigationStructure(category.name, S, context.documentStore),
       S.divider(),

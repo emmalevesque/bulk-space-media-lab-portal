@@ -1,3 +1,4 @@
+import 'tailwindcss/tailwind.css'
 import 'styles/studio.css'
 export default function RootLayout({ children }) {
   return (

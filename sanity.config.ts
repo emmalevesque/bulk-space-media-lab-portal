@@ -31,13 +31,12 @@ import { templates } from 'lib/constants'
 import { TITLE } from 'lib/constants'
 
 import 'styles/studio.css'
-import PortalDemo from 'tools/PortalDemo/PortalDemo'
 
 const document = {
   actions: documentActions,
 }
 
-const tools = [PortalDemo]
+const tools = []
 
 const plugins = [
   deskTool({

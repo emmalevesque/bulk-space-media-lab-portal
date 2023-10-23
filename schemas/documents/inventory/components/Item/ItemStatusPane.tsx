@@ -6,7 +6,7 @@ export default (props) => {
 
   const { stock } = document?.displayed
 
-  return document?.displayed?.stock ? (
+  return document?.displayed?.stock !== null ? (
     <Box padding={4}>
       <Inline space={2}>
         <Box
