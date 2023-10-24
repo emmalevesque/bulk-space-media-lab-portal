@@ -1,13 +1,10 @@
 import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
-import dynamic from 'next/dynamic'
 import { getCheckoutStatusProps } from './hooks/useCheckout'
+import ArrayQrCodeScanner from './components/QrCode/ArrayQrCodeScanner'
+import ReferenceQrCodeScanner from './components/QrCode/ReferenceQrCodeScanner'
 
 const dev = process.env.NODE_ENV !== 'production'
-
-const QrScanner = dynamic(() => import('./components/QrScanner'), {
-  ssr: false,
-})
 
 // TODO: create a guided checkout flow and add custom actions to the "publish" menu that remaps Publish to Checkout
 //     and adds a "Return" button to the checkout document
@@ -76,7 +73,7 @@ export default defineType({
       to: [{ type: 'user' }],
       validation: (Rule) => Rule.required(),
       components: {
-        input: QrScanner,
+        input: ReferenceQrCodeScanner,
       },
     },
     {
@@ -87,7 +84,7 @@ export default defineType({
       type: 'array',
       validation: (Rule) => Rule.min(1).required(),
       components: {
-        input: QrScanner,
+        input: ArrayQrCodeScanner,
       },
       of: [
         {
@@ -97,7 +94,7 @@ export default defineType({
           options: {
             filter: () => {
               return {
-                filter: 'stock > 0',
+                filter: 'order(stock desc)',
               }
             },
           },

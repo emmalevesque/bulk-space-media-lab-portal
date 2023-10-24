@@ -6,8 +6,14 @@ export default (props) => {
 
   const { stock, condition } = document?.displayed
 
-  condition.label =
-    condition.rating > 6 ? 'Excellent' : condition.rating > 4 ? 'Good' : 'Poor'
+  if (condition) {
+    condition.label =
+      condition.rating > 6
+        ? 'Excellent'
+        : condition.rating > 4
+        ? 'Good'
+        : 'Poor'
+  }
 
   return document?.displayed?.stock !== null ? (
     <Box padding={4}>
@@ -17,20 +23,22 @@ export default (props) => {
             {stock} available
           </Text>
         </Badge>
-        <Badge
-          padding={2}
-          tone={
-            condition.rating > 6
-              ? 'positive'
-              : condition.rating > 4
-              ? 'caution'
-              : 'critical'
-          }
-        >
-          <Text size={1} weight="semibold">
-            {condition.label} condition
-          </Text>
-        </Badge>
+        {document?.displayed?.condition && (
+          <Badge
+            padding={2}
+            tone={
+              condition.rating > 6
+                ? 'positive'
+                : condition.rating > 4
+                ? 'caution'
+                : 'critical'
+            }
+          >
+            <Text size={1} weight="semibold">
+              {condition.label} condition
+            </Text>
+          </Badge>
+        )}
       </Inline>
     </Box>
   ) : (

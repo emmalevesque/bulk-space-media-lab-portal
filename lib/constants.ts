@@ -64,7 +64,17 @@ export const documentPreviewPanes: {
     },
   ],
   staff: [],
-  category: [],
+  category: [
+    {
+      title: 'Inventory Items',
+      component: dynamic(
+        () =>
+          import(
+            'schemas/documents/inventory/components/Category/CategoryItemsPane'
+          )
+      ),
+    },
+  ],
   tag: [],
   settings: [],
 }

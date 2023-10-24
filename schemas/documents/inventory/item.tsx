@@ -6,8 +6,9 @@ import StatusIcon from './components/StatusIcon'
 import slugify from 'slugify'
 import ItemPreviewComponent from './components/Item/ItemPreviewComponent'
 import { Box, Card, Grid, Inline, Text } from '@sanity/ui'
+import { SanityDocument } from 'next-sanity'
 
-export type ItemType = {
+export type ItemType = SanityDocument & {
   name: string
   manufacturerDetails: {
     make: string

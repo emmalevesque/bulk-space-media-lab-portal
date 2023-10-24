@@ -61,7 +61,7 @@ const getFilter = (title: string) => {
 }
 
 const previewPanes = (S, type) => [
-  S.view.form().title('Edit'),
+  S.view.form().title('Edit Category'),
   ...documentPreviewPanes[type.name || '']?.map((pane) =>
     S.view
       .component(pane.component)

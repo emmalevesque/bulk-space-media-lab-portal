@@ -7,6 +7,9 @@ import { apiVersion, projectId } from 'lib/sanity.api'
 import { defineConfig } from 'sanity'
 import deskStructure from 'plugins/deskStructure'
 import { deskTool } from 'sanity/desk'
+import { dashboardTool } from '@sanity/dashboard'
+import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
+import { documentListWidget } from 'sanity-plugin-dashboard-widget-document-list'
 
 // schema related items
 import { schema } from 'schemas/schema'
@@ -31,6 +34,7 @@ import { templates } from 'lib/constants'
 import { TITLE } from 'lib/constants'
 
 import 'styles/studio.css'
+import { groq } from 'next-sanity'
 
 const document = {
   actions: documentActions,
@@ -39,6 +43,32 @@ const document = {
 const tools = []
 
 const plugins = [
+  dashboardTool({
+    widgets: [
+      documentListWidget({
+        title: 'Hot Checkouts',
+        order: '_updatedAt desc',
+        types: ['checkout'],
+        query: `*[_type == "checkout" && isCheckedOut && !isReturned]`,
+        createButtonText: 'New Checkout',
+      }),
+      documentListWidget({
+        title: 'Recent Returns',
+        order: '_updatedAt desc',
+        query: `*[_type == "checkout" && isCheckedOut && isReturned]`,
+      }),
+      documentListWidget({
+        title: 'Most common Categories',
+        types: ['category'],
+        query: groq`*[_type == "category"]
+          {
+            ...,
+            "count": count(*[_type == "item" && references(^._id)])
+          }`,
+        order: 'count desc',
+      }),
+    ],
+  }),
   deskTool({
     title: 'Manage',
     structure: (S, context) =>
@@ -135,6 +165,7 @@ const plugins = [
   // Vision lets you query your content with GROQ in the studio
   // https://www.sanity.io/docs/the-vision-plugin
   visionTool({ defaultApiVersion: apiVersion }),
+  unsplashImageAsset(),
 ]
 
 const commonConfig = {
