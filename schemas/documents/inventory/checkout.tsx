@@ -70,7 +70,7 @@ export default defineType({
       name: 'user',
       title: 'User',
       type: 'reference',
-      to: [{ type: 'user' }],
+      to: [{ type: 'user' }, { type: 'staff' }],
       validation: (Rule) => Rule.required(),
       components: {
         input: ReferenceQrCodeScanner,
@@ -91,13 +91,6 @@ export default defineType({
           type: 'reference',
           weak: true,
           to: [{ type: 'item' }],
-          options: {
-            filter: () => {
-              return {
-                filter: 'order(stock desc)',
-              }
-            },
-          },
         },
       ],
     },
