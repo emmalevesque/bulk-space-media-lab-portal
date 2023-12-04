@@ -3,13 +3,14 @@ import check from './documents/inventory/check'
 import checkout from './documents/inventory/checkout'
 import item from './documents/inventory/item'
 import kit from './documents/inventory/kit'
+import tag from './documents/inventory/tag'
 import page from './documents/page'
 import staff from './documents/user/staff'
-import tag from './documents/inventory/tag'
 import user from './documents/user/user'
+import conditionReport from './objects/conditionReport'
 import contact from './objects/contact'
-import menu from './singletons/menu'
 import qrCode from './objects/qrCode'
+import menu from './singletons/menu'
 
 export const schema = [
   category,
@@ -24,4 +25,5 @@ export const schema = [
   tag,
   user,
   qrCode,
+  conditionReport,
 ]

@@ -1,12 +1,13 @@
 import { defineType } from 'sanity'
 
-import EmojiIcon from 'components/Icon/Emoji'
-import { CategoryInputComponent } from './components/Category/CategoryInput'
-import StatusIcon from './components/StatusIcon'
-import slugify from 'slugify'
-import ItemPreviewComponent from './components/Item/ItemPreviewComponent'
 import { Box, Card, Grid, Inline, Text } from '@sanity/ui'
+import EmojiIcon from 'components/Icon/Emoji'
 import { SanityDocument } from 'next-sanity'
+import conditionReport from 'schemas/objects/conditionReport'
+import slugify from 'slugify'
+import { CategoryInputComponent } from './components/Category/CategoryInput'
+import ItemPreviewComponent from './components/Item/ItemPreviewComponent'
+import StatusIcon from './components/StatusIcon'
 
 export type ItemType = SanityDocument & {
   name: string
@@ -45,14 +46,14 @@ export default defineType({
   },
   groups: [
     {
-      name: 'details',
+      name: 'metadata',
       default: true,
     },
     {
-      name: 'images',
+      name: 'details',
     },
     {
-      name: 'description',
+      name: 'images',
     },
     {
       name: 'taxonomy',
@@ -66,7 +67,7 @@ export default defineType({
       name: 'stock',
       title: 'Stock Quanity',
       type: 'number',
-      group: 'details',
+      group: 'metadata',
       initialValue: 1,
     },
     {
@@ -75,11 +76,11 @@ export default defineType({
       description:
         'Commonly used name for the item e.g. DSLR Camera, Cord, Adapter...',
       type: 'string',
-      group: 'details',
+      group: 'metadata',
       validation: (Rule) => Rule.required(),
     },
     {
-      group: 'details',
+      group: 'metadata',
       name: 'manufacturerDetails',
       title: 'Manufacturer Details',
       type: 'object',
@@ -99,27 +100,12 @@ export default defineType({
     {
       name: 'condition',
       title: 'Condition',
-      type: 'object',
+      type: 'array',
+      of: [{ type: conditionReport.name }],
       group: 'condition',
-      fields: [
-        {
-          name: 'report',
-          title: 'Condition Report',
-          type: 'array',
-          of: [{ type: 'block' }],
-        },
-        {
-          name: 'rating',
-          title: 'Condition Rating',
-          type: 'number',
-          description: '1 = Poor, 10 = Excellent',
-          initialValue: 10,
-          validation: (Rule) => [Rule.min(1), Rule.max(10)],
-        },
-      ],
     },
     {
-      group: 'details',
+      group: 'metadata',
       name: 'slug',
       title: 'Item Slug',
       type: 'slug',
@@ -142,13 +128,13 @@ export default defineType({
     {
       hidden: ({ parent }) => !parent?.showMoreDetails,
       group: 'details',
-      name: 'sku',
-      title: 'Item SKU',
+      name: 'serialNumber',
+      title: 'Serial Number',
       type: 'string',
     },
     {
       hidden: ({ parent }) => !parent?.showMoreDetails,
-      group: 'description',
+      group: 'details',
       name: 'description',
       title: 'Item Description',
       type: 'text',
