@@ -135,9 +135,9 @@ export default function navigationStructure(
   }
 
   return S.listItem()
-    .title('Manage Inventory')
-    .id('manage-inventory')
-    .icon(() => <EmojiIcon>🎒</EmojiIcon>)
+    .title('Inventory')
+    .id('inventory')
+    .icon(() => <EmojiIcon>🗄️</EmojiIcon>)
     .child(
       documentStore.listenQuery(query, {}, options).pipe(
         map((response: any) => {

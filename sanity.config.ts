@@ -111,7 +111,7 @@ const plugins = [
           {
             type: 'list',
             title: 'Manage Inventory',
-            icon: kit.icon,
+            icon: item.icon,
             typeDefs: [
               {
                 type: 'list',

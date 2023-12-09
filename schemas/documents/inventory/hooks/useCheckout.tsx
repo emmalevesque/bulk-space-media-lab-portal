@@ -1,13 +1,14 @@
+import {
+  AddIcon,
+  CheckmarkCircleIcon,
+  EllipsisHorizontalIcon,
+  UserIcon,
+  WarningOutlineIcon,
+} from '@sanity/icons'
+import EmojiIcon from 'components/Icon/Emoji'
 import moment from 'moment'
 import { SanityDocument } from 'next-sanity'
-import EmojiIcon from 'components/Icon/Emoji'
 import type { ItemType } from '../item'
-import {
-  WarningOutlineIcon,
-  EllipsisHorizontalIcon,
-  CheckmarkCircleIcon,
-  UserIcon,
-} from '@sanity/icons'
 
 export type CheckoutStatus =
   // add Pre & Post spotcheck
@@ -83,7 +84,7 @@ export const checkoutActions = {
     title: 'This item is available to be checked out',
     tone: 'primary',
     icon: EllipsisHorizontalIcon,
-    emoji: () => <EmojiIcon>➕</EmojiIcon>,
+    emoji: AddIcon,
   },
   PENDING: {
     label: 'Begin Checkout',
@@ -177,7 +178,7 @@ export const getCheckoutStatusProps = (document, status?: CheckoutStatus) => {
       color: 'primary',
       title: 'This item is available to be checked out',
       tone: 'primary',
-      icon: EllipsisHorizontalIcon,
+      icon: () => <EmojiIcon>✋</EmojiIcon>,
     },
     USER_NEEDED: {
       label: 'Select User',
