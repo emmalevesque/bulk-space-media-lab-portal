@@ -6,9 +6,9 @@ const documentActions = (prev, context) => {
     return [
       ProcessCheckout,
       ResetCheckout,
-      ...prev.filter((a) => {
-        return a.name !== 'publish'
-      }),
+      ...prev.filter(
+        (a: { action: string }) => !['publish', 'unpublish'].includes(a.action)
+      ),
     ]
   }
   return prev

@@ -3,11 +3,12 @@ import { groq } from 'next-sanity'
 import { map } from 'rxjs/operators'
 import { DocumentStore } from 'sanity'
 import { StructureBuilder } from 'sanity/desk'
+import { previewPanes } from './deskStructure'
 
 const typeIconMap = {
   category: () => <EmojiIcon>🏷️</EmojiIcon>,
-  item: () => <EmojiIcon>🎒</EmojiIcon>,
-  tag: () => <EmojiIcon>🏷️</EmojiIcon>,
+  item: () => <EmojiIcon>📸</EmojiIcon>,
+  tag: () => <EmojiIcon>🗂️</EmojiIcon>,
 }
 
 export default function navigationStructure(
@@ -19,6 +20,8 @@ export default function navigationStructure(
     _id,
     _type,
     name,
+    manufacturerDetails,
+    variantNumber,
   `
 
   // create the recursive fragment from which all things flow 🌊
@@ -43,10 +46,7 @@ export default function navigationStructure(
       ${filter}
     ]
     {
-      _id,
-      _type,
-      name,
-      
+      ${childrenFieldsFragment} 
       // begin the recursion ➿
       ${childrenFragment(childrenFragment(childrenFragment('')))} 
       
@@ -62,6 +62,14 @@ export default function navigationStructure(
 
   // create the recursive structure builder
   const recursiveStructureBuilder = (item: any) => {
+    let itemName =
+      `${item.manufacturerDetails?.make} ${item.manufacturerDetails?.model}` ||
+      item.name ||
+      'Unnamed Item'
+
+    itemName = `${itemName}${
+      item.variantNumber > 1 ? ` (${item.variantNumber})` : ''
+    }`
     if (item._type === 'category') {
       // split the children ahead of time
       // to show the categories above the items
@@ -111,10 +119,10 @@ export default function navigationStructure(
                 .id(`${item._id}-edit`)
                 .icon(() => <EmojiIcon>🔧</EmojiIcon>)
                 .child(
-                  S.document()
-                    .title(`Edit ${item.name}`)
-                    .id(item._id)
-                    .schemaType(item._type)
+                  S.defaultDocument({
+                    documentId: item._id,
+                    schemaType: item._type,
+                  })
                 ),
               ...listItemChildCategoriesList,
               ...listItemChildItemsList,
@@ -122,14 +130,15 @@ export default function navigationStructure(
         )
     } else {
       return S.listItem()
-        .title(item.name)
+        .title(itemName)
         .id(item._id)
         .icon(typeIconMap[item._type])
         .child(
           S.document()
-            .title(`Edit ${item.name}`)
+            .title(`Edit ${itemName}`)
             .id(item._id)
             .schemaType(item._type)
+            .views(previewPanes(S, { name: item._type }))
         )
     }
   }
@@ -141,8 +150,6 @@ export default function navigationStructure(
     .child(
       documentStore.listenQuery(query, {}, options).pipe(
         map((response: any) => {
-          console.log({ response })
-
           return S.list()
             .title('Manage Inventory')
             .id('manage-inventory')
