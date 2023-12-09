@@ -23,7 +23,7 @@ export default defineType({
   name: 'category',
   title: 'Category',
   type: 'document',
-  icon: () => <EmojiIcon>🔖</EmojiIcon>,
+  icon: () => <EmojiIcon>🏷️</EmojiIcon>,
   fields: [
     {
       name: 'name',

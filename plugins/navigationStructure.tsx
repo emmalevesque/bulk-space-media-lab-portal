@@ -1,129 +1,190 @@
-import { DocumentStore } from 'sanity'
-import { SanityDocument } from '@sanity/client'
-import { StructureBuilder } from 'sanity/desk'
-import { map } from 'rxjs/operators'
-import category from 'schemas/documents/inventory/category'
-import menu from 'schemas/singletons/menu'
-import { uuid } from '@sanity/uuid'
-import { groq } from 'next-sanity'
 import EmojiIcon from 'components/Icon/Emoji'
+import { groq } from 'next-sanity'
+import { map } from 'rxjs/operators'
+import { DocumentStore } from 'sanity'
+import { StructureBuilder } from 'sanity/desk'
+
+const typeIconMap = {
+  category: () => <EmojiIcon>🏷️</EmojiIcon>,
+  product: () => <EmojiIcon>🎒</EmojiIcon>,
+  tag: () => <EmojiIcon>🏷️</EmojiIcon>,
+}
 
 export default function navigationStructure(
-  schemaType: string,
   S: StructureBuilder,
   documentStore: DocumentStore
 ) {
-  const filter = groq`_type == "${schemaType}" && !defined(parent) && !(_id in path("drafts.**"))`
+  // children fields fragment
+  const childrenFieldsFragment = groq`
+    _id,
+    _type,
+    name,
+  `
+
+  // create the recursive fragment from which all things flow 🌊
+  const childrenFragment = (subChildrenFragment: string) => groq`
+    "children": *[references(^._id) && !(_id in path("drafts.**"))][] {
+       ${childrenFieldsFragment}
+       ${subChildrenFragment}
+    }
+  `
+
+  // create the filter for the main query to get the inventory structure
+  const filter = groq`
+  
+  // get categories
+  _type == "category" && 
+  // top level categories
+  !defined(parent) && !(_id in path("drafts.**"))`
+
+  // build the main query
   const query = groq`
     *[
       ${filter}
     ]
     {
       _id,
+      _type,
       name,
-      "childrenCount": count(
-        *[
-          _type == "${schemaType}" 
-          && parent._ref == ^._id 
-          && !(_id in path("drafts.**"))
-         ]
-       )
+      
+      // begin the recursion ➿
+      ${childrenFragment(childrenFragment(childrenFragment('')))} 
+      
+    }
+    // second projection to add count
+    {
+      ...,
+      "childrenCount": count(children)
     } | order(childrenCount desc)
     `
+
   const options = { apiVersion: `2023-01-01` }
 
-  function createChildList(
-    S: StructureBuilder,
-    schemaType: string,
-    parent: SanityDocument
-  ) {
-    return S.listItem({
-      id: parent._id,
-      title: parent.name,
-      icon: category.icon,
-      schemaType,
-      child: () =>
-        S.documentTypeList(schemaType)
-          .title(`${parent.name}`)
-          .showIcons(true)
-          .id(parent._id)
-          .filter(`_type == $schemaType && parent._ref == $parentId`)
-          .params({ schemaType, parentId: parent._id })
-          .canHandleIntent(
-            (intentName, params) =>
-              intentName === 'create' && params.template === 'category-child'
-          )
-          .initialValueTemplates([
-            S.initialValueTemplateItem('category-child', {
-              parentId: parent._id,
-              title: 'test',
+  // create the recursive structure builder
+  const recursiveStructureBuilder = (item: any) => {
+    return S.listItem()
+      .title(item.name)
+      .id(item._id)
+      .icon(typeIconMap[item._type])
+      .child(
+        S.list()
+          .title(item.name)
+          .id(item._id)
+          .items([
+            S.listItem()
+              .title(`Edit ${item.name}`)
+              .id(`${item._id}-edit`)
+              .icon(() => <EmojiIcon>📝</EmojiIcon>)
+              .child(
+                S.document()
+                  .title(`Edit ${item.name}`)
+                  .id(item._id)
+                  .schemaType(item._type)
+              ),
+            S.divider(),
+            ...item.children.map((child) => {
+              return recursiveStructureBuilder(child)
             }),
           ])
-          .child((subChildId) => {
-            // Query to find children of the current child (sub-children)
-            const query = groq`{
-                "subChildren": *[_type == "${schemaType}" && parent._ref == $subChildId && !(_id in path("drafts.**"))]{
-                _id, 
-                name
-              },
-              "parentName": *[_id == $subChildId][0].title,
-            }
-            `
-            return documentStore
-              .listenQuery(query, { subChildId }, options)
-              .pipe(
-                map((response) =>
-                  S.documentTypeList(schemaType)
-                    .title(response.parentName)
-                    .showIcons(true)
-                    .id(parent._id)
-                    .filter(
-                      `_type == $schemaType && parent._ref == $documentId`
-                    )
-                    .params({
-                      schemaType,
-                      parentId: parent._id,
-                      documentId: subChildId,
-                    })
-                    .canHandleIntent(
-                      (intentName, params) =>
-                        intentName === 'create' &&
-                        params.template === 'category-child'
-                    )
-                    .initialValueTemplates([
-                      S.initialValueTemplateItem('category-child', {
-                        parentId: subChildId,
-                      }),
-                    ])
-                )
-              )
-          }),
-    })
+      )
   }
 
   return S.listItem()
-    .title('Navigation' || 'Navigation')
-    .id(uuid())
-    .icon(() => <EmojiIcon>🧭</EmojiIcon>)
-    .child(() =>
+    .title('Manage Inventory')
+    .id('manage-inventory')
+    .icon(() => <EmojiIcon>🎒</EmojiIcon>)
+    .child(
       documentStore.listenQuery(query, {}, options).pipe(
-        map((parents) =>
-          S.list()
-            .id(menu.name)
-            .title(`Navigation` || 'Navigation')
-            .menuItems([
-              S.menuItem()
-                .title('Add')
-                .intent({ type: 'create', params: { type: schemaType } }),
-            ])
-            .items([
-              // Create a List Item for each parent
-              // To display all its child documents
-              ...parents.map((parent: SanityDocument) =>
-                createChildList(S, schemaType, parent)
-              ),
-            ])
-        )
+        map((response: any) => {
+          // create separate lists for items and categories
+
+          const categories = response.filter(
+            (item) => item._type === 'category'
+          )
+
+          return S.list()
+            .title('Manage Inventory')
+            .items(
+              categories.map((item) => {
+                return S.listItem()
+                  .title(item.name)
+                  .id(item._id)
+                  .icon(() => <EmojiIcon>🏷️</EmojiIcon>)
+                  .child(
+                    S.list()
+                      .title(item.name)
+                      .id(item._id)
+                      .items([
+                        S.listItem()
+                          .title(`Edit ${item.name}`)
+                          .id(`${item._id}-edit`)
+                          .icon(() => <EmojiIcon>📝</EmojiIcon>)
+                          .child(
+                            S.document()
+                              .title(`Edit ${item.name}`)
+                              .id(item._id)
+                              .schemaType(item._type)
+                          ),
+                        S.divider(),
+                        ...item.children.map((child) => {
+                          if (child._type === 'category') {
+                            return S.listItem()
+                              .title(child.name)
+                              .id(child._id)
+                              .icon(() => <EmojiIcon>🏷️</EmojiIcon>)
+                              .child(
+                                S.list()
+                                  .title(child.name)
+                                  .id(child._id)
+                                  .items(
+                                    child.children.map((subChild) => {
+                                      return S.listItem()
+                                        .title(subChild.name)
+                                        .id(subChild._id)
+                                        .icon(typeIconMap[subChild._type])
+                                        .child(
+                                          S.list()
+                                            .title(subChild.name)
+                                            .id(subChild._id)
+                                            .items(
+                                              subChild.children?.map(
+                                                (subSubChild) => {
+                                                  console.log({ subChild })
+
+                                                  return S.listItem()
+                                                    .title(subSubChild.name)
+                                                    .id(subSubChild._id)
+                                                    .icon(
+                                                      typeIconMap[
+                                                        subSubChild._type
+                                                      ]
+                                                    )
+                                                    .child(
+                                                      S.document()
+                                                        .id(subSubChild._id)
+                                                        .schemaType(
+                                                          subSubChild._type
+                                                        )
+                                                    )
+                                                }
+                                              )
+                                            )
+                                        )
+                                    })
+                                  )
+                              )
+                          } else {
+                            return S.listItem()
+                              .title(child.name)
+                              .id(child._id)
+                              .child(S.list().title(child.name).id(child._id))
+                          }
+                        }),
+                      ])
+                  )
+              })
+            )
+        })
       )
     )
 }
