@@ -27,7 +27,6 @@ import {
   checkoutActions,
   getCheckoutStatusProps,
 } from 'schemas/documents/inventory/hooks/useCheckout'
-import settings from 'schemas/singletons/settings'
 
 import { templates } from 'lib/constants'
 
@@ -146,7 +145,6 @@ const plugins = [
             typeDefs: [user, staff],
           },
           S.divider(),
-          settings,
         ],
         context
       ),

@@ -1,4 +1,4 @@
-import { defineType } from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 import { Box, Card, Grid, Inline, Text } from '@sanity/ui'
 import EmojiIcon from 'components/Icon/Emoji'
@@ -62,13 +62,46 @@ export default defineType({
       name: 'condition',
     },
   ],
-  fields: [
+  fieldsets: [
     {
       name: 'stock',
+      title: 'Manage Stock & Variant Number',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
+  ],
+  fields: [
+    {
+      name: 'isVariant',
+      title: 'Is this a variant of another inventory item?',
+      description:
+        'As a variant the maximum number of stock for this item will be 1. (Commonly used for more valueable items to track each item individually)',
+      initialValue: false,
+      type: 'boolean',
+      fieldset: 'stock',
+      group: 'metadata',
+    },
+    defineField({
+      name: 'variantNumber',
+      title: 'Variant Number',
+      description: 'This number is automatically set when creating a variant',
+      fieldset: 'stock',
+      group: 'metadata',
+      type: 'number',
+      initialValue: 1,
+      hidden: ({ parent }) => !parent?.isVariant,
+      readOnly: ({ parent }) => !parent?.isVariant,
+    }),
+    {
+      name: 'stock',
+      fieldset: 'stock',
       title: 'Stock Quanity',
       type: 'number',
       group: 'metadata',
       initialValue: 1,
+      readOnly: ({ parent }) => parent?.isVariant,
     },
     {
       name: 'name',
@@ -120,27 +153,18 @@ export default defineType({
       },
     },
     {
-      name: 'showMoreDetails',
-      title: 'Show More Details',
-      type: 'boolean',
-      group: 'details',
-    },
-    {
-      hidden: ({ parent }) => !parent?.showMoreDetails,
       group: 'details',
       name: 'serialNumber',
       title: 'Serial Number',
       type: 'string',
     },
     {
-      hidden: ({ parent }) => !parent?.showMoreDetails,
       group: 'details',
       name: 'description',
       title: 'Item Description',
       type: 'text',
     },
     {
-      hidden: ({ parent }) => !parent?.showMoreDetails,
       name: 'replacementCost',
       title: 'Replacement Cost',
       group: 'details',
@@ -165,7 +189,6 @@ export default defineType({
     },
     {
       group: 'details',
-      hidden: ({ parent }) => !parent?.showMoreDetails,
       name: 'productManualUrl',
       title: 'Product Manual URL',
       description:
@@ -200,34 +223,46 @@ export default defineType({
   preview: {
     select: {
       name: 'name',
+      manufacturerDetails: 'manufacturerDetails',
       manufacturerMake: 'manufacturerDetails.make',
       manufacturerModel: 'manufacturerDetails.model',
       media: 'images.0',
-      category: 'categories.0.title',
-      parentCategory: 'categories.0.parent.title',
-      firstCategory: 'categories.0.title',
-      secondCategory: 'categories.1.title',
+      parentCategory: 'categories.0.parent.name',
+      firstCategory: 'categories.0.name',
+      secondCategory: 'categories.1.name',
       stock: 'stock',
+      variantNumber: 'variantNumber',
     },
     prepare: ({
       parentCategory,
       name,
+      manufacturerDetails,
       manufacturerMake,
       manufacturerModel,
       stock,
       firstCategory,
       secondCategory,
+      variantNumber,
       ...rest
     }) => {
+      const manufacturerName =
+        manufacturerDetails?.make && manufacturerDetails?.model
+          ? `${manufacturerMake} ${manufacturerModel}`
+          : name
+      const parentCategoryName = parentCategory
+        ? `${parentCategory} > ${firstCategory}`
+        : firstCategory
+      const category = parentCategoryName || firstCategory
+      const subtitle = `${manufacturerName} ${category}`
+
+      const variantNumberString = variantNumber > 1 ? ` (${variantNumber})` : ''
+
       return {
         ...rest,
         subtitle: `${parentCategory ? `${parentCategory} > ` : ''}${
           firstCategory || ''
         }`,
-        title:
-          manufacturerMake && manufacturerModel
-            ? `${manufacturerMake} ${manufacturerModel} ${name}`
-            : name,
+        title: `${manufacturerName}${variantNumberString}`,
         media: <StatusIcon stock={stock} />,
         stock: stock,
         secondCategory,
