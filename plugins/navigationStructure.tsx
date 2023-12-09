@@ -62,9 +62,41 @@ export default function navigationStructure(
 
   // create the recursive structure builder
   const recursiveStructureBuilder = (item: any) => {
-    console.log({ item })
-
     if (item._type === 'category') {
+      // split the children ahead of time
+      // to show the categories above the items
+
+      const listItemChildCategories = item.children.filter((child: any) => {
+        return child._type === 'category'
+      })
+
+      const listItemChildItems = item.children.filter((child: any) => {
+        return child._type === 'item'
+      })
+
+      // prepare the lists by checking if there are children
+      // and return them if they do otherwise return nothing (not null)
+
+      const listItemChildCategoriesList =
+        listItemChildCategories.length > 0
+          ? [
+              S.divider(),
+              ...listItemChildCategories.map((child: any) => {
+                return recursiveStructureBuilder(child)
+              }),
+            ]
+          : []
+
+      const listItemChildItemsList =
+        listItemChildItems.length > 0
+          ? [
+              S.divider(),
+              ...listItemChildItems.map((child: any) => {
+                return recursiveStructureBuilder(child)
+              }),
+            ]
+          : []
+
       return S.listItem()
         .title(item.name)
         .id(item._id)
@@ -84,10 +116,8 @@ export default function navigationStructure(
                     .id(item._id)
                     .schemaType(item._type)
                 ),
-              S.divider(),
-              ...item.children.map((child) => {
-                return recursiveStructureBuilder(child)
-              }),
+              ...listItemChildCategoriesList,
+              ...listItemChildItemsList,
             ])
         )
     } else {
