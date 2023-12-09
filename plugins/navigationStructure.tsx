@@ -109,7 +109,7 @@ export default function navigationStructure(
               S.listItem()
                 .title(`Edit ${item.name}`)
                 .id(`${item._id}-edit`)
-                .icon(() => <EmojiIcon>📝</EmojiIcon>)
+                .icon(() => <EmojiIcon>🔧</EmojiIcon>)
                 .child(
                   S.document()
                     .title(`Edit ${item.name}`)
