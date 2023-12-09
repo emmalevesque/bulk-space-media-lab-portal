@@ -1,129 +1,157 @@
-import { DocumentStore } from 'sanity'
-import { SanityDocument } from '@sanity/client'
-import { StructureBuilder } from 'sanity/desk'
-import { map } from 'rxjs/operators'
-import category from 'schemas/documents/inventory/category'
-import menu from 'schemas/singletons/menu'
-import { uuid } from '@sanity/uuid'
-import { groq } from 'next-sanity'
 import EmojiIcon from 'components/Icon/Emoji'
+import { groq } from 'next-sanity'
+import { map } from 'rxjs/operators'
+import { DocumentStore } from 'sanity'
+import { StructureBuilder } from 'sanity/desk'
+
+const typeIconMap = {
+  category: () => <EmojiIcon>🏷️</EmojiIcon>,
+  item: () => <EmojiIcon>🎒</EmojiIcon>,
+  tag: () => <EmojiIcon>🏷️</EmojiIcon>,
+}
 
 export default function navigationStructure(
-  schemaType: string,
   S: StructureBuilder,
   documentStore: DocumentStore
 ) {
-  const filter = groq`_type == "${schemaType}" && !defined(parent) && !(_id in path("drafts.**"))`
+  // children fields fragment
+  const childrenFieldsFragment = groq`
+    _id,
+    _type,
+    name,
+  `
+
+  // create the recursive fragment from which all things flow 🌊
+  const childrenFragment = (subChildrenFragment: string) => groq`
+    "children": *[references(^._id) && !(_id in path("drafts.**"))][] {
+       ${childrenFieldsFragment}
+       ${subChildrenFragment}
+    }
+  `
+
+  // create the filter for the main query to get the inventory structure
+  const filter = groq`
+  
+  // get categories
+  _type == "category" && 
+  // top level categories
+  !defined(parent) && !(_id in path("drafts.**"))`
+
+  // build the main query
   const query = groq`
     *[
       ${filter}
     ]
     {
       _id,
+      _type,
       name,
-      "childrenCount": count(
-        *[
-          _type == "${schemaType}" 
-          && parent._ref == ^._id 
-          && !(_id in path("drafts.**"))
-         ]
-       )
+      
+      // begin the recursion ➿
+      ${childrenFragment(childrenFragment(childrenFragment('')))} 
+      
+    }
+    // second projection to add count
+    {
+      ...,
+      "childrenCount": count(children)
     } | order(childrenCount desc)
     `
+
   const options = { apiVersion: `2023-01-01` }
 
-  function createChildList(
-    S: StructureBuilder,
-    schemaType: string,
-    parent: SanityDocument
-  ) {
-    return S.listItem({
-      id: parent._id,
-      title: parent.name,
-      icon: category.icon,
-      schemaType,
-      child: () =>
-        S.documentTypeList(schemaType)
-          .title(`${parent.name}`)
-          .showIcons(true)
-          .id(parent._id)
-          .filter(`_type == $schemaType && parent._ref == $parentId`)
-          .params({ schemaType, parentId: parent._id })
-          .canHandleIntent(
-            (intentName, params) =>
-              intentName === 'create' && params.template === 'category-child'
-          )
-          .initialValueTemplates([
-            S.initialValueTemplateItem('category-child', {
-              parentId: parent._id,
-              title: 'test',
-            }),
-          ])
-          .child((subChildId) => {
-            // Query to find children of the current child (sub-children)
-            const query = groq`{
-                "subChildren": *[_type == "${schemaType}" && parent._ref == $subChildId && !(_id in path("drafts.**"))]{
-                _id, 
-                name
-              },
-              "parentName": *[_id == $subChildId][0].title,
-            }
-            `
-            return documentStore
-              .listenQuery(query, { subChildId }, options)
-              .pipe(
-                map((response) =>
-                  S.documentTypeList(schemaType)
-                    .title(response.parentName)
-                    .showIcons(true)
-                    .id(parent._id)
-                    .filter(
-                      `_type == $schemaType && parent._ref == $documentId`
-                    )
-                    .params({
-                      schemaType,
-                      parentId: parent._id,
-                      documentId: subChildId,
-                    })
-                    .canHandleIntent(
-                      (intentName, params) =>
-                        intentName === 'create' &&
-                        params.template === 'category-child'
-                    )
-                    .initialValueTemplates([
-                      S.initialValueTemplateItem('category-child', {
-                        parentId: subChildId,
-                      }),
-                    ])
-                )
-              )
-          }),
-    })
+  // create the recursive structure builder
+  const recursiveStructureBuilder = (item: any) => {
+    if (item._type === 'category') {
+      // split the children ahead of time
+      // to show the categories above the items
+
+      const listItemChildCategories = item.children.filter((child: any) => {
+        return child._type === 'category'
+      })
+
+      const listItemChildItems = item.children.filter((child: any) => {
+        return child._type === 'item'
+      })
+
+      // prepare the lists by checking if there are children
+      // and return them if they do otherwise return nothing (not null)
+
+      const listItemChildCategoriesList =
+        listItemChildCategories.length > 0
+          ? [
+              S.divider(),
+              ...listItemChildCategories.map((child: any) => {
+                return recursiveStructureBuilder(child)
+              }),
+            ]
+          : []
+
+      const listItemChildItemsList =
+        listItemChildItems.length > 0
+          ? [
+              S.divider(),
+              ...listItemChildItems.map((child: any) => {
+                return recursiveStructureBuilder(child)
+              }),
+            ]
+          : []
+
+      return S.listItem()
+        .title(item.name)
+        .id(item._id)
+        .icon(() => <EmojiIcon>🏷️</EmojiIcon>)
+        .child(
+          S.list()
+            .title(item.name)
+            .id(item._id)
+            .items([
+              S.listItem()
+                .title(`Edit ${item.name}`)
+                .id(`${item._id}-edit`)
+                .icon(() => <EmojiIcon>🔧</EmojiIcon>)
+                .child(
+                  S.document()
+                    .title(`Edit ${item.name}`)
+                    .id(item._id)
+                    .schemaType(item._type)
+                ),
+              ...listItemChildCategoriesList,
+              ...listItemChildItemsList,
+            ])
+        )
+    } else {
+      return S.listItem()
+        .title(item.name)
+        .id(item._id)
+        .icon(typeIconMap[item._type])
+        .child(
+          S.document()
+            .title(`Edit ${item.name}`)
+            .id(item._id)
+            .schemaType(item._type)
+        )
+    }
   }
 
   return S.listItem()
-    .title('Navigation' || 'Navigation')
-    .id(uuid())
-    .icon(() => <EmojiIcon>🧭</EmojiIcon>)
-    .child(() =>
+    .title('Inventory')
+    .id('inventory')
+    .icon(() => <EmojiIcon>🗄️</EmojiIcon>)
+    .child(
       documentStore.listenQuery(query, {}, options).pipe(
-        map((parents) =>
-          S.list()
-            .id(menu.name)
-            .title(`Navigation` || 'Navigation')
-            .menuItems([
-              S.menuItem()
-                .title('Add')
-                .intent({ type: 'create', params: { type: schemaType } }),
-            ])
+        map((response: any) => {
+          console.log({ response })
+
+          return S.list()
+            .title('Manage Inventory')
+            .id('manage-inventory')
             .items([
-              // Create a List Item for each parent
-              // To display all its child documents
-              ...parents.map((parent: SanityDocument) =>
-                createChildList(S, schemaType, parent)
-              ),
+              ...response.map((item: any) => {
+                return recursiveStructureBuilder(item)
+              }),
             ])
-        )
+        })
       )
     )
 }

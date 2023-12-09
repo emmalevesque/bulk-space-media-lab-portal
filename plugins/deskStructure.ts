@@ -1,3 +1,4 @@
+import { uuid } from '@sanity/uuid'
 import { ComponentType, ReactNode } from 'react'
 import { DocumentDefinition } from 'sanity'
 import type {
@@ -6,15 +7,13 @@ import type {
   StructureBuilder,
   StructureResolverContext,
 } from 'sanity/desk'
-import category from 'schemas/documents/inventory/category'
 import navigationStructure from './navigationStructure'
-import { uuid } from '@sanity/uuid'
 
 import {
+  DESK_NAME,
+  documentPreviewPanes,
   singletonDocumentTypes,
   typesWithCustomFilters,
-  documentPreviewPanes,
-  DESK_NAME,
 } from 'lib/constants'
 
 type FilteredDocumentDefinition = DocumentDefinition & {
@@ -189,7 +188,7 @@ const deskStructure = (
   return S.list()
     .title(DESK_NAME)
     .items([
-      navigationStructure(category.name, S, context.documentStore),
+      navigationStructure(S, context.documentStore),
       S.divider(),
       ...documentTypesStructure,
     ])

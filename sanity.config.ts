@@ -2,39 +2,39 @@
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
 // plugins
+import { dashboardTool } from '@sanity/dashboard'
 import { visionTool } from '@sanity/vision'
 import { apiVersion, projectId } from 'lib/sanity.api'
-import { defineConfig } from 'sanity'
 import deskStructure from 'plugins/deskStructure'
-import { deskTool } from 'sanity/desk'
-import { dashboardTool } from '@sanity/dashboard'
+import { defineConfig } from 'sanity'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import { documentListWidget } from 'sanity-plugin-dashboard-widget-document-list'
+import { deskTool } from 'sanity/desk'
 
 // schema related items
-import { schema } from 'schemas/schema'
 import category from 'schemas/documents/inventory/category'
 import item from 'schemas/documents/inventory/item'
 import kit from 'schemas/documents/inventory/kit'
-import staff from 'schemas/documents/user/staff'
 import tag from 'schemas/documents/inventory/tag'
+import staff from 'schemas/documents/user/staff'
 import user from 'schemas/documents/user/user'
+import { schema } from 'schemas/schema'
 
-import checkout from 'schemas/documents/inventory/checkout'
-import { previewDocumentNode } from 'plugins/previewPane'
 import documentActions from 'plugins/documentActions'
-import settings from 'schemas/singletons/settings'
+import { previewDocumentNode } from 'plugins/previewPane'
+import checkout from 'schemas/documents/inventory/checkout'
 import {
   checkoutActions,
   getCheckoutStatusProps,
 } from 'schemas/documents/inventory/hooks/useCheckout'
+import settings from 'schemas/singletons/settings'
 
 import { templates } from 'lib/constants'
 
 import { TITLE } from 'lib/constants'
 
-import 'styles/studio.css'
 import { groq } from 'next-sanity'
+import 'styles/studio.css'
 
 const document = {
   actions: documentActions,
@@ -111,7 +111,7 @@ const plugins = [
           {
             type: 'list',
             title: 'Manage Inventory',
-            icon: kit.icon,
+            icon: item.icon,
             typeDefs: [
               {
                 type: 'list',
@@ -185,17 +185,17 @@ const commonConfig = {
 // They must match the dataset name
 export default defineConfig([
   {
-    basePath: '/studio/demo',
-    name: 'demo',
-    dataset: 'demo',
-    title: `Demo Data`,
-    ...commonConfig,
-  },
-  {
     basePath: '/studio/production',
     name: 'production',
     dataset: 'production',
     title: `${TITLE}`,
+    ...commonConfig,
+  },
+  {
+    basePath: '/studio/demo',
+    name: 'demo',
+    dataset: 'demo',
+    title: `Demo Data`,
     ...commonConfig,
   },
 ])

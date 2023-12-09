@@ -4,7 +4,7 @@ import { defineType } from 'sanity'
 export default defineType({
   name: 'tag',
   title: 'Tag',
-  icon: () => <EmojiIcon>🏷️</EmojiIcon>,
+  icon: () => <EmojiIcon>🗂️</EmojiIcon>,
   type: 'document',
   fields: [
     {
