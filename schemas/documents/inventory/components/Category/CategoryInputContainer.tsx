@@ -1,10 +1,10 @@
-import { Card, Box } from '@sanity/ui'
-import { SanityDocument } from 'next-sanity'
-import { Slug } from 'sanity'
-import { CategoryInputCheckbox } from './CategoryInputCheckbox'
-import { useCategoryInputContext } from '../../hooks/useCategoryInputContext'
-import { ChangeEvent, useCallback } from 'react'
+import { Box, Card } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
+import { SanityDocument } from 'next-sanity'
+import { ChangeEvent, useCallback } from 'react'
+import { Slug } from 'sanity'
+import { useCategoryInputContext } from '../../hooks/useCategoryInputContext'
+import { CategoryInputCheckbox } from './CategoryInputCheckbox'
 
 export type CategoryInputContainerProps = SanityDocument & {
   slug: Slug
@@ -84,7 +84,7 @@ export default function CategoryInputContainer({
           <CategoryInputCheckbox
             id={_id}
             label={name}
-            slug={slug.current}
+            slug={slug?.current}
             onClick={handleChange}
           />
         </Card>
