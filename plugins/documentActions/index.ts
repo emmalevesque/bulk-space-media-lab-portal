@@ -1,3 +1,4 @@
+import CreateVariant from './CreateVariant'
 import ProcessCheckout from './processCheckout'
 import ResetCheckout from './resetCheckout'
 
@@ -8,6 +9,13 @@ const documentActions = (prev, context) => {
       ResetCheckout,
       ...prev.filter(
         (a: { action: string }) => !['publish', 'unpublish'].includes(a.action)
+      ),
+    ]
+  } else if (context.schemaType === 'item ') {
+    return [
+      CreateVariant,
+      ...prev.filter(
+        (a: { action: string }) => !['duplicate'].includes(a.action)
       ),
     ]
   }

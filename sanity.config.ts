@@ -32,7 +32,7 @@ import { templates } from 'lib/constants'
 
 import { TITLE } from 'lib/constants'
 
-import { groq } from 'next-sanity'
+import inventoryStatsWidget from 'plugins/widgets/InventoryStatsWidget'
 import 'styles/studio.css'
 
 const document = {
@@ -56,15 +56,9 @@ const plugins = [
         order: '_updatedAt desc',
         query: `*[_type == "checkout" && isCheckedOut && isReturned]`,
       }),
-      documentListWidget({
-        title: 'Most common Categories',
-        types: ['category'],
-        query: groq`*[_type == "category"]
-          {
-            ...,
-            "count": count(*[_type == "item" && references(^._id)])
-          }`,
-        order: 'count desc',
+      inventoryStatsWidget({
+        title: 'Inventory Stats',
+        types: ['item', 'checkout'],
       }),
     ],
   }),
