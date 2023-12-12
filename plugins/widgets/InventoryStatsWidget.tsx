@@ -86,11 +86,14 @@ export default function inventoryStatsWidget(config): DashboardWidget {
 
         client
           .fetch(
-            groq`*[_type == "category"][]{
+            groq`*[_type == "category"]{
               _id,
               name,
               "children": count(*[_type == "item" && references(^._id)])
-            }| order(children desc)`
+            }| order(children desc)
+            [
+              0..5
+            ]`
           )
           .then(setCategories)
       }, [client])
@@ -120,7 +123,7 @@ export default function inventoryStatsWidget(config): DashboardWidget {
               </Card>
               <Grid columns={2} gap={3}>
                 <Card padding={2} shadow={1} radius={3}>
-                  <p>Total Items in Inventory</p>
+                  <p>Total Inventory Items</p>
                   <p className="font-bold">{count}</p>
                 </Card>
                 <Card padding={2} shadow={1} radius={3}>
@@ -138,14 +141,20 @@ export default function inventoryStatsWidget(config): DashboardWidget {
               </Grid>
               <Card padding={0} shadow={1} tone="default" radius={3} />
               <Card padding={2} shadow={1} radius={3} tone="caution">
-                Categories
+                Top Categories
               </Card>
               <Grid columns={2} gap={3}>
                 {categories?.map((category) => {
                   return (
-                    <Card padding={2} shadow={1} radius={3}>
-                      <p>Total in {category.name}</p>
-                      <p className="font-bold">{category.children}</p>
+                    <Card shadow={1} radius={3}>
+                      <Button
+                        padding={2}
+                        style={{ width: '100%', lineBreak: 'loose' }}
+                        mode="bleed"
+                      >
+                        <p>Total in {category.name}</p>
+                        <p className="font-bold">{category.children}</p>
+                      </Button>
                     </Card>
                   )
                 })}
