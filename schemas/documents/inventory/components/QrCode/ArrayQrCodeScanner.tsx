@@ -1,8 +1,8 @@
 import { BadgeTone, Button, Card, Dialog, Grid, Stack, Text } from '@sanity/ui'
-import { useCallback, useEffect, useState } from 'react'
-import { set, unset } from 'sanity'
 import { uuid } from '@sanity/uuid'
 import dynamic from 'next/dynamic'
+import { useCallback, useEffect, useState } from 'react'
+import { set, unset } from 'sanity'
 
 export default (props) => {
   const { onChange, value, schemaType } = props
@@ -118,7 +118,7 @@ export default (props) => {
             onClick={() => {
               setToBeAdded(null)
             }}
-            mode="ghost"
+            mode="bleed"
             text="Cancel"
           />
         </Dialog>

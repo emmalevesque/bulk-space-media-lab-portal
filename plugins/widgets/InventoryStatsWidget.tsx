@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <Button
       text="View Inventory"
-      mode="ghost"
+      mode="bleed"
       tone="primary"
       padding={3}
       fontSize={1}
@@ -105,7 +105,6 @@ export default function inventoryStatsWidget(config): DashboardWidget {
             <IntentButton
               mode="bleed"
               style={{ width: '100%' }}
-              paddingX={2}
               paddingY={4}
               tone="primary"
               type="button"

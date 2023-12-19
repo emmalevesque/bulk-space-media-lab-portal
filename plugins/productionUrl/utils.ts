@@ -26,6 +26,7 @@ export async function getSecret(
       await client
         .transaction()
         .createIfNotExists({ _id: id, _type: id })
+        // @ts-ignore
         .patch(patch)
         .commit({ tag })
       return newSecret
