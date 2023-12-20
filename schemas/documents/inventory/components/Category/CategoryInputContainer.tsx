@@ -36,7 +36,7 @@ export default function CategoryInputContainer({
         : false
       const childrenAreSelected = isSelected
         ? value?.some((item) =>
-            childrenCategories?.some((child) => child._id === item._ref)
+            childrenCategories?.some((child) => child?._id === item._ref)
           )
         : false
 

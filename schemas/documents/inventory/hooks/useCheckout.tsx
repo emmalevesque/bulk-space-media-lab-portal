@@ -52,7 +52,7 @@ export const getCheckoutStatus = (document): CheckoutStatus => {
       return 'USER_NEEDED'
     } else if (
       !Array.isArray(document?.checkoutItems) ||
-      !document?.checkoutItems[0]._ref
+      !document?.checkoutItems[0]?._ref
     ) {
       return 'ITEMS_NEEDED'
     }

@@ -8,10 +8,10 @@ import {
   Grid,
   Stack,
 } from '@sanity/ui'
-import { useCallback, useEffect, useState } from 'react'
-import { set, unset } from 'sanity'
 import { uuid } from '@sanity/uuid'
 import dynamic from 'next/dynamic'
+import { useCallback, useEffect, useState } from 'react'
+import { set, unset } from 'sanity'
 
 export default (props) => {
   const { onChange, schemaType } = props
@@ -78,7 +78,7 @@ export default (props) => {
     <>
       <Card className="bg-white">
         <Grid paddingY={2} gap={2} columns={[1]}>
-          {props.renderDefault(props)}
+          {props?.renderDefault(props)}
           <Stack space={2}>
             <Grid paddingY={[1]} columns={[1]}>
               <Stack space={1}>
@@ -118,7 +118,6 @@ export default (props) => {
                 onClick={() => {
                   setToBeAdded(null)
                 }}
-                mode="bleed"
                 tone="default"
                 text="Cancel"
               />

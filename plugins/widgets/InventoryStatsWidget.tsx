@@ -1,5 +1,12 @@
 import { DashboardWidget, DashboardWidgetContainer } from '@sanity/dashboard'
-import { Button, Card, Grid, Stack } from '@sanity/ui'
+import {
+  Button,
+  Card,
+  Grid,
+  Stack,
+  ThemeProvider,
+  studioTheme,
+} from '@sanity/ui'
 import { groq } from 'next-sanity'
 import { useEffect, useState } from 'react'
 import { IntentButton, useClient } from 'sanity'
@@ -99,68 +106,70 @@ export default function inventoryStatsWidget(config): DashboardWidget {
       }, [client])
 
       return (
-        <DashboardWidgetContainer
-          header={`Inventory Stats`}
-          footer={
-            <IntentButton
-              mode="bleed"
-              style={{ width: '100%' }}
-              paddingY={4}
-              tone="primary"
-              type="button"
-              intent="browse"
-              text="View Inventory"
-              id="inventory-stats-widget-view-inventory"
-              params={{ type: 'item' }}
-            />
-          }
-        >
-          <Card padding={3}>
-            <Stack space={3}>
-              <Card tone="primary" padding={2} shadow={1} radius={3}>
-                Overall Stats
-              </Card>
-              <Grid columns={2} gap={3}>
-                <Card padding={2} shadow={1} radius={3}>
-                  <p>Total Inventory Items</p>
-                  <p className="font-bold">{count}</p>
+        <ThemeProvider theme={studioTheme}>
+          <DashboardWidgetContainer
+            header={`Inventory Stats`}
+            footer={
+              <IntentButton
+                mode="bleed"
+                style={{ width: '100%' }}
+                paddingY={4}
+                tone="primary"
+                type="button"
+                intent="browse"
+                text="View Inventory"
+                id="inventory-stats-widget-view-inventory"
+                params={{ type: 'item' }}
+              />
+            }
+          >
+            <Card padding={3}>
+              <Stack space={3}>
+                <Card tone="primary" padding={2} shadow={1} radius={3}>
+                  Overall Stats
                 </Card>
-                <Card padding={2} shadow={1} radius={3}>
-                  <p>Total Variants</p>
-                  <p className="font-bold">{variantCount}</p>
+                <Grid columns={2} gap={3}>
+                  <Card padding={2} shadow={1} radius={3}>
+                    <p>Total Inventory Items</p>
+                    <p className="font-bold">{count}</p>
+                  </Card>
+                  <Card padding={2} shadow={1} radius={3}>
+                    <p>Total Variants</p>
+                    <p className="font-bold">{variantCount}</p>
+                  </Card>
+                  <Card padding={2} shadow={1} radius={3}>
+                    <p>Total Non-Variants</p>
+                    <p className="font-bold">{count - variantCount}</p>
+                  </Card>
+                  <Card padding={2} shadow={1} radius={3}>
+                    <p>Total Categories</p>
+                    <p className="font-bold">{totalCategories}</p>
+                  </Card>
+                </Grid>
+                <Card padding={0} shadow={1} tone="default" radius={3} />
+                <Card padding={2} shadow={1} radius={3} tone="caution">
+                  Top Categories
                 </Card>
-                <Card padding={2} shadow={1} radius={3}>
-                  <p>Total Non-Variants</p>
-                  <p className="font-bold">{count - variantCount}</p>
-                </Card>
-                <Card padding={2} shadow={1} radius={3}>
-                  <p>Total Categories</p>
-                  <p className="font-bold">{totalCategories}</p>
-                </Card>
-              </Grid>
-              <Card padding={0} shadow={1} tone="default" radius={3} />
-              <Card padding={2} shadow={1} radius={3} tone="caution">
-                Top Categories
-              </Card>
-              <Grid columns={2} gap={3}>
-                {categories?.map((category) => {
-                  return (
-                    <Card shadow={1} radius={3}>
-                      <Button
-                        padding={2}
-                        style={{ width: '100%', lineBreak: 'loose' }}
-                        mode="bleed"
-                      >
-                        <p>Total in {category.name}</p>
-                        <p className="font-bold">{category.children}</p>
-                      </Button>
-                    </Card>
-                  )
-                })}
-              </Grid>
-            </Stack>
-          </Card>
-        </DashboardWidgetContainer>
+                <Grid columns={2} gap={3}>
+                  {categories?.map((category) => {
+                    return (
+                      <Card shadow={1} radius={3}>
+                        <Button
+                          padding={2}
+                          style={{ width: '100%', lineBreak: 'loose' }}
+                          mode="bleed"
+                        >
+                          <p>Total in {category.name}</p>
+                          <p className="font-bold">{category.children}</p>
+                        </Button>
+                      </Card>
+                    )
+                  })}
+                </Grid>
+              </Stack>
+            </Card>
+          </DashboardWidgetContainer>
+        </ThemeProvider>
       )
     },
     layout: {

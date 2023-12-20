@@ -16,6 +16,8 @@ import {
   typesWithCustomFilters,
 } from 'lib/constants'
 
+import ReferencesComponent from 'schemas/documents/inventory/components/References'
+
 type FilteredDocumentDefinition = DocumentDefinition & {
   filter: string
 }
@@ -61,6 +63,7 @@ const getFilter = (title: string) => {
 
 export const previewPanes = (S, type) => [
   S.view.form().title('Edit'),
+  S.view.component(ReferencesComponent).title('References'),
   ...documentPreviewPanes[type.name || '']?.map((pane) =>
     S.view
       .component(pane.component)

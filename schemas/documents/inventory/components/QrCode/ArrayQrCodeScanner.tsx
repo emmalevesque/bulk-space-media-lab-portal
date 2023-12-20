@@ -1,7 +1,7 @@
 import { BadgeTone, Button, Card, Dialog, Grid, Stack, Text } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
 import dynamic from 'next/dynamic'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { set, unset } from 'sanity'
 
 export default (props) => {
@@ -10,7 +10,7 @@ export default (props) => {
 
   const [open, setOpen] = useState(false)
 
-  const onOpen = useCallback(async () => {
+  const onOpen = useCallback(() => {
     setOpen(true)
   }, [])
   const onClose = useCallback(() => setOpen(false), [])
@@ -63,11 +63,7 @@ export default (props) => {
     setTone('critical')
   }
 
-  useEffect(() => {
-    console.log({ toBeAdded })
-  }, [toBeAdded])
-
-  const [tone, setTone] = useState<BadgeTone>('default')
+  const [tone, setTone] = useState<BadgeTone>('critical')
 
   const RenderQrScanner = (props) => {
     const QrReader = dynamic(() => import('../QrScanner'), {
@@ -111,6 +107,7 @@ export default (props) => {
               setToBeAdded(null)
               handleConfirm()
             }}
+            mode="ghost"
             text="Confirm"
           />
 
@@ -118,7 +115,7 @@ export default (props) => {
             onClick={() => {
               setToBeAdded(null)
             }}
-            mode="bleed"
+            mode="ghost"
             text="Cancel"
           />
         </Dialog>
