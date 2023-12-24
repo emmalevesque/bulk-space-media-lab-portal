@@ -29,13 +29,14 @@ import { templates } from 'lib/constants'
 
 import { TITLE } from 'lib/constants'
 
+import inventoryStatsComponent from 'plugins/widgets/InventoryStatsWidget'
 import 'styles/studio.css'
 
 const document = {
   actions: documentActions,
 }
 
-const tools = []
+const tools = [inventoryStatsComponent()]
 
 const plugins = [
   deskTool({

@@ -6,7 +6,7 @@ export default defineType({
   name: 'kit',
   title: 'Kit',
   type: 'document',
-  icon: () => <EmojiIcon>🎒</EmojiIcon>,
+  icon: () => <EmojiIcon>📦</EmojiIcon>,
   groups: [
     {
       name: 'details',

@@ -13,7 +13,7 @@ export default defineType({
   name: 'checkout',
   title: 'Checkout',
   type: 'document',
-  icon: () => <EmojiIcon>📦</EmojiIcon>,
+  icon: () => <EmojiIcon>🎒</EmojiIcon>,
   groups: [
     {
       name: 'details',

@@ -1,32 +1,15 @@
-import { DashboardWidget, DashboardWidgetContainer } from '@sanity/dashboard'
-import {
-  Button,
-  Card,
-  Grid,
-  Stack,
-  ThemeProvider,
-  studioTheme,
-} from '@sanity/ui'
+import { BarChartIcon } from '@sanity/icons'
+import { Button, Card, Container, Grid, Stack } from '@sanity/ui'
 import { groq } from 'next-sanity'
 import { useEffect, useState } from 'react'
-import { IntentButton, useClient } from 'sanity'
+import { Tool, useClient } from 'sanity'
+import { IntentLink } from 'sanity/router'
 
-const Footer = () => {
-  return (
-    <Button
-      text="View Inventory"
-      mode="bleed"
-      tone="primary"
-      padding={3}
-      fontSize={1}
-      style={{ marginTop: '1rem' }}
-    />
-  )
-}
-
-export default function inventoryStatsWidget(config): DashboardWidget {
+export default function inventoryStatsComponent(): Tool {
   return {
-    name: 'inventory-stats-widget',
+    name: 'inventory-stats',
+    title: 'Inventory Stats',
+    icon: BarChartIcon,
     component: () => {
       const client = useClient()
 
@@ -36,12 +19,12 @@ export default function inventoryStatsWidget(config): DashboardWidget {
       useEffect(() => {
         if (!client) return
 
-        const documentCount = client
+        client
           .fetch(
             groq`
-      *[_type == "item"][]{
-        "increment": stock,
-      }`
+          *[_type == "item"][]{
+            "increment": stock,
+          }`
           )
           .then((res) => {
             return res.reduce((acc, curr) => {
@@ -57,11 +40,11 @@ export default function inventoryStatsWidget(config): DashboardWidget {
       useEffect(() => {
         if (!client) return
 
-        const documentCount = client
+        client
           .fetch(
             groq`*[_type == "item" && isVariant]{
-              "increment": stock,
-            }`
+                  "increment": stock,
+                }`
           )
           .then((res) => {
             return res.reduce((acc, curr) => {
@@ -77,15 +60,21 @@ export default function inventoryStatsWidget(config): DashboardWidget {
       useEffect(() => {
         if (!client) return
 
-        const documentCount = client
+        client
           .fetch(
             groq`count(*[_type == "category"])
-            `
+                `
           )
           .then(setTotalCategories)
       }, [client])
 
-      const [categories, setCategories] = useState<any[]>([])
+      const [categories, setCategories] = useState<
+        {
+          _id: string
+          name: string
+          children: number
+        }[]
+      >([])
 
       // get the categories
       useEffect(() => {
@@ -94,87 +83,90 @@ export default function inventoryStatsWidget(config): DashboardWidget {
         client
           .fetch(
             groq`*[_type == "category"]{
-              _id,
-              name,
-              "children": count(*[_type == "item" && references(^._id)])
-            }| order(children desc)
-            [
-              0..5
-            ]`
+                  _id,
+                  name,
+                  "children": count(*[_type == "item" && references(^._id)])
+                }| order(children desc)
+                [
+                  0..5
+                ]`
           )
           .then(setCategories)
       }, [client])
-
       return (
-        <ThemeProvider theme={studioTheme}>
-          <DashboardWidgetContainer
-            header={`Inventory Stats`}
-            footer={
-              <IntentButton
-                mode="bleed"
-                style={{ width: '100%' }}
-                paddingY={4}
-                tone="primary"
-                type="button"
-                intent="browse"
-                text="View Inventory"
-                id="inventory-stats-widget-view-inventory"
-                params={{ type: 'item' }}
-              />
-            }
-          >
-            <Card padding={3}>
-              <Stack space={3}>
-                <Card tone="primary" padding={2} shadow={1} radius={3}>
-                  Overall Stats
-                </Card>
-                <Grid columns={2} gap={3}>
-                  <Card padding={2} shadow={1} radius={3}>
-                    <p>Total Inventory Items</p>
-                    <p className="font-bold">{count}</p>
-                  </Card>
-                  <Card padding={2} shadow={1} radius={3}>
-                    <p>Total Variants</p>
-                    <p className="font-bold">{variantCount}</p>
-                  </Card>
-                  <Card padding={2} shadow={1} radius={3}>
-                    <p>Total Non-Variants</p>
-                    <p className="font-bold">{count - variantCount}</p>
-                  </Card>
-                  <Card padding={2} shadow={1} radius={3}>
-                    <p>Total Categories</p>
-                    <p className="font-bold">{totalCategories}</p>
-                  </Card>
-                </Grid>
-                <Card padding={0} shadow={1} tone="default" radius={3} />
-                <Card padding={2} shadow={1} radius={3} tone="caution">
-                  Top Categories
-                </Card>
-                <Grid columns={2} gap={3}>
-                  {categories?.map((category) => {
-                    return (
-                      <Card shadow={1} radius={3}>
-                        <Button
-                          padding={2}
-                          style={{ width: '100%', lineBreak: 'loose' }}
-                          mode="bleed"
-                        >
-                          <p>Total in {category.name}</p>
-                          <p className="font-bold">{category.children}</p>
-                        </Button>
-                      </Card>
-                    )
-                  })}
-                </Grid>
-              </Stack>
+        <Container width={[1, 2, 2]} padding={3}>
+          <Stack space={3}>
+            <Card tone="primary" padding={2} shadow={1} radius={3}>
+              Overall Stats
             </Card>
-          </DashboardWidgetContainer>
-        </ThemeProvider>
+            <Grid columns={2} gap={3}>
+              <Button
+                radius={3}
+                padding={2}
+                style={{ width: '100%', lineBreak: 'loose' }}
+                mode="bleed"
+              >
+                <p>
+                  Total <b>Inventory Items</b>
+                </p>
+                <p className="font-bold">{count}</p>
+              </Button>
+
+              <Button padding={2} mode="bleed" radius={3}>
+                <p>
+                  Total <b>Variants</b>
+                </p>
+                <p className="font-bold">{variantCount}</p>
+              </Button>
+
+              <Button padding={2} mode="bleed" radius={3}>
+                <p>
+                  Total <b>Variants</b>
+                </p>
+                <p className="font-bold">{variantCount}</p>
+              </Button>
+              <Button padding={2} mode="bleed" radius={3}>
+                <p>
+                  Total <b>Non-Variants</b>
+                </p>
+                <p className="font-bold">{count - variantCount}</p>
+              </Button>
+              <Button padding={2} mode="bleed" radius={3}>
+                <p>
+                  Total <b>Categories</b>
+                </p>
+                <p className="font-bold">{totalCategories}</p>
+              </Button>
+            </Grid>
+            <Card padding={2} shadow={1} radius={3} tone="caution">
+              Top Categories
+            </Card>
+            <Grid columns={2} gap={3}>
+              {categories?.map((category) => {
+                return (
+                  <Button
+                    radius={3}
+                    padding={2}
+                    style={{ width: '100%', lineBreak: 'loose' }}
+                    mode="bleed"
+                  >
+                    <IntentLink
+                      intent="edit"
+                      params={{ id: category._id }}
+                      style={{ width: '100%' }}
+                    >
+                      <p>
+                        Total in <b>{category.name}</b>
+                      </p>
+                      <p className="font-bold">{category.children}</p>
+                    </IntentLink>
+                  </Button>
+                )
+              })}
+            </Grid>
+          </Stack>
+        </Container>
       )
-    },
-    layout: {
-      width: 'auto',
-      height: 'auto',
     },
   }
 }

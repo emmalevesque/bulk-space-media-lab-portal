@@ -5,13 +5,14 @@ import slugify from 'slugify'
 export type Category = {
   _id: Id
   _type: 'category'
-  title: string
+  name: string
   slug: string
   parent: Reference
   tags: {
     _type: 'tag'
     _ref: string
   }[]
+  children?: Category[]
 }
 
 function asyncSlugify(input) {
