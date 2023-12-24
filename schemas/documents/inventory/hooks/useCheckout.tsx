@@ -178,7 +178,7 @@ export const getCheckoutStatusProps = (document, status?: CheckoutStatus) => {
       color: 'primary',
       title: 'This item is available to be checked out',
       tone: 'primary',
-      icon: () => <EmojiIcon>✋</EmojiIcon>,
+      icon: () => <EmojiIcon>⏱️</EmojiIcon>,
     },
     USER_NEEDED: {
       label: 'Select User',
