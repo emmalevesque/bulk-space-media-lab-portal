@@ -20,7 +20,6 @@ import { schema } from 'schemas/schema'
 
 import documentActions from 'plugins/documentActions'
 import { previewDocumentNode } from 'plugins/previewPane'
-import inventoryStatsComponent from 'plugins/widgets/InventoryStatsWidget'
 import {
   checkoutActions,
   getCheckoutStatusProps,
@@ -30,6 +29,7 @@ import { templates } from 'lib/constants'
 
 import { TITLE } from 'lib/constants'
 
+import inventoryStatsComponent from 'plugins/widgets/InventoryStatsWidget'
 import 'styles/studio.css'
 
 const document = {
