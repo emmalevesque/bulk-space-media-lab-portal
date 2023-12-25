@@ -19,7 +19,7 @@ import { schema } from 'schemas/schema'
 
 import documentActions from 'plugins/documentActions'
 import { previewDocumentNode } from 'plugins/previewPane'
-import checkout from 'schemas/documents/inventory/checkout'
+import inventoryStatsComponent from 'plugins/widgets/InventoryStatsWidget'
 import {
   checkoutActions,
   getCheckoutStatusProps,
@@ -29,13 +29,14 @@ import { templates } from 'lib/constants'
 
 import { TITLE } from 'lib/constants'
 
+import checkout from 'schemas/documents/inventory/checkout'
 import 'styles/studio.css'
 
 const document = {
   actions: documentActions,
 }
 
-const tools = []
+const tools = [inventoryStatsComponent()]
 
 const plugins = [
   deskTool({

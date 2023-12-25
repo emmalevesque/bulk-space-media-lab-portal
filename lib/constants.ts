@@ -21,39 +21,35 @@ export const documentPreviewPanes: {
 } = {
   item: [
     {
-      title: 'Status',
-      component: dynamic(
-        () =>
-          import('schemas/documents/inventory/components/Item/ItemStatusPane')
-      ),
-    },
-    {
-      title: 'History',
-      component: dynamic(
-        () =>
-          import('schemas/documents/inventory/components/Item/ItemHistoryPane')
-      ),
-    },
-    {
       title: 'QR Code',
       component: dynamic(
         () =>
           import('schemas/documents/inventory/components/Item/ItemQrCodePane')
       ),
     },
-  ],
-  checkout: [
     {
-      title: 'History',
+      title: 'Related',
       component: dynamic(
-        () =>
-          import(
-            'schemas/documents/inventory/components/Checkout/CheckoutHistoryPane'
-          )
+        () => import('schemas/documents/inventory/components/RelatedDocuments')
       ),
     },
   ],
-  kit: [],
+  checkout: [
+    {
+      title: 'Related',
+      component: dynamic(
+        () => import('schemas/documents/inventory/components/RelatedDocuments')
+      ),
+    },
+  ],
+  kit: [
+    {
+      title: 'Related',
+      component: dynamic(
+        () => import('schemas/documents/inventory/components/RelatedDocuments')
+      ),
+    },
+  ],
   user: [
     {
       title: 'QR Code',
@@ -63,19 +59,30 @@ export const documentPreviewPanes: {
       ),
     },
   ],
-  staff: [],
-  category: [
+  staff: [
     {
-      title: 'Inventory Items',
+      title: 'Related',
       component: dynamic(
-        () =>
-          import(
-            'schemas/documents/inventory/components/Category/CategoryItemsPane'
-          )
+        () => import('schemas/documents/inventory/components/RelatedDocuments')
       ),
     },
   ],
-  tag: [],
+  category: [
+    {
+      title: 'Related',
+      component: dynamic(
+        () => import('schemas/documents/inventory/components/RelatedDocuments')
+      ),
+    },
+  ],
+  tag: [
+    {
+      title: 'Related',
+      component: dynamic(
+        () => import('schemas/documents/inventory/components/RelatedDocuments')
+      ),
+    },
+  ],
   settings: [],
 }
 
