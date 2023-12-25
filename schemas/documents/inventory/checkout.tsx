@@ -1,8 +1,6 @@
 import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
 import { getCheckoutStatusProps } from './hooks/useCheckout'
-import ArrayQrCodeScanner from './components/QrCode/ArrayQrCodeScanner'
-import ReferenceQrCodeScanner from './components/QrCode/ReferenceQrCodeScanner'
 
 const dev = process.env.NODE_ENV !== 'production'
 
@@ -73,7 +71,7 @@ export default defineType({
       to: [{ type: 'user' }, { type: 'staff' }],
       validation: (Rule) => Rule.required(),
       components: {
-        input: ReferenceQrCodeScanner,
+        // input: ReferenceQrCodeScanner,
       },
     },
     {
@@ -84,7 +82,7 @@ export default defineType({
       type: 'array',
       validation: (Rule) => Rule.min(1).required(),
       components: {
-        input: ArrayQrCodeScanner,
+        // input: ArrayQrCodeScanner,
       },
       of: [
         {
