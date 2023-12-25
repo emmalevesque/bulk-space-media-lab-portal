@@ -2,7 +2,7 @@
 import { useEffect, useReducer, useRef } from 'react'
 
 // Initialize Sanity client (replace with your project's details)
-import { client } from 'lib/sanity.client'
+import { _readClient as client } from 'lib/sanity.client'
 
 interface State<T> {
   data?: T

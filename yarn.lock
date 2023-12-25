@@ -2005,10 +2005,10 @@
     "@sanity/client" "^6.10.0"
     "@types/react" "^18.0.25"
 
-"@sanity/types@3.23.1":
-  version "3.23.1"
-  resolved "https://registry.yarnpkg.com/@sanity/types/-/types-3.23.1.tgz#caa428d6445c1832e06af1221e777a855a9d7ea0"
-  integrity sha512-aeo/jLcCN4GskaXmg3D5zHnCAqFCTc/sgoUguLwVtxYyDN5Ex0fVmCiQf6XPBQZpw0dZOr8hQmVSpmeJ6AAckQ==
+"@sanity/types@3.23.4":
+  version "3.23.4"
+  resolved "https://registry.yarnpkg.com/@sanity/types/-/types-3.23.4.tgz#f7477583772d4c935457ba83c7879b3641a3b211"
+  integrity sha512-v3EN73ECxlwHAScOhQhSnnfpZf62LX8vN62V3m6tY7+Umnc9XwKUoTtKiMQUKJy4XuZgarot3kM4/6GfB9Y3Mg==
   dependencies:
     "@sanity/client" "^6.10.0"
     "@types/react" "^18.0.25"
@@ -2067,11 +2067,11 @@
     moment "^2.29.4"
 
 "@sanity/util@^3.0.0":
-  version "3.23.1"
-  resolved "https://registry.yarnpkg.com/@sanity/util/-/util-3.23.1.tgz#2fdd1a62b50c81b50757db29a3edae95ce085fd8"
-  integrity sha512-AgZpPnZO9TYBu5IvtqLhM8gVPUtxmT4lhGEkymdC42fmskJSfHU6hD/BFvcyBu4Nf/TTFWf7DmtC1PSbnSGvsg==
+  version "3.23.4"
+  resolved "https://registry.yarnpkg.com/@sanity/util/-/util-3.23.4.tgz#93a2c1f4e41ac215c582b526c0c02d4f67106bde"
+  integrity sha512-ehWW1GifZVJxacyBDaiORogvD7Nzp1/WjzWCtRZ/Gjlt1kXJl4B7ESwPsbOtwRLGBnVB1wHcl7HsCStxEd5aqg==
   dependencies:
-    "@sanity/types" "3.23.1"
+    "@sanity/types" "3.23.4"
     get-random-values-esm "^1.0.0"
     moment "^2.29.4"
 
