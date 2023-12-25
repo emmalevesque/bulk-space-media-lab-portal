@@ -27,6 +27,12 @@ export const documentPreviewPanes: {
           import('schemas/documents/inventory/components/Item/ItemQrCodePane')
       ),
     },
+    {
+      title: 'Related',
+      component: dynamic(
+        () => import('schemas/documents/inventory/components/RelatedDocuments')
+      ),
+    },
   ],
   checkout: [
     {
@@ -36,7 +42,14 @@ export const documentPreviewPanes: {
       ),
     },
   ],
-  kit: [],
+  kit: [
+    {
+      title: 'Related',
+      component: dynamic(
+        () => import('schemas/documents/inventory/components/RelatedDocuments')
+      ),
+    },
+  ],
   user: [
     {
       title: 'QR Code',
@@ -46,9 +59,30 @@ export const documentPreviewPanes: {
       ),
     },
   ],
-  staff: [],
-  category: [],
-  tag: [],
+  staff: [
+    {
+      title: 'Related',
+      component: dynamic(
+        () => import('schemas/documents/inventory/components/RelatedDocuments')
+      ),
+    },
+  ],
+  category: [
+    {
+      title: 'Related',
+      component: dynamic(
+        () => import('schemas/documents/inventory/components/RelatedDocuments')
+      ),
+    },
+  ],
+  tag: [
+    {
+      title: 'Related',
+      component: dynamic(
+        () => import('schemas/documents/inventory/components/RelatedDocuments')
+      ),
+    },
+  ],
   settings: [],
 }
 

@@ -40,3 +40,6 @@ export async function getSecret(
 
   return secret
 }
+
+export const stripDraftNamespace = (id) =>
+  id ? id.replace(/^(drafts\.)?/, '') : id

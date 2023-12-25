@@ -10,7 +10,6 @@ import { deskTool } from 'sanity/desk'
 
 // schema related items
 import category from 'schemas/documents/inventory/category'
-import checkout from 'schemas/documents/inventory/checkout'
 import item from 'schemas/documents/inventory/item'
 import kit from 'schemas/documents/inventory/kit'
 import tag from 'schemas/documents/inventory/tag'
@@ -30,6 +29,7 @@ import { templates } from 'lib/constants'
 
 import { TITLE } from 'lib/constants'
 
+import checkout from 'schemas/documents/inventory/checkout'
 import 'styles/studio.css'
 
 const document = {
