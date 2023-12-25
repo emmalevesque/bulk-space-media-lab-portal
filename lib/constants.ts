@@ -21,20 +21,6 @@ export const documentPreviewPanes: {
 } = {
   item: [
     {
-      title: 'Status',
-      component: dynamic(
-        () =>
-          import('schemas/documents/inventory/components/Item/ItemStatusPane')
-      ),
-    },
-    {
-      title: 'History',
-      component: dynamic(
-        () =>
-          import('schemas/documents/inventory/components/Item/ItemHistoryPane')
-      ),
-    },
-    {
       title: 'QR Code',
       component: dynamic(
         () =>
@@ -44,12 +30,9 @@ export const documentPreviewPanes: {
   ],
   checkout: [
     {
-      title: 'History',
+      title: 'Related',
       component: dynamic(
-        () =>
-          import(
-            'schemas/documents/inventory/components/Checkout/CheckoutHistoryPane'
-          )
+        () => import('schemas/documents/inventory/components/RelatedDocuments')
       ),
     },
   ],
@@ -64,17 +47,7 @@ export const documentPreviewPanes: {
     },
   ],
   staff: [],
-  category: [
-    {
-      title: 'Inventory Items',
-      component: dynamic(
-        () =>
-          import(
-            'schemas/documents/inventory/components/Category/CategoryItemsPane'
-          )
-      ),
-    },
-  ],
+  category: [],
   tag: [],
   settings: [],
 }

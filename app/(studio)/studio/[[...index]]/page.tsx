@@ -1,20 +1,16 @@
-import type { Metadata, Viewport } from 'next'
-import { metadata as studioMetadata } from 'next-sanity/studio/metadata'
-import { viewport as studioViewport } from 'next-sanity/studio/viewport'
-
+import 'tailwindcss/tailwind.css'
 import { Studio } from './Studio'
 
-// Set the right `viewport`, `robots` and `referer` meta tags
-export const metadata: Metadata = {
-  ...studioMetadata,
-  // Overrides the title until the Studio is loaded
-  title: 'Loading Studio…',
-}
+import { Viewport } from 'next'
+import { viewport as nextSanityViewport } from 'next-sanity/studio/viewport'
+// Ensures the Studio route is statically generated
+export const dynamic = 'force-static'
 
+// Set the right `viewport`, `robots` and `referer` meta tags
+export { metadata } from 'next-sanity/studio/metadata'
 export const viewport: Viewport = {
-  ...studioViewport,
-  // Overrides the viewport to resize behavior
-  interactiveWidget: 'resizes-content',
+  ...nextSanityViewport,
+  themeColor: '#1f212b',
 }
 
 export default function StudioPage() {

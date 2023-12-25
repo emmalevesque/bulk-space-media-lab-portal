@@ -6208,7 +6208,7 @@ groq-js@1.3.0, groq-js@^1.1.12:
   resolved "https://registry.yarnpkg.com/groq-js/-/groq-js-1.3.0.tgz#7fc03a41c0b5a4160edfd714735e756d653b637a"
   integrity sha512-J7+JcxM0OvoowSkhNZAabCLueldEMkKzd9ufCEDRjKvkD1PcBUwyfsGvxUI59UojRCqFqp0y76LLzPzwSZTetw==
 
-groq@^3.0.0, groq@^3.19:
+groq@^3.0.0:
   version "3.23.0"
   resolved "https://registry.yarnpkg.com/groq/-/groq-3.23.0.tgz#6d53b79ef915db199fc1623b5141fca4ec5990be"
   integrity sha512-YdrXobv/QLYhbRiY2QuYcpRCBhBS1iOLPRCasPXvwrjPdG565vyIur6u+BxY7dnOQMxhppY3U5aUM7E13pn/jA==
@@ -6217,6 +6217,11 @@ groq@^3.14.5:
   version "3.18.1"
   resolved "https://registry.yarnpkg.com/groq/-/groq-3.18.1.tgz#4425c62e7d623510622377ff1aae837ad723672d"
   integrity sha512-+IAn1xU51GY1J3L/6aBak3lxQV7mdvEDegTk2+KRgU5BFq7C0A5Anfe1buo6+gz9d7RkkWNrVwVqxduSJ71udA==
+
+groq@^3.19:
+  version "3.23.4"
+  resolved "https://registry.yarnpkg.com/groq/-/groq-3.23.4.tgz#5fd3221651341ed66691e542a528c57fd89d00c0"
+  integrity sha512-1r7OKgUKHZ6dpuzKNkvFfqB8GEt633n6vCH9gWnbvy8ahYb2/RxNqk4VHkEAbxqKhrLTPaEgi6kJJ5Kk4K6SKg==
 
 gunzip-maybe@^1.4.1:
   version "1.4.2"
@@ -8079,10 +8084,10 @@ next-sanity-image@6.1.0:
   dependencies:
     "@sanity/image-url" "^1.0.2"
 
-next-sanity@^7.0.4:
-  version "7.0.4"
-  resolved "https://registry.yarnpkg.com/next-sanity/-/next-sanity-7.0.4.tgz#878f7c50d91fa677cdb85310577edac8de230071"
-  integrity sha512-Lp3Ms3yRdHDTWPQ3Cz3a4JU1shti+Ipz75Qqvi2keU2qInQOoLSfjhxbLQcTEjOdtXb55kMKnysJi/bUya6r9g==
+next-sanity@^7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/next-sanity/-/next-sanity-7.0.5.tgz#a93c00315e0f6b191d969c7f0b4f3a9877ad0f46"
+  integrity sha512-CZLE3LTnWDPoUtpdVcA+L+cXvgbc+0uvR3PvkEqHmWU8N1UE/S6QCUhtOrxNErp3vP87PzQM9Msc9rUu4jH80w==
   dependencies:
     "@sanity/client" "^6.10.0"
     "@sanity/preview-kit" "5.0.6"

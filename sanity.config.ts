@@ -10,6 +10,7 @@ import { deskTool } from 'sanity/desk'
 
 // schema related items
 import category from 'schemas/documents/inventory/category'
+import checkout from 'schemas/documents/inventory/checkout'
 import item from 'schemas/documents/inventory/item'
 import kit from 'schemas/documents/inventory/kit'
 import tag from 'schemas/documents/inventory/tag'
@@ -19,7 +20,7 @@ import { schema } from 'schemas/schema'
 
 import documentActions from 'plugins/documentActions'
 import { previewDocumentNode } from 'plugins/previewPane'
-import checkout from 'schemas/documents/inventory/checkout'
+import inventoryStatsComponent from 'plugins/widgets/InventoryStatsWidget'
 import {
   checkoutActions,
   getCheckoutStatusProps,
@@ -29,7 +30,6 @@ import { templates } from 'lib/constants'
 
 import { TITLE } from 'lib/constants'
 
-import inventoryStatsComponent from 'plugins/widgets/InventoryStatsWidget'
 import 'styles/studio.css'
 
 const document = {
