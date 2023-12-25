@@ -2,12 +2,10 @@
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
 // plugins
-import { dashboardTool } from '@sanity/dashboard'
 import { visionTool } from '@sanity/vision'
 import { apiVersion, projectId } from 'lib/sanity.api'
 import deskStructure from 'plugins/deskStructure'
 import { defineConfig } from 'sanity'
-import { documentListWidget } from 'sanity-plugin-dashboard-widget-document-list'
 import { deskTool } from 'sanity/desk'
 
 // schema related items
@@ -40,26 +38,6 @@ const document = {
 const tools = []
 
 const plugins = [
-  dashboardTool({
-    widgets: [
-      documentListWidget({
-        title: 'Hot Checkouts',
-        order: '_updatedAt desc',
-        types: ['checkout'],
-        query: `*[_type == "checkout" && isCheckedOut && !isReturned]`,
-        createButtonText: 'New Checkout',
-      }),
-      documentListWidget({
-        title: 'Recent Returns',
-        order: '_updatedAt desc',
-        query: `*[_type == "checkout" && isCheckedOut && isReturned]`,
-      }),
-      // inventoryStatsWidget({
-      //   title: 'Inventory Stats',
-      //   types: ['item', 'checkout'],
-      // }),
-    ],
-  }),
   deskTool({
     title: 'Manage',
     structure: (S, context) =>
