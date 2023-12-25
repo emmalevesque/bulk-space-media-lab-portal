@@ -263,6 +263,8 @@ export default defineType({
           firstCategory || ''
         }`,
         title: `${manufacturerName}${variantNumberString}`,
+        // TODO: replace this with any uploaded images
+        // TODO: potentially add a little dot icon to indicate stock
         media: <StatusIcon stock={stock} />,
         stock: stock,
         secondCategory,
