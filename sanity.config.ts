@@ -19,7 +19,7 @@ import { schema } from 'schemas/schema'
 
 import documentActions from 'plugins/documentActions'
 import { previewDocumentNode } from 'plugins/previewPane'
-import inventoryStatsComponent from 'plugins/widgets/InventoryStatsWidget'
+import inventoryStatsComponent from 'plugins/tools/InventoryStatsWidget'
 import {
   checkoutActions,
   getCheckoutStatusProps,
