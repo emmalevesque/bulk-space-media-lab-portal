@@ -1,8 +1,6 @@
 // ./src/app/studio/[[...index]]/Studio.tsx
 'use client'
 
-import 'tailwindcss/tailwind.css'
-
 import { NextStudio } from 'next-sanity/studio'
 
 import config from 'sanity.config'
