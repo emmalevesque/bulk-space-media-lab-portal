@@ -12,6 +12,9 @@ import contact from './objects/contact'
 import qrCode from './objects/qrCode'
 import menu from './singletons/menu'
 
+import description from './objects/fields/description'
+import link from './objects/fields/link'
+
 export const schema = [
   category,
   check,
@@ -26,4 +29,7 @@ export const schema = [
   user,
   qrCode,
   conditionReport,
+  // fields
+  description,
+  link,
 ]

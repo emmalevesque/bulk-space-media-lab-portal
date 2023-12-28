@@ -25,7 +25,7 @@ import {
   getCheckoutStatusProps,
 } from 'schemas/documents/inventory/hooks/useCheckout'
 
-import { templates } from 'lib/constants'
+import { templates } from 'lib/sanity.templates'
 
 import { TITLE } from 'lib/constants'
 
@@ -34,6 +34,7 @@ import 'styles/studio.css'
 
 const document = {
   actions: documentActions,
+  templates: templates,
 }
 
 const tools = [inventoryStatsComponent()]

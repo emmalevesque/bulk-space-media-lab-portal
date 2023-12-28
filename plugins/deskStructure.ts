@@ -7,7 +7,6 @@ import type {
   StructureBuilder,
   StructureResolverContext,
 } from 'sanity/desk'
-import navigationStructure from './navigationStructure'
 
 import {
   DESK_NAME,
@@ -15,6 +14,7 @@ import {
   singletonDocumentTypes,
   typesWithCustomFilters,
 } from 'lib/constants'
+import navigationStructure from './navigationStructure'
 
 type FilteredDocumentDefinition = DocumentDefinition & {
   filter: string

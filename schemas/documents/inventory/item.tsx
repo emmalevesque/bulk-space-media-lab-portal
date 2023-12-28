@@ -7,7 +7,6 @@ import conditionReport from 'schemas/objects/conditionReport'
 import slugify from 'slugify'
 import { CategoryInputComponent } from './components/Category/CategoryInput'
 import ItemPreviewComponent from './components/Item/ItemPreviewComponent'
-import StatusIcon from './components/StatusIcon'
 
 export type ItemType = SanityDocument & {
   name: string
@@ -162,7 +161,7 @@ export default defineType({
       group: 'details',
       name: 'description',
       title: 'Item Description',
-      type: 'text',
+      type: 'description',
     },
     {
       name: 'replacementCost',
@@ -243,6 +242,7 @@ export default defineType({
       firstCategory,
       secondCategory,
       variantNumber,
+      media,
       ...rest
     }) => {
       const manufacturerName =
@@ -265,7 +265,6 @@ export default defineType({
         title: `${manufacturerName}${variantNumberString}`,
         // TODO: replace this with any uploaded images
         // TODO: potentially add a little dot icon to indicate stock
-        media: <StatusIcon stock={stock} />,
         stock: stock,
         secondCategory,
         firstCategory,

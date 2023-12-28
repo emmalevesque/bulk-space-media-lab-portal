@@ -1,4 +1,5 @@
 import { createClient } from '@sanity/client'
+import { uuid } from '@sanity/uuid'
 import { dataset, projectId } from 'lib/sanity.api'
 import { groq } from 'next-sanity'
 
@@ -15,8 +16,13 @@ const queryAndPatchDocuments = async () => {
     *[
       _type == "item" 
      ] | order(_createdAt desc)
-     []
+     []{
+      _id,
+      description
+     }
    `)
+
+  const transaction = client.transaction()
 
   // Loop through each document and apply patches
   documents.forEach(async (doc) => {
@@ -24,28 +30,34 @@ const queryAndPatchDocuments = async () => {
     // const model = doc?.name?.split(' ').slice(1).join(' ')
 
     // Example: Update the `name` field of each document
-    await client
-      .patch(doc._id)
-      .set({
-        stock: 1,
-      })
-
-      .commit()
-      .then((updatedDoc) => {})
-      .catch((err) => {
-        console.error('Update failed: ', err.message)
-      })
+    transaction.patch(doc._id, {
+      set: {
+        description: doc.description
+          ? [
+              {
+                _key: uuid(),
+                _type: 'block',
+                children: [
+                  {
+                    _key: uuid(),
+                    _type: 'span',
+                    marks: [],
+                    text: doc.description,
+                  },
+                ],
+                markDefs: [],
+                style: 'normal',
+              },
+            ]
+          : undefined,
+      },
+    })
   })
 
-  // Delete
-  // await client
-  //   .delete(doc._id)
-  //   .then(() => {
-  //
-  //   })
-  //   .catch((err) => {
-  //     console.error('Delete failed: ', err.message)
-  //   })
-  // })
+  try {
+    await transaction.commit()
+  } catch (err) {
+    console.error(err)
+  }
 }
 queryAndPatchDocuments()
