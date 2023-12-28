@@ -66,6 +66,7 @@
     "sanity-plugin-iframe-pane": "^2.5.4",
     "sanity-plugin-media": "^2.2.4",
     "sanity-plugin-webhooks": "^1.0.0",
+    "sanity-plugin-workflow": "^1.0.2",
     "slugify": "^1.6.6",
     "styled-components": "^6.1.0",
     "suspend-react": "0.1.3",

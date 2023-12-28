@@ -162,7 +162,7 @@ export default defineType({
       group: 'details',
       name: 'description',
       title: 'Item Description',
-      type: 'text',
+      type: 'description',
     },
     {
       name: 'replacementCost',

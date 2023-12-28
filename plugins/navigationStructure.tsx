@@ -1,14 +1,18 @@
+import { AddIcon } from '@sanity/icons'
 import EmojiIcon from 'components/Icon/Emoji'
 import { groq } from 'next-sanity'
 import { map } from 'rxjs/operators'
 import { DocumentStore } from 'sanity'
 import { StructureBuilder } from 'sanity/desk'
+import category from 'schemas/documents/inventory/category'
+import item from 'schemas/documents/inventory/item'
+import tag from 'schemas/documents/inventory/tag'
 import { previewPanes } from './deskStructure'
 
 const typeIconMap = {
-  category: () => <EmojiIcon>🏷️</EmojiIcon>,
-  item: () => <EmojiIcon>📸</EmojiIcon>,
-  tag: () => <EmojiIcon>🗂️</EmojiIcon>,
+  category: category.icon,
+  item: item.icon,
+  tag: tag.icon,
 }
 
 export default function navigationStructure(
@@ -108,12 +112,27 @@ export default function navigationStructure(
       return S.listItem()
         .title(item.name)
         .id(item._id)
-        .icon(() => <EmojiIcon>🏷️</EmojiIcon>)
+        .icon(typeIconMap[item._type])
         .child(
           S.list()
             .title(item.name)
             .id(item._id)
             .items([
+              S.listItem()
+                .title(`New Item in ${item.name}`)
+                .id(`new-item-in-${item._id}`)
+                .icon(AddIcon)
+                .child(
+                  S.document()
+                    .title(`New Item in ${item.name}`)
+                    .id(`new-item-in-${item._id}`)
+                    .schemaType('item')
+                    .initialValueTemplate('item-child', {
+                      parentId: item._id,
+                      parentTitle: item.name,
+                    })
+                ),
+
               S.listItem()
                 .title(`Edit ${item.name}`)
                 .id(`${item._id}-edit`)

@@ -6,6 +6,7 @@ import { visionTool } from '@sanity/vision'
 import { apiVersion, projectId } from 'lib/sanity.api'
 import deskStructure from 'plugins/deskStructure'
 import { defineConfig } from 'sanity'
+import { workflow } from 'sanity-plugin-workflow'
 import { deskTool } from 'sanity/desk'
 
 // schema related items
@@ -25,7 +26,7 @@ import {
   getCheckoutStatusProps,
 } from 'schemas/documents/inventory/hooks/useCheckout'
 
-import { templates } from 'lib/constants'
+import { templates } from 'lib/sanity.templates'
 
 import { TITLE } from 'lib/constants'
 
@@ -34,6 +35,7 @@ import 'styles/studio.css'
 
 const document = {
   actions: documentActions,
+  templates: templates,
 }
 
 const tools = [inventoryStatsComponent()]
@@ -134,6 +136,13 @@ const plugins = [
   // Vision lets you query your content with GROQ in the studio
   // https://www.sanity.io/docs/the-vision-plugin
   visionTool({ defaultApiVersion: apiVersion }),
+  workflow({
+    // Required, list of document type names
+    // schemaTypes: ['article', 'product'],
+    schemaTypes: ['checkout'],
+    // Optional, see below
+    // states: [],
+  }),
 ]
 
 const commonConfig = {
