@@ -1,8 +1,7 @@
 import { Badge, Container, Flex } from '@sanity/ui'
 
 export default (props) => {
-  console.log({ props })
-
+  if (props?.stock === undefined) return null
   const badge = props?.stock > 0 ? 'In Stock' : 'Out of Stock'
 
   if (!props?.stock === undefined) return null

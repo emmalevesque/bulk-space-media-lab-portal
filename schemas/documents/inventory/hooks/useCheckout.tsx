@@ -101,7 +101,9 @@ export const checkoutActions = {
     tone: 'caution',
     icon: WarningOutlineIcon,
     disabled: true,
-    emoji: () => <EmojiIcon>🟥</EmojiIcon>,
+    emoji: () => (
+      <div className="flex rounded-full border-2 border-red-600"></div>
+    ),
   },
   SPOTCHECK_NEEDED: {
     label: 'Spotcheck Needed',
@@ -118,7 +120,9 @@ export const checkoutActions = {
     title: 'This is checked out',
     tone: 'caution',
     icon: EllipsisHorizontalIcon,
-    emoji: () => <EmojiIcon>❌</EmojiIcon>,
+    emoji: () => (
+      <div className="flex rounded-full border-2 border-red-600"></div>
+    ),
   },
   RETURNED: {
     label: 'Checkout Complete',
@@ -127,7 +131,9 @@ export const checkoutActions = {
     tone: 'positive',
     icon: CheckmarkCircleIcon,
     disabled: true,
-    emoji: () => <EmojiIcon>🟩</EmojiIcon>,
+    emoji: () => (
+      <div className="flex rounded-full border-2 border-blue-400"></div>
+    ),
   },
   USER_NEEDED: {
     label: 'Select User',
@@ -160,7 +166,9 @@ export const getCheckoutStatusProps = (document, status?: CheckoutStatus) => {
       color: 'danger',
       title: 'Items have been checked out',
       tone: 'critical',
-      icon: () => <EmojiIcon>🟥</EmojiIcon>,
+      icon: () => (
+        <div className="flex rounded-full border-2 border-red-600"></div>
+      ),
     },
     RETURNED: {
       label: `Returned ${
@@ -170,7 +178,9 @@ export const getCheckoutStatusProps = (document, status?: CheckoutStatus) => {
       color: 'success',
       title: 'Items have been returned successfully',
       tone: 'positive',
-      icon: () => <EmojiIcon>🟦</EmojiIcon>,
+      icon: () => (
+        <div className="flex rounded-full border-2 border-blue-400"></div>
+      ),
     },
     PENDING: {
       label: 'Begin Checkout',
@@ -178,7 +188,9 @@ export const getCheckoutStatusProps = (document, status?: CheckoutStatus) => {
       color: 'primary',
       title: 'This item is available to be checked out',
       tone: 'primary',
-      icon: () => <EmojiIcon>⏱️</EmojiIcon>,
+      icon: () => (
+        <div className="flex rounded-full border-2 border-green-400"></div>
+      ),
     },
     USER_NEEDED: {
       label: 'Select User',
@@ -186,7 +198,9 @@ export const getCheckoutStatusProps = (document, status?: CheckoutStatus) => {
       color: 'caution',
       title: 'Please select a user before checking this item out',
       tone: 'caution',
-      icon: () => <EmojiIcon>👤</EmojiIcon>,
+      icon: () => (
+        <div className="flex rounded-full border-2 border-amber-400"></div>
+      ),
       disabled: true,
     },
     ITEMS_NEEDED: {
@@ -196,7 +210,9 @@ export const getCheckoutStatusProps = (document, status?: CheckoutStatus) => {
       title:
         'Please select at least 1 inventory item before processing the checkout',
       tone: 'caution',
-      icon: () => <EmojiIcon>📸</EmojiIcon>,
+      icon: () => (
+        <div className="flex rounded-full border-2 border-amber-400"></div>
+      ),
       disabled: true,
     },
     NO_STOCK: {
@@ -205,7 +221,9 @@ export const getCheckoutStatusProps = (document, status?: CheckoutStatus) => {
       color: 'caution',
       title: 'This item is out of stock',
       tone: 'caution',
-      icon: EmojiIcon({ children: '🟥' }),
+      icon: () => (
+        <div className="flex rounded-full border-2 border-red-600"></div>
+      ),
       disabled: true,
     },
     SPOTCHECK_NEEDED: {
@@ -214,7 +232,9 @@ export const getCheckoutStatusProps = (document, status?: CheckoutStatus) => {
       color: 'caution',
       title: 'Please spotcheck this item before processing the return',
       tone: 'caution',
-      icon: EmojiIcon({ children: '⋯' }),
+      icon: () => (
+        <div className="flex rounded-full border-2 border-amber-400"></div>
+      ),
       disabled: true,
     },
   }

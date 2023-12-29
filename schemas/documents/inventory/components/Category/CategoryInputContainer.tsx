@@ -25,8 +25,6 @@ export default function CategoryInputContainer({
 }: CategoryInputContainerProps) {
   const { value, onChange, set } = useCategoryInputContext()
 
-  // instantiate the client
-
   // handle the click event on the input checkbox
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {

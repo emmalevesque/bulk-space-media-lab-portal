@@ -2,6 +2,14 @@ span[data-testid='Media'] > *:not(svg) + span {
   box-shadow: none;
 }
 
+[data-border='true'] {
+  box-shadow: none !important;
+}
+
+span[data-testid='Media'] > *:not(svg) + span > * {
+  box-shadow: none;
+}
+
 [data-testid='PreviewCard'] {
   width: '100%';
 }

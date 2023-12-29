@@ -125,7 +125,6 @@ export default function navigationStructure(
                 .child(
                   S.document()
                     .title(`New Item in ${item.name}`)
-                    .id(`new-item-in-${item._id}`)
                     .schemaType('item')
                     .initialValueTemplate('item-child', {
                       parentId: item._id,

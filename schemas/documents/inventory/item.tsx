@@ -1,6 +1,7 @@
 import { defineField, defineType } from 'sanity'
 
 import { Box, Card, Grid, Inline, Text } from '@sanity/ui'
+import classNames from 'classnames'
 import EmojiIcon from 'components/Icon/Emoji'
 import { SanityDocument } from 'next-sanity'
 import conditionReport from 'schemas/objects/conditionReport'
@@ -242,7 +243,6 @@ export default defineType({
       firstCategory,
       secondCategory,
       variantNumber,
-      media,
       ...rest
     }) => {
       const manufacturerName =
@@ -266,6 +266,17 @@ export default defineType({
         // TODO: replace this with any uploaded images
         // TODO: potentially add a little dot icon to indicate stock
         stock: stock,
+        media: () => (
+          <div
+            className={classNames(
+              {
+                'border-red-600': stock === 0,
+                'border-green-600': stock > 0,
+              },
+              'flex rounded-full border-2'
+            )}
+          ></div>
+        ),
         secondCategory,
         firstCategory,
         parentCategory,
