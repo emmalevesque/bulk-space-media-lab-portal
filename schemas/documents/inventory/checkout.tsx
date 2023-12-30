@@ -1,5 +1,6 @@
 import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
+import StaffMemberInput from 'schemas/components/StaffMemberInput'
 import { getCheckoutStatusProps } from './hooks/useCheckout'
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -65,11 +66,39 @@ export default defineType({
     },
     {
       group: 'details',
+      name: 'staffMember',
+      title: 'Staff Member',
+      description:
+        'The staff member who is checking out this item. In most cases, this will be you.',
+      type: 'string',
+      components: {
+        input: StaffMemberInput,
+      },
+    },
+    {
+      group: 'details',
+      name: 'isStaffCheckout',
+      title: 'Is this a Staff Checkout?',
+      description:
+        'Staff checkouts are for internal use only and do not require a user.',
+      type: 'boolean',
+      initialValue: false,
+    },
+    {
+      group: 'details',
       name: 'user',
       title: 'User',
       type: 'reference',
       to: [{ type: 'user' }, { type: 'staff' }],
-      validation: (Rule) => Rule.required(),
+      hidden: ({ document }) => Boolean(document?.isStaffCheckout),
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          if (context?.document?.isStaffCheckout) {
+            return true
+          } else {
+            return value ? true : 'User is required'
+          }
+        }),
       components: {
         // input: ReferenceQrCodeScanner,
       },
