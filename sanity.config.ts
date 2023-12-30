@@ -2,6 +2,7 @@
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
 // plugins
+import { embeddingsIndexReferenceInput } from '@sanity/embeddings-index-ui'
 import { visionTool } from '@sanity/vision'
 import { apiVersion, projectId } from 'lib/sanity.api'
 import deskStructure from 'plugins/deskStructure'
@@ -40,6 +41,7 @@ const document = {
 const tools = [inventoryStatsComponent()]
 
 const plugins = [
+  embeddingsIndexReferenceInput(),
   deskTool({
     title: 'Manage',
     structure: (S, context) =>

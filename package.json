@@ -29,6 +29,7 @@
     "@sanity/client": "6.1.7",
     "@sanity/cross-dataset-duplicator": "^1.2.1",
     "@sanity/dashboard": "^3.1.6",
+    "@sanity/embeddings-index-ui": "^1.1.8",
     "@sanity/icons": "^2.7.0",
     "@sanity/image-url": "1.0.2",
     "@sanity/preview-kit": "^3.1.6",

@@ -1809,6 +1809,15 @@
   dependencies:
     "@sanity/diff-match-patch" "^3.1.1"
 
+"@sanity/embeddings-index-ui@^1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@sanity/embeddings-index-ui/-/embeddings-index-ui-1.1.8.tgz#a26748fc3f926aad46a450aa4f9ab555c79ef353"
+  integrity sha512-CrAVDXyxaQYuYgBZrx9veaSTEoB0/HJrTUFIL3xQT4Bc/YGk12RF0sMMX8cE0OGhjeEfMzx4OiLzPzpQuo+9yg==
+  dependencies:
+    "@sanity/icons" "^2.4.1"
+    "@sanity/incompatible-plugin" "^1.0.4"
+    "@sanity/ui" "^1.7.11"
+
 "@sanity/eventsource@5.0.1", "@sanity/eventsource@^5.0.0":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@sanity/eventsource/-/eventsource-5.0.1.tgz#133bbb3cd4403cfe1bf6e6b62fc8ff5a76cbd5c7"
@@ -2124,7 +2133,7 @@
     framer-motion "^10.16.1"
     react-refractor "^2.1.7"
 
-"@sanity/ui@^1.7.0", "@sanity/ui@^1.9.3":
+"@sanity/ui@^1.7.0", "@sanity/ui@^1.7.11", "@sanity/ui@^1.9.3":
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/@sanity/ui/-/ui-1.9.3.tgz#4af45902ac95801aa5ea57f377beaf3e3cb36339"
   integrity sha512-AdWEVFaK0Snk6xxP0lGPVP3QQYKwzkfGFpFZnL9d6UtWt8yeuS8BMLVAzmXzg14hrqH50ex9nvNl3eq6a0MWiw==
