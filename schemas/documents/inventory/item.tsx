@@ -37,6 +37,7 @@ export type ItemType = SanityDocument & {
 }
 
 export default defineType({
+  liveEdit: true,
   name: 'item',
   title: 'Inventory Item',
   type: 'document',
@@ -111,6 +112,14 @@ export default defineType({
       type: 'string',
       group: 'metadata',
       validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'useShortName',
+      title: 'Use Short Name?',
+      description:
+        'If checked, the short name will be used instead of the manufacturer name.',
+      type: 'boolean',
+      group: 'metadata',
     },
     {
       group: 'metadata',
