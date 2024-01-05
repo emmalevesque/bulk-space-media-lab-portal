@@ -1,6 +1,6 @@
+import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
 import user from './user'
-import EmojiIcon from 'components/Icon/Emoji'
 
 export default defineType({
   ...user,
@@ -10,24 +10,79 @@ export default defineType({
   initialValue: {
     role: 'staff',
   },
-  fields: [
-    ...user.fields,
+  fieldsets: [
     {
-      readOnly: true,
-      name: 'role',
-      type: 'string',
+      name: 'name',
       options: {
-        list: [
-          {
-            title: 'Administrator',
-            value: 'administrator',
-          },
-          {
-            title: 'Staff',
-            value: 'staff',
-          },
-        ],
+        columns: 2,
+        collapsible: false,
       },
     },
   ],
+  fields: [
+    {
+      fieldset: 'name',
+      name: 'givenName',
+      title: 'First name',
+      type: 'string',
+      readOnly: true,
+    },
+    {
+      fieldset: 'name',
+      name: 'familyName',
+      title: 'Last name',
+      type: 'string',
+      readOnly: true,
+    },
+    {
+      name: 'displayName',
+      title: 'Display name',
+      type: 'string',
+    },
+    {
+      name: 'email',
+      title: 'Email',
+      type: 'string',
+      readOnly: true,
+    },
+    {
+      name: 'sanityUserId',
+      title: 'Sanity User ID',
+      type: 'string',
+      readOnly: true,
+    },
+    {
+      name: 'loginProvider',
+      title: 'Login provider',
+      type: 'string',
+      readOnly: true,
+    },
+    {
+      name: 'imageUrl',
+      title: 'Image URL',
+      type: 'url',
+      readOnly: true,
+    },
+  ],
+  preview: {
+    select: {
+      givenName: 'givenName',
+      familyName: 'familyName',
+      imageUrl: 'imageUrl',
+      email: 'email',
+    },
+    prepare({ givenName, familyName, imageUrl, email }) {
+      return {
+        title: `${givenName} ${familyName}`,
+        subtitle: `${email}`,
+        media: imageUrl ? (
+          <img
+            className="overflow-hidden rounded-full"
+            src={imageUrl}
+            alt={givenName}
+          />
+        ) : null,
+      }
+    },
+  },
 })
