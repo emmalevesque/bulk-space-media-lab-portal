@@ -24,6 +24,7 @@ export default function navigationStructure(
     _id,
     _type,
     name,
+    useShortName,
     manufacturerDetails,
     variantNumber,
   `
@@ -62,14 +63,16 @@ export default function navigationStructure(
     } | order(childrenCount desc)
     `
 
-  const options = { apiVersion: `2023-01-01` }
+  const options = { apiVersion: `2023-01-01`, tag: 'menuItems' }
 
   // create the recursive structure builder
   const recursiveStructureBuilder = (item: any) => {
     let itemName =
-      `${item.manufacturerDetails?.make} ${item.manufacturerDetails?.model}` ||
-      item.name ||
-      'Unnamed Item'
+      item._type === 'category' || item.useShortName
+        ? item.name
+        : item.manufacturerDetails?.make && item.manufacturerDetails?.model
+        ? `${item.manufacturerDetails?.make} ${item.manufacturerDetails?.model}`
+        : 'Unnamed Item'
 
     itemName = `${itemName}${
       item.variantNumber > 1 ? ` (${item.variantNumber})` : ''
@@ -110,12 +113,12 @@ export default function navigationStructure(
           : []
 
       return S.listItem()
-        .title(item.name)
+        .title(itemName)
         .id(item._id)
         .icon(typeIconMap[item._type])
         .child(
           S.list()
-            .title(item.name)
+            .title(itemName)
             .id(item._id)
             .items([
               S.listItem()

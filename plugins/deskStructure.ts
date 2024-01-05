@@ -14,6 +14,7 @@ import {
   singletonDocumentTypes,
   typesWithCustomFilters,
 } from 'lib/constants'
+import { apiVersion } from 'lib/sanity.api'
 import navigationStructure from './navigationStructure'
 
 type FilteredDocumentDefinition = DocumentDefinition & {
@@ -129,6 +130,7 @@ const documentListItemBuilder = (
                 ? getFilter(type.title || '')
                 : `_type == $type`
             )
+            .apiVersion(apiVersion)
             .params({ type: type.name })
             .child((documentId) =>
               S.document()

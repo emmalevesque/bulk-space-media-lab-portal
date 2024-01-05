@@ -8,6 +8,9 @@ import { Tool, useClient } from 'sanity'
 import { IntentLink } from 'sanity/router'
 import { ItemType } from 'schemas/documents/inventory/item'
 
+// TODO: most common items checked,
+// TODO: tax related stats, total checkouts, total members, total value of inventory
+
 export default function inventoryStatsComponent(): Tool {
   return {
     name: 'inventory-stats',

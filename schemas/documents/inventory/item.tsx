@@ -1,7 +1,6 @@
 import { defineField, defineType } from 'sanity'
 
 import { Box, Card, Grid, Inline, Text } from '@sanity/ui'
-import classNames from 'classnames'
 import EmojiIcon from 'components/Icon/Emoji'
 import { SanityDocument } from 'next-sanity'
 import conditionReport from 'schemas/objects/conditionReport'
@@ -221,13 +220,6 @@ export default defineType({
         input: CategoryInputComponent,
       },
     },
-    // {
-    //   group: 'taxonomy',
-    //   name: 'tags',
-    //   type: 'array',
-    //   of: [{ type: 'reference', to: [{ type: 'tag' }] }],
-    //   title: 'Item Tags',
-    // },
   ],
   preview: {
     select: {
@@ -241,6 +233,7 @@ export default defineType({
       secondCategory: 'categories.1.name',
       stock: 'stock',
       variantNumber: 'variantNumber',
+      useShortName: 'useShortName',
     },
     prepare: ({
       parentCategory,
@@ -252,16 +245,21 @@ export default defineType({
       firstCategory,
       secondCategory,
       variantNumber,
+      media,
+      useShortName,
       ...rest
     }) => {
-      const manufacturerName =
-        manufacturerDetails?.make && manufacturerDetails?.model
-          ? `${manufacturerMake} ${manufacturerModel}`
-          : name
+      const manufacturerName = useShortName
+        ? name
+        : manufacturerDetails?.make && manufacturerDetails?.model
+        ? `${manufacturerMake} ${manufacturerModel}`
+        : 'Untitled'
+
       const parentCategoryName = parentCategory
         ? `${parentCategory} > ${firstCategory}`
         : firstCategory
       const category = parentCategoryName || firstCategory
+
       const subtitle = `${manufacturerName} ${category}`
 
       const variantNumberString = variantNumber > 1 ? ` (${variantNumber})` : ''
@@ -275,17 +273,7 @@ export default defineType({
         // TODO: replace this with any uploaded images
         // TODO: potentially add a little dot icon to indicate stock
         stock: stock,
-        media: () => (
-          <div
-            className={classNames(
-              {
-                'border-red-600': stock === 0,
-                'border-green-600': stock > 0,
-              },
-              'flex rounded-full border-2'
-            )}
-          ></div>
-        ),
+        media,
         secondCategory,
         firstCategory,
         parentCategory,

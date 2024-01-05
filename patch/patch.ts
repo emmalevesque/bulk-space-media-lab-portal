@@ -1,5 +1,4 @@
 import { createClient } from '@sanity/client'
-import { uuid } from '@sanity/uuid'
 import { dataset, projectId } from 'lib/sanity.api'
 import { groq } from 'next-sanity'
 
@@ -32,24 +31,7 @@ const queryAndPatchDocuments = async () => {
     // Example: Update the `name` field of each document
     transaction.patch(doc._id, {
       set: {
-        description: doc.description
-          ? [
-              {
-                _key: uuid(),
-                _type: 'block',
-                children: [
-                  {
-                    _key: uuid(),
-                    _type: 'span',
-                    marks: [],
-                    text: doc.description,
-                  },
-                ],
-                markDefs: [],
-                style: 'normal',
-              },
-            ]
-          : undefined,
+        useShortName: false,
       },
     })
   })
