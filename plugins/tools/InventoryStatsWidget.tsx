@@ -3,8 +3,7 @@ import { Button, Card, Container, Grid, Stack } from '@sanity/ui'
 import AnimatedNumber from 'components/AnimatedNumber'
 import { useFetch } from 'hooks/useFetch'
 import { groq } from 'next-sanity'
-import { useState } from 'react'
-import { Tool, useClient } from 'sanity'
+import { Tool } from 'sanity'
 import { IntentLink } from 'sanity/router'
 import { ItemType } from 'schemas/documents/inventory/item'
 
@@ -17,9 +16,11 @@ export default function inventoryStatsComponent(): Tool {
     title: 'Inventory Stats',
     icon: BarChartIcon,
     component: () => {
-      const client = useClient()
+      const totalInventoryCostQuery = groq`
+      math::sum(*[_type == "item"][].replacementCost)`
 
-      const [count, set] = useState<number>(0)
+      const { data: totalInventoryItemsCost, error: totalInventoryCostError } =
+        useFetch(totalInventoryCostQuery) as { data: ItemType[]; error: any }
 
       const totalItemsQuery = groq`
       *[_type == "item"][]{
@@ -107,6 +108,22 @@ export default function inventoryStatsComponent(): Tool {
               Overall Stats
             </Card>
             <Grid columns={2} gap={3}>
+              <Button
+                radius={3}
+                padding={2}
+                style={{ width: '100%', lineBreak: 'loose' }}
+                mode="bleed"
+              >
+                <p>
+                  Total <b>Inventory Value</b>
+                </p>
+                <p className="font-bold">
+                  <AnimatedNumber
+                    toValue={totalInventoryItemsCost}
+                    isCurrency
+                  />
+                </p>
+              </Button>
               <Button
                 radius={3}
                 padding={2}
