@@ -26,9 +26,7 @@ interface ProjectUser {
 }
 
 // Configure a Sanity client to make authenticated API calls
-const client = getCliClient({ apiVersion: '2022-03-20' }).withConfig({
-  dataset: 'demo',
-})
+const client = getCliClient({ apiVersion: '2022-03-20' })
 const { projectId } = client.config()
 
 // A list of users you want to keep

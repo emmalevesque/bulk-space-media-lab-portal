@@ -66,20 +66,19 @@ export default defineType({
   ],
   preview: {
     select: {
-      givenName: 'givenName',
-      familyName: 'familyName',
+      displayName: 'displayName',
       imageUrl: 'imageUrl',
       email: 'email',
     },
-    prepare({ givenName, familyName, imageUrl, email }) {
+    prepare({ displayName, imageUrl, email }) {
       return {
-        title: `${givenName} ${familyName}`,
+        title: `${displayName}`,
         subtitle: `${email}`,
         media: imageUrl ? (
           <img
             className="overflow-hidden rounded-full"
             src={imageUrl}
-            alt={givenName}
+            alt={displayName}
           />
         ) : null,
       }

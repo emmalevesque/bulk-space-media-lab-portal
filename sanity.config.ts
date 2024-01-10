@@ -29,7 +29,9 @@ import { templates } from 'lib/sanity.templates'
 
 import { TITLE } from 'lib/constants'
 
+import Icon from 'components/Icon'
 import checkout from 'schemas/documents/inventory/checkout'
+import settings from 'schemas/singletons/settings'
 import 'styles/studio.css'
 
 const document = {
@@ -112,9 +114,15 @@ const plugins = [
           },
           {
             type: 'list',
-            title: 'Users',
+            title: 'Members',
             icon: user.icon,
-            typeDefs: [user, staff],
+            typeDefs: [user],
+          },
+          {
+            type: 'list',
+            title: 'Settings',
+            icon: settings.icon,
+            typeDefs: [staff],
           },
           S.divider(),
         ],
@@ -147,6 +155,7 @@ const commonConfig = {
   tools,
   plugins,
   document,
+  icon: Icon,
 }
 
 // the basePath values here are extremely important
