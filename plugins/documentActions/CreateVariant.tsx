@@ -1,10 +1,7 @@
+import { DoubleChevronUpIcon } from '@sanity/icons'
 import { _writeClient } from 'lib/sanity.client'
 import { useEffect } from 'react'
 import { useDataset, useDocumentOperation } from 'sanity'
-import {
-  checkoutActions,
-  getCheckoutStatus,
-} from 'schemas/documents/inventory/hooks/useCheckout'
 import { useInventory } from 'schemas/documents/inventory/hooks/useInventory'
 
 export default function CreateVariant(props) {
@@ -23,11 +20,11 @@ export default function CreateVariant(props) {
     }
   }, [props.draft, setIsPublishing])
 
-  const checkoutStatus = getCheckoutStatus(latestDocument)
-  const action = checkoutActions[checkoutStatus]
+  console.log({ latestDocument })
 
   return {
-    ...action,
+    label: 'Create Variant',
+    icon: DoubleChevronUpIcon,
     onHandle: async () => {
       if (!_writeClient || !latestDocument)
         console.error('missing client or doc')
