@@ -70,7 +70,8 @@ export default defineType({
       title: 'Staff Member',
       description:
         'The staff member who is checking out this item. In most cases, this will be you.',
-      type: 'string',
+      type: 'reference',
+      to: [{ type: 'staff' }],
       components: {
         input: StaffMemberInput,
       },
@@ -157,12 +158,17 @@ export default defineType({
       isSpotChecked: 'isSpotChecked',
       isCheckedOut: 'isCheckedOut',
       isReturned: 'isReturned',
+      isStaffCheckout: 'isStaffCheckout',
+      staffMember: 'staffMember',
+      staffMemberName: 'staffMember.displayName',
       user: 'user',
     },
     prepare(selection) {
       const props = getCheckoutStatusProps(selection)
       return {
-        title: selection.checkedOutTo,
+        title: !selection?.isStaffCheckout
+          ? selection.checkedOutTo
+          : selection?.staffMemberName,
         subtitle: props?.name,
         media: props?.icon,
       }

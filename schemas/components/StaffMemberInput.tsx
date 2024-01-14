@@ -1,19 +1,8 @@
-import { SearchIcon } from '@sanity/icons'
-import { Autocomplete, Avatar, Flex, Stack, Text } from '@sanity/ui'
-import { useCallback } from 'react'
+import { Flex, Stack } from '@sanity/ui'
 import { useCurrentUser } from 'sanity'
-
-import { set, unset } from 'sanity'
 
 export default (props, context) => {
   const { onChange, value } = props
-
-  const handleChange = useCallback(
-    (nextValue) => {
-      onChange(nextValue ? set(nextValue) : unset())
-    },
-    [onChange]
-  )
 
   const currentUser = useCurrentUser()
 
@@ -25,7 +14,8 @@ export default (props, context) => {
   return (
     <Flex direction="column" style={{ width: '100%' }}>
       <Stack space={3}>
-        <Autocomplete
+        {props?.renderDefault(props)}
+        {/* <Autocomplete
           filterOption={(query, option) =>
             option.payload.name.toLowerCase().indexOf(query.toLowerCase()) > -1
           }
@@ -44,7 +34,6 @@ export default (props, context) => {
             },
           ]}
           id={`staffMember`}
-          renderValue={(value, option) => option?.payload?.name || value}
           renderOption={(option) => {
             const { name, imageUrl } = option.payload
             return (
@@ -59,7 +48,7 @@ export default (props, context) => {
               </Flex>
             )
           }}
-        />
+        /> */}
       </Stack>
     </Flex>
   )

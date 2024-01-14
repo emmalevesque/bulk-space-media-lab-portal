@@ -47,8 +47,9 @@ export type CheckoutType = SanityDocument & {
   }[]
 }
 export const getCheckoutStatus = (document): CheckoutStatus => {
+  // if the checkout is not checked out
   if (!document?.isCheckedOut) {
-    if (!document?.user) {
+    if (!document?.user && !document?.isStaffCheckout) {
       return 'USER_NEEDED'
     } else if (
       !Array.isArray(document?.checkoutItems) ||

@@ -71,11 +71,12 @@ async function run() {
   userDetails.forEach((user) => {
     if (internalUsers.includes(user.email.toLocaleLowerCase())) {
       transaction.createIfNotExists({
-        _id: `staff.${user.sanityUserId}`,
+        _id: `staff.${user.id}`,
         _type: 'staff',
         displayName: user.displayName,
         email: user.email,
         sanityUserId: user.sanityUserId,
+        id: user.id,
         givenName: user.givenName,
         familyName: user.familyName,
         imageUrl: user.imageUrl,
@@ -86,6 +87,7 @@ async function run() {
 
   try {
     await transaction.commit()
+    // console.log({ transaction })
   } catch (err) {
     console.error(err)
   }

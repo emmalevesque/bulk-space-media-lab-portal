@@ -38,4 +38,32 @@ export const templates = [
       }
     },
   },
+  {
+    id: 'current-user-checkout',
+    title: 'Checkout: Current User',
+    schemaType: 'checkout',
+    parameters: [
+      {
+        name: `userId`,
+        title: `User ID`,
+        type: `string`,
+      },
+      {
+        name: `userDisplayName`,
+        title: `User Display Name`,
+        type: `string`,
+      },
+      {
+        name: `currentUser`,
+        title: `Current User`,
+        type: `object`,
+      },
+    ],
+    // This value will be passed-in from desk structure
+    value: ({ userId }) => {
+      return {
+        staffMember: { _type: 'reference', _ref: `staff.${userId}` },
+      }
+    },
+  },
 ]

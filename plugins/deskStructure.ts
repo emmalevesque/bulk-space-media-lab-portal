@@ -1,6 +1,6 @@
 import { uuid } from '@sanity/uuid'
 import { ComponentType, ReactNode } from 'react'
-import { DocumentDefinition } from 'sanity'
+import { DocumentDefinition, User } from 'sanity'
 import type {
   Divider,
   ListItemBuilder,
@@ -97,7 +97,8 @@ const singletonListItemBuilder = (
  */
 const documentListItemBuilder = (
   S: StructureBuilder,
-  type: DocumentDefinition
+  type: DocumentDefinition,
+  currentUser?: User | null
 ): ListItemBuilder =>
   S.listItem()
     .title(type.title || type.name)
@@ -110,6 +111,10 @@ const documentListItemBuilder = (
             .documentId(uuid())
             .title(type.title || type.name)
             .views([S.view.form().title('Edit')])
+            .initialValueTemplate('current-user-checkout', {
+              userId: currentUser?.id,
+              currentUser: currentUser,
+            })
         : singletonDocumentTypes.includes(type.name)
         ? Object.keys(documentPreviewPanes).includes(type.name)
           ? S.editor()
@@ -130,6 +135,12 @@ const documentListItemBuilder = (
                 ? getFilter(type.title || '')
                 : `_type == $type`
             )
+            .initialValueTemplates([
+              S.initialValueTemplateItem('current-user-checkout', {
+                userId: currentUser?.id,
+                currentUser,
+              }),
+            ])
             .apiVersion(apiVersion)
             .params({ type: type.name })
             .child((documentId) =>
@@ -145,7 +156,8 @@ const documentListItemBuilder = (
  */
 const listItemBuilder = (
   S: StructureBuilder,
-  listItem: TopLevelListDefinition
+  listItem: TopLevelListDefinition,
+  currentUser?: User | null
 ) =>
   S.listItem()
     .title(listItem.title)
@@ -172,16 +184,18 @@ const deskStructure = (
   listItems: ListItem[],
   context: StructureResolverContext
 ) => {
+  const currentUser = context?.currentUser
+
   const documentTypesStructure = listItems.map((listItem) => {
     if (listItem.type === 'list') {
-      return listItemBuilder(S, listItem)
+      return listItemBuilder(S, listItem, currentUser)
     }
 
     if (listItem.type === 'divider') {
       return S.divider()
     }
 
-    return documentListItemBuilder(S, listItem)
+    return documentListItemBuilder(S, listItem, currentUser)
   })
 
   return S.list()
