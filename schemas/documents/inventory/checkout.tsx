@@ -1,7 +1,13 @@
+import { PortableText } from '@portabletext/react'
+import { Card, Stack, Text } from '@sanity/ui'
 import EmojiIcon from 'components/Icon/Emoji'
 import { defineType } from 'sanity'
+import {
+  ReadableDatetime,
+  useReadableDate,
+} from 'schemas/components/ReadableDatetime'
 import StaffMemberInput from 'schemas/components/StaffMemberInput'
-import { getCheckoutStatusProps } from './hooks/useCheckout'
+import { CheckoutType, getCheckoutStatusProps } from './hooks/useCheckout'
 
 const dev = process.env.NODE_ENV !== 'production'
 
@@ -119,25 +125,132 @@ export default defineType({
       name: 'checkoutDate',
       title: 'Checkout Date',
       type: 'datetime',
+      options: {
+        dateFormat: 'MM/DD/yyyy',
+        timeFormat: 'hh:mma',
+        timeStep: 15,
+      },
       initialValue: () => new Date().toISOString(),
+      components: {
+        input: ReadableDatetime,
+      },
     },
     {
       group: 'dates',
       name: 'scheduledReturnDate',
       title: 'Scheduled Return Date',
       type: 'datetime',
+      options: {
+        dateFormat: 'MM/DD/yyyy',
+        timeFormat: 'hh:mma',
+        timeStep: 15,
+      },
+      initialValue: () => {
+        const now = new Date()
+        const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000)
+        return nextWeek.toISOString()
+      },
+      components: {
+        input: ReadableDatetime,
+      },
+      validation: (Rule) => {
+        return Rule.custom((value, context) => {
+          console.log({ value, context })
+
+          if (!value || !context?.document) {
+            return true
+          }
+
+          const document = context?.document
+
+          const checkoutDate = context?.document?.checkoutDate
+            ? new Date((context?.document as CheckoutType)?.checkoutDate)
+            : new Date()
+          const scheduledReturnDate = new Date(value as string)
+          if (scheduledReturnDate < checkoutDate) {
+            return 'Scheduled Return Date must be after Checkout Date'
+          }
+          return true
+        })
+      },
     },
     {
       group: 'dates',
       name: 'returnDate',
       title: 'Return Date',
       type: 'datetime',
+      options: {
+        dateFormat: 'MM/DD/yyyy',
+        timeFormat: 'hh:mma',
+        timeStep: 15,
+      },
+      components: {
+        input: (props) => ReadableDatetime(props, { showTone: false }),
+      },
     },
     {
       name: 'notes',
       title: 'Checkout Notes',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [
+        {
+          type: 'object',
+          components: {
+            preview: (props, context) => {
+              return (
+                <Card className="hover:bg-gray-100" padding={2}>
+                  <Stack space={2}>
+                    <Text muted size={1}>
+                      {new Date(props?.date).toLocaleDateString()} (
+                      {useReadableDate(props?.date).readableDate})
+                    </Text>
+                    <PortableText value={props?.note} />
+                  </Stack>
+                </Card>
+              )
+            },
+          },
+          preview: {
+            select: {
+              note: 'note',
+              date: 'date',
+            },
+            prepare(selection) {
+              return {
+                title: selection?.date
+                  ? new Date(selection?.date).toLocaleString()
+                  : 'No Date',
+                ...selection,
+              }
+            },
+          },
+          name: 'note',
+          title: 'Note',
+          fields: [
+            {
+              type: 'datetime',
+              name: 'date',
+              readOnly: true,
+              title: 'Date',
+              options: {
+                dateFormat: 'MM/DD/yyyy',
+                timeFormat: 'hh:mma',
+                timeStep: 15,
+              },
+              initialValue: () => new Date().toISOString(),
+              components: {
+                input: ReadableDatetime,
+              },
+            },
+            {
+              type: 'array',
+              of: [{ type: 'block' }],
+              name: 'note',
+              title: 'Note',
+            },
+          ],
+        },
+      ],
       group: 'notes',
     },
   ],
@@ -170,7 +283,6 @@ export default defineType({
   initialValue: {
     isCheckedOut: false,
     isReturned: false,
-    isSpotChecked: false,
   },
   orderings: [
     {

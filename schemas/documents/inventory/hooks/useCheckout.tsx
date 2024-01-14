@@ -37,6 +37,7 @@ export type CheckoutType = SanityDocument & {
     item?: ItemType
   }[]
   checkoutDate: string
+  scheduledReturnDate: string
   returnDate?: string
   notes?: {
     _type: 'block'
@@ -58,6 +59,7 @@ export const getCheckoutStatus = (document: CheckoutType): CheckoutStatus => {
     } else if (!Array.isArray(checkoutItems) || !checkoutItems[0]?._ref) {
       return 'ITEMS_NEEDED'
     }
+    // check the stock of each item in the checkout
   }
 
   if (isCheckedOut && isReturned) {

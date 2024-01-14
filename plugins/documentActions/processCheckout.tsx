@@ -33,6 +33,7 @@ export default function ProcessCheckout(props) {
 
   return {
     ...action,
+
     onHandle: async () => {
       if (!_writeClient || !latestDocument)
         console.error('missing client or doc')
