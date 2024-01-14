@@ -5,7 +5,7 @@
 import { visionTool } from '@sanity/vision'
 import { apiVersion, projectId } from 'lib/sanity.api'
 import deskStructure from 'plugins/deskStructure'
-import { defineConfig } from 'sanity'
+import { defineConfig, isDev } from 'sanity'
 import { deskTool } from 'sanity/desk'
 
 // schema related items
@@ -153,7 +153,9 @@ const commonConfig = {
     templates,
   },
   tools,
-  plugins,
+  plugins: isDev
+    ? plugins
+    : plugins.filter((plugin) => plugin.name !== 'vision'),
   document,
   icon: Icon,
 }
