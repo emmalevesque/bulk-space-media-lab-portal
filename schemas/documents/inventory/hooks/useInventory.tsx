@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useEffect, useState } from 'react'
-import { SanityDocument, groq } from 'next-sanity'
-import { useDataset } from 'sanity'
 import { _writeClient } from 'lib/sanity.client'
+import { SanityDocument, groq } from 'next-sanity'
+import { useCallback, useEffect, useState } from 'react'
+import { useDataset } from 'sanity'
 import { CheckoutType } from './useCheckout'
 
 export const patchStock = async (
@@ -114,27 +114,6 @@ export const useInventory = (
 
     return relatedCheckouts
   }
-
-  // const getCheckoutHistory = async (): Promise<CheckoutType> => {
-  //   const checkoutHistory = await client.fetch(
-  //     groq`
-  //       *[
-  //         $id == _id
-  //       ][0]
-  //       {
-  //         ...,
-  //         "user": user->name,
-  //         "checkoutItems": checkoutItems[]->,
-  //         "totalReplacementValue": math::sum(checkoutItems[]->.replacementValue),
-  //       }
-  //   `,
-  //     {
-  //       id: document?._id,
-  //     }
-  //   )
-
-  //   return checkoutHistory
-  // }
 
   const [itemAvailability, setItemAvailability] = useState<number>(0)
   const [relatedCheckouts, setRelatedCheckouts] =

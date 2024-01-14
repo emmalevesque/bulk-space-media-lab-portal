@@ -20,8 +20,6 @@ export default function CreateVariant(props) {
     }
   }, [props.draft, setIsPublishing])
 
-  console.log({ latestDocument })
-
   return {
     label: 'Create Variant',
     icon: DoubleChevronUpIcon,

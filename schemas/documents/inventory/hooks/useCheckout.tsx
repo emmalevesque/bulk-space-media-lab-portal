@@ -46,35 +46,28 @@ export type CheckoutType = SanityDocument & {
     }[]
   }[]
 }
-export const getCheckoutStatus = (document): CheckoutStatus => {
-  // if the checkout is not checked out
-  if (!document?.isCheckedOut) {
-    if (!document?.user && !document?.isStaffCheckout) {
+export const getCheckoutStatus = (document: CheckoutType): CheckoutStatus => {
+  const isCheckedOut = document?.isCheckedOut
+  const isReturned = document?.isReturned
+  const user = document?.user
+  const checkoutItems = document?.checkoutItems
+
+  if (!isCheckedOut) {
+    if (!user && !document?.isStaffCheckout) {
       return 'USER_NEEDED'
-    } else if (
-      !Array.isArray(document?.checkoutItems) ||
-      !document?.checkoutItems[0]?._ref
-    ) {
+    } else if (!Array.isArray(checkoutItems) || !checkoutItems[0]?._ref) {
       return 'ITEMS_NEEDED'
     }
   }
 
-  if (document?.isCheckedOut && document?.isReturned) {
+  if (isCheckedOut && isReturned) {
     return 'RETURNED'
-  } else if (document?.isCheckedOut && !document?.isReturned) {
+  } else if (isCheckedOut && !isReturned) {
     return 'CHECKED_OUT'
-  } else if (!document?.isCheckedOut && document?.isReturned) {
-    return 'RETURNED'
-  } else if (
-    document?.isCheckedOut &&
-    !document?.isReturned &&
-    !document?.isSpotChecked &&
-    !document?.user
-  ) {
-    return 'SPOTCHECK_NEEDED'
-  } else if (!document?.isCheckedOut && !document?.isReturned) {
+  } else if (!isCheckedOut && !isReturned) {
     return 'PENDING'
   }
+
   return 'PENDING'
 }
 
@@ -82,7 +75,7 @@ export const checkoutActions = {
   NEW: {
     label: 'Begin Checkout',
     color: 'primary',
-    title: 'This item is available to be checked out',
+    title: 'Checkout is ready to begin',
     tone: 'primary',
     icon: EllipsisHorizontalIcon,
     emoji: AddIcon,
@@ -90,7 +83,7 @@ export const checkoutActions = {
   PENDING: {
     label: 'Begin Checkout',
     color: 'primary',
-    title: 'This item is available to be checked out',
+    title: 'This checkout is pending and ready to be checked out',
     tone: 'primary',
     icon: EllipsisHorizontalIcon,
     emoji: () => <EmojiIcon>⋯</EmojiIcon>,
@@ -98,7 +91,7 @@ export const checkoutActions = {
   NO_STOCK: {
     label: 'No Stock',
     color: 'caution',
-    title: 'This item is out of stock',
+    title: 'This is out of stock',
     tone: 'caution',
     icon: WarningOutlineIcon,
     disabled: true,
@@ -106,19 +99,11 @@ export const checkoutActions = {
       <div className="flex rounded-full border-2 border-red-600"></div>
     ),
   },
-  SPOTCHECK_NEEDED: {
-    label: 'Spotcheck Needed',
-    color: 'caution',
-    title: 'Please spotcheck this item before processing the return',
-    tone: 'caution',
-    icon: WarningOutlineIcon,
-    disabled: true,
-    emoji: () => <EmojiIcon>🔎</EmojiIcon>,
-  },
+
   CHECKED_OUT: {
     label: 'Process Return',
     color: 'primary',
-    title: 'This is checked out',
+    title: 'This is currently checked out',
     tone: 'caution',
     icon: EllipsisHorizontalIcon,
     emoji: () => (
@@ -224,17 +209,6 @@ export const getCheckoutStatusProps = (document, status?: CheckoutStatus) => {
       tone: 'caution',
       icon: () => (
         <div className="flex rounded-full border-2 border-red-600"></div>
-      ),
-      disabled: true,
-    },
-    SPOTCHECK_NEEDED: {
-      label: 'Spotcheck Needed',
-      name: 'Spotcheck Needed',
-      color: 'caution',
-      title: 'Please spotcheck this item before processing the return',
-      tone: 'caution',
-      icon: () => (
-        <div className="flex rounded-full border-2 border-amber-400"></div>
       ),
       disabled: true,
     },

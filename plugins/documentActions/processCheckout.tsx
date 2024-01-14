@@ -11,10 +11,10 @@ import {
 } from 'schemas/documents/inventory/hooks/useInventory'
 
 export default function ProcessCheckout(props) {
-  const latestDocument = props?.draft || props?.published
+  const latestDocument = props?.published
   const dataset = useDataset()
 
-  const { patch, publish } = useDocumentOperation(props.id, props.type)
+  const { patch } = useDocumentOperation(props.id, props.type)
 
   const { setIsPublishing } = useInventory(latestDocument, patch)
 
@@ -26,7 +26,9 @@ export default function ProcessCheckout(props) {
     }
   }, [props.draft, setIsPublishing])
 
-  const checkoutStatus = getCheckoutStatus(latestDocument)
+  const checkoutStatus = latestDocument
+    ? getCheckoutStatus(latestDocument)
+    : 'PENDING'
   const action = checkoutActions[checkoutStatus]
 
   return {
@@ -59,7 +61,7 @@ export default function ProcessCheckout(props) {
               },
             },
           ])
-          publish.execute()
+          // publish.execute()
           props.onComplete()
         })
         .catch((e) => console.error({ e }))

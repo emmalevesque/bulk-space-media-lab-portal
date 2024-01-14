@@ -15,6 +15,7 @@ export default defineType({
   title: 'Checkout',
   type: 'document',
   icon: () => <EmojiIcon>🛒</EmojiIcon>,
+  liveEdit: true,
   groups: [
     {
       name: 'details',
@@ -55,15 +56,6 @@ export default defineType({
       hidden: !dev,
     },
     // TODO: confirm this feature or deprecate it
-    {
-      group: 'spotCheck',
-      name: 'isSpotChecked',
-      title: 'Has this item been Spot Checked?',
-      description:
-        'All items must be spot-checked before being return can be processed.',
-      type: 'boolean',
-      readOnly: ({ document }) => Boolean(!document?.isCheckedOut),
-    },
     {
       group: 'details',
       name: 'staffMember',

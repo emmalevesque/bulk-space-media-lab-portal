@@ -113,10 +113,7 @@ const plugins = [
             ],
           },
           {
-            type: 'list',
-            title: 'Members',
-            icon: user.icon,
-            typeDefs: [user],
+            ...user,
           },
           {
             type: 'list',
