@@ -198,13 +198,19 @@ export default defineType({
           components: {
             preview: (props, context) => {
               return (
-                <Card className="hover:bg-gray-100" padding={2}>
+                <Card
+                  tone="caution"
+                  className=" hover:cursor-pointer hover:saturate-200"
+                  padding={2}
+                >
                   <Stack space={2}>
                     <Text muted size={1}>
                       {new Date(props?.date).toLocaleDateString()} (
                       {useReadableDate(props?.date).readableDate})
                     </Text>
-                    <PortableText value={props?.note} />
+                    <span className=" text-sm">
+                      <PortableText value={props?.note} />
+                    </span>
                   </Stack>
                 </Card>
               )

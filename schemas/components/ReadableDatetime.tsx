@@ -67,7 +67,15 @@ export const ReadableDatetime = (
       <Stack space={2} style={{ width: '100%' }}>
         <Flex gap={2}>
           {props?.renderDefault(props)}
-          <Button mode="bleed" paddingY={0} paddingX={2} onClick={handleNow}>
+          <Button
+            type="button"
+            mode="ghost"
+            tone="default"
+            paddingY={0}
+            paddingX={2}
+            className=" font-bold"
+            onClick={handleNow}
+          >
             Now
           </Button>
         </Flex>
