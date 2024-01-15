@@ -7,6 +7,7 @@ import conditionReport from 'schemas/objects/conditionReport'
 import slugify from 'slugify'
 import { CategoryInputComponent } from './components/Category/CategoryInput'
 import ItemPreviewComponent from './components/Item/ItemPreviewComponent'
+import { getCheckoutStatusProps } from './hooks/useCheckout'
 
 export type ItemType = SanityDocument & {
   name: string
@@ -73,6 +74,8 @@ export default defineType({
     },
   ],
   fields: [
+    // TODO: add custom input component to ensure that stock
+    // is set 1 when isVariant is true
     {
       name: 'isVariant',
       title: 'Is this a variant of another inventory item?',
@@ -264,6 +267,11 @@ export default defineType({
 
       const variantNumberString = variantNumber > 1 ? ` (${variantNumber})` : ''
 
+      const statusIcon =
+        stock > 0
+          ? getCheckoutStatusProps('AVAILABLE').emoji
+          : getCheckoutStatusProps('NO_STOCK').emoji
+
       return {
         ...rest,
         subtitle: `${parentCategory ? `${parentCategory} > ` : ''}${
@@ -273,7 +281,7 @@ export default defineType({
         // TODO: replace this with any uploaded images
         // TODO: potentially add a little dot icon to indicate stock
         stock: stock,
-        media,
+        media: statusIcon,
         secondCategory,
         firstCategory,
         parentCategory,

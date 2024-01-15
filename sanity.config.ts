@@ -35,6 +35,7 @@ import { TITLE } from 'lib/constants'
 
 import Icon from 'components/Icon'
 import { CheckoutBadge } from 'plugins/documentBadges/CheckoutBadge'
+import { ItemBadge } from 'plugins/documentBadges/ItemBadge'
 import checkout from 'schemas/documents/inventory/checkout'
 import settings from 'schemas/singletons/settings'
 import 'styles/studio.css'
@@ -42,8 +43,13 @@ import 'styles/studio.css'
 const document = {
   actions: documentActions,
   templates: templates,
+  // TODO: add item badge that shows if item is available or not
   badges: (prev, context) =>
-    context.schemaType === 'checkout' ? [CheckoutBadge] : prev,
+    context.schemaType === 'checkout'
+      ? [CheckoutBadge]
+      : context.schemaType === 'item'
+      ? [ItemBadge]
+      : prev,
 }
 
 const tools = [inventoryStatsComponent()]
@@ -108,6 +114,11 @@ const plugins = [
                     ...item,
                     title: 'Unavailable Items',
                     icon: checkoutActions.CHECKED_OUT.emoji,
+                  },
+                  {
+                    ...item,
+                    title: 'All Variants',
+                    icon: checkoutActions.DEFAULT.emoji,
                   },
                 ],
               },

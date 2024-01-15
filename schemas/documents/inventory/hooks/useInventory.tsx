@@ -43,7 +43,45 @@ export type InventoryHook = {
   isPublishing: boolean
   // eslint-disable-next-line no-unused-vars
   setIsPublishing: (value: boolean) => void
+  itemState: ItemState
+  itemStateProps: (typeof ItemStates)[keyof typeof ItemStates]
 }
+
+export const ItemStates = {
+  AVAILABLE: {
+    label: 'Available',
+    title: 'This Item is Available',
+    color: 'success',
+  },
+  CHECKED_OUT: {
+    label: 'Checked Out',
+    title: 'This Item is Checked Out',
+    color: 'warning',
+  },
+  RETURNED: {
+    label: 'Returned',
+    title: 'This Item is Returned',
+    color: 'success',
+  },
+  NO_STOCK: {
+    label: 'No Stock',
+    title: 'This Item is Out of Stock',
+    color: 'danger',
+  },
+  PENDING: {
+    label: 'Pending',
+    title: 'This Item is Pending',
+    color: 'warning',
+  },
+  DEFAULT: {
+    label: 'Default',
+    title: 'This Item is Default',
+    color: 'default',
+  },
+}
+
+// create a type for all the keys of ItemStates
+type ItemState = keyof typeof ItemStates
 
 export const useInventory = (
   // the parent document
@@ -80,21 +118,6 @@ export const useInventory = (
       .catch((e) => console.error({ e }))
   }, [document?._id])
 
-  const getItemAvailability = async () => {
-    const item = await client.fetch(
-      groq`
-        *[
-          _id == "$id"
-        ][0]
-    `,
-      {
-        id: document?._id,
-      }
-    )
-
-    return item?.stock
-  }
-
   const getRelatedCheckouts = async () => {
     const relatedCheckouts = await client.fetch(
       groq`
@@ -104,7 +127,8 @@ export const useInventory = (
         | order(checkoutDate desc)
         {
           ...,
-          "user": user->name
+          "user": user->name,
+          "checkoutItems": checkoutItems[]->
         }
     `,
       {
@@ -115,22 +139,56 @@ export const useInventory = (
     return relatedCheckouts
   }
 
-  const [itemAvailability, setItemAvailability] = useState<number>(0)
-  const [relatedCheckouts, setRelatedCheckouts] =
-    useState<Pick<InventoryHook, 'relatedCheckouts'>>()
-  // const [checkoutHistory, setCheckoutHistory] = useState<CheckoutType>()
+  const [itemAvailability, setItemAvailability] = useState<boolean>(true)
+
+  const getItemAvailability = async () => {
+    return await client.fetch(
+      groq`
+        *[
+          _id == $id
+        ][0].stock
+    `,
+      {
+        id: document?._id,
+      }
+    )
+  }
 
   useEffect(() => {
-    if (document?._id) getItemAvailability().then(setItemAvailability)
-  }, [document?._id])
+    if (document)
+      getItemAvailability().then((stock) =>
+        setItemAvailability(stock > 0 ? true : false)
+      )
+  }, [document])
 
+  const [relatedCheckouts, setRelatedCheckouts] =
+    useState<Pick<InventoryHook, 'relatedCheckouts'>>()
   useEffect(() => {
     if (document?._id) getRelatedCheckouts().then(setRelatedCheckouts)
   }, [document?._id])
 
-  // useEffect(() => {
-  //   getCheckoutHistory().then(setCheckoutHistory)
-  // }, [document?._id])
+  const getItemState = (): ItemState => {
+    if (itemAvailability) return 'AVAILABLE'
+    if (!itemAvailability) return 'CHECKED_OUT'
+
+    return 'DEFAULT'
+  }
+
+  const [itemState, setItemState] = useState<ItemState>('DEFAULT')
+
+  useEffect(() => {
+    if (document) setItemState(getItemState())
+  }, [document])
+
+  useEffect(() => {
+    console.log({ itemState })
+  }, [itemState])
+
+  const [itemStateProps, setItemStateProps] = useState(ItemStates.DEFAULT)
+
+  useEffect(() => {
+    if (document) setItemStateProps(ItemStates[itemState])
+  }, [document, itemState])
 
   return {
     handleProcessCheckout,
@@ -139,5 +197,7 @@ export const useInventory = (
     // checkoutHistory,
     isPublishing,
     setIsPublishing,
+    itemState,
+    itemStateProps,
   }
 }

@@ -20,6 +20,7 @@ export type CheckoutStatus =
   | 'ITEMS_NEEDED'
   | 'NO_STOCK' // ready
   | 'PENDING' // ready
+  | 'DEFAULT' // ready
 
 export type CheckoutType = SanityDocument & {
   _type: 'checkout'
@@ -148,7 +149,7 @@ export const checkoutActions: {
     icon: CheckmarkCircleIcon,
     disabled: true,
     emoji: () => (
-      <div className="flex rounded-full border-2 border-blue-400"></div>
+      <div className="flex rounded-full border-2 border-green-400"></div>
     ),
   },
   USER_NEEDED: {
@@ -179,6 +180,17 @@ export const checkoutActions: {
     icon: EllipsisHorizontalIcon,
     disabled: true,
     emoji: () => <EmojiIcon>⋯</EmojiIcon>,
+  },
+  DEFAULT: {
+    label: 'Setup Checkout',
+    name: 'Setup Checkout',
+    color: 'warning',
+    title: 'Fill out the form to begin the checkout process',
+    tone: 'caution',
+    icon: EllipsisHorizontalIcon,
+    emoji: () => (
+      <div className="flex rounded-full border-2 border-amber-400"></div>
+    ),
   },
 }
 
