@@ -93,7 +93,7 @@ export default function navigationStructure(
       // and return them if they do otherwise return nothing (not null)
 
       const listItemChildCategoriesList =
-        listItemChildCategories.length > 0
+        listItemChildCategories?.length > 0
           ? [
               S.divider(),
               ...listItemChildCategories.map((child: any) => {
@@ -103,7 +103,7 @@ export default function navigationStructure(
           : []
 
       const listItemChildItemsList =
-        listItemChildItems.length > 0
+        listItemChildItems?.length > 0
           ? [
               S.divider(),
               ...listItemChildItems.map((child: any) => {

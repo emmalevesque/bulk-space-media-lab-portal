@@ -76,7 +76,7 @@ export default defineType({
   fields: [
     // TODO: add custom input component to ensure that stock
     // is set 1 when isVariant is true
-    {
+    defineField({
       name: 'isVariant',
       title: 'Is this a variant of another inventory item?',
       description:
@@ -85,7 +85,7 @@ export default defineType({
       type: 'boolean',
       fieldset: 'stock',
       group: 'metadata',
-    },
+    }),
     defineField({
       name: 'variantNumber',
       title: 'Variant Number',
@@ -106,6 +106,16 @@ export default defineType({
       initialValue: 1,
       readOnly: ({ parent }) => parent?.isVariant,
     },
+    defineField({
+      name: 'variants',
+      title: 'Variants',
+      description: 'Variants of this item',
+      type: 'array',
+      of: [{ weak: true, type: 'reference', to: [{ type: 'item' }] }],
+      fieldset: 'stock',
+      group: 'metadata',
+      hidden: ({ parent, document }) => !document?.variants,
+    }),
     {
       name: 'name',
       title: 'Short Name',
@@ -168,6 +178,11 @@ export default defineType({
       name: 'serialNumber',
       title: 'Serial Number',
       type: 'string',
+      description: 'Serial Number (if applicable)',
+      validation: (Rule) =>
+        Rule.required().warning(
+          'Adding a serial number is recommended for tracking purposes.'
+        ),
     },
     {
       group: 'details',

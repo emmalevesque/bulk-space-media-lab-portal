@@ -74,7 +74,7 @@ export default function CategoryInputContainer({
       {Array.isArray(children) ? (
         <CategoryInputCheckbox
           id={_id}
-          label={`${name} (${children.length})`}
+          label={`${name} (${children?.length})`}
           slug={slug?.current}
           childCategories={children}
           onClick={handleChange}

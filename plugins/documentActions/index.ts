@@ -11,11 +11,11 @@ const documentActions = (prev, context) => {
         (a: { action: string }) => !['publish', 'unpublish'].includes(a.action)
       ),
     ]
-  } else if (context.schemaType === 'item ') {
+  } else if (context.schemaType === 'item') {
     return [
       CreateVariant,
       ...prev.filter(
-        (a: { action: string }) => !['duplicate'].includes(a.action)
+        (a: { action: string }) => !['duplicate', 'publish'].includes(a.action)
       ),
     ]
   }
