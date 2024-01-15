@@ -1,10 +1,11 @@
 import {
-  AddIcon,
   CheckmarkCircleIcon,
   EllipsisHorizontalIcon,
+  IconComponent,
   UserIcon,
   WarningOutlineIcon,
 } from '@sanity/icons'
+import { CardTone } from '@sanity/ui'
 import EmojiIcon from 'components/Icon/Emoji'
 import moment from 'moment'
 import { SanityDocument } from 'next-sanity'
@@ -12,9 +13,9 @@ import type { ItemType } from '../item'
 
 export type CheckoutStatus =
   // add Pre & Post spotcheck
+  | 'LOADING' // await document info
   | 'CHECKED_OUT' // spotcheck needed
   | 'RETURNED' // complete
-  | 'SPOTCHECK_NEEDED' // spotcheck needed
   | 'USER_NEEDED'
   | 'ITEMS_NEEDED'
   | 'NO_STOCK' // ready
@@ -24,7 +25,10 @@ export type CheckoutType = SanityDocument & {
   _type: 'checkout'
   isCheckedOut: boolean
   isReturned: boolean
-  isSpotChecked: boolean
+  staffMember: {
+    _type: 'reference'
+    _ref: string
+  }
   user: {
     _type: 'reference'
     _ref: string
@@ -52,47 +56,69 @@ export const getCheckoutStatus = (document: CheckoutType): CheckoutStatus => {
   const isReturned = document?.isReturned
   const user = document?.user
   const checkoutItems = document?.checkoutItems
+  const isStaffCheckout = document?.isStaffCheckout
+  const staffMember = document?.staffMember?._ref
 
-  if (!isCheckedOut) {
-    if (!user && !document?.isStaffCheckout) {
+  if (document) {
+    if (isReturned) {
+      return 'RETURNED'
+    }
+
+    if (isCheckedOut) {
+      return 'CHECKED_OUT'
+    }
+
+    if (
+      checkoutItems?.filter((item) => !Boolean(item?._ref))?.length > 0 &&
+      (user || (staffMember && isStaffCheckout)) &&
+      !isCheckedOut &&
+      !isReturned
+    ) {
+      return 'PENDING'
+    }
+
+    if (isStaffCheckout && !staffMember) {
       return 'USER_NEEDED'
-    } else if (!Array.isArray(checkoutItems) || !checkoutItems[0]?._ref) {
+    }
+
+    if (!isStaffCheckout && !user) {
+      return 'USER_NEEDED'
+    }
+
+    if (!checkoutItems?.length) {
       return 'ITEMS_NEEDED'
     }
-    // check the stock of each item in the checkout
-  }
 
-  if (isCheckedOut && isReturned) {
-    return 'RETURNED'
-  } else if (isCheckedOut && !isReturned) {
-    return 'CHECKED_OUT'
-  } else if (!isCheckedOut && !isReturned) {
     return 'PENDING'
   }
 
-  return 'PENDING'
+  return 'LOADING'
 }
 
-export const checkoutActions = {
-  NEW: {
-    label: 'Begin Checkout',
-    color: 'primary',
-    title: 'Checkout is ready to begin',
-    tone: 'primary',
-    icon: EllipsisHorizontalIcon,
-    emoji: AddIcon,
-  },
+export const checkoutActions: {
+  [key in CheckoutStatus]: {
+    label: string
+    name?: string
+    title: string
+    tone: CardTone
+    color: 'primary' | 'warning' | 'success' | 'danger' | 'default'
+    icon?: IconComponent
+    disabled?: boolean
+    emoji: () => React.ReactNode
+  }
+} = {
   PENDING: {
     label: 'Begin Checkout',
-    color: 'primary',
+    name: 'Pending',
     title: 'This checkout is pending and ready to be checked out',
-    tone: 'primary',
+    tone: 'positive',
+    color: 'success',
     icon: EllipsisHorizontalIcon,
     emoji: () => <EmojiIcon>⋯</EmojiIcon>,
   },
   NO_STOCK: {
     label: 'No Stock',
-    color: 'caution',
+    color: 'danger',
     title: 'This is out of stock',
     tone: 'caution',
     icon: WarningOutlineIcon,
@@ -104,7 +130,8 @@ export const checkoutActions = {
 
   CHECKED_OUT: {
     label: 'Process Return',
-    color: 'primary',
+    name: 'Checked Out',
+    color: 'danger',
     title: 'This is currently checked out',
     tone: 'caution',
     icon: EllipsisHorizontalIcon,
@@ -114,7 +141,8 @@ export const checkoutActions = {
   },
   RETURNED: {
     label: 'Checkout Complete',
-    color: 'success',
+    name: 'Returned',
+    color: 'primary',
     title: 'This has been returned',
     tone: 'positive',
     icon: CheckmarkCircleIcon,
@@ -125,7 +153,8 @@ export const checkoutActions = {
   },
   USER_NEEDED: {
     label: 'Select User',
-    color: 'caution',
+    name: 'User Needed',
+    color: 'warning',
     title: 'Please select a user before checking this item out',
     tone: 'caution',
     icon: UserIcon,
@@ -134,11 +163,22 @@ export const checkoutActions = {
   },
   ITEMS_NEEDED: {
     label: 'Select Items',
-    color: 'caution',
+    name: 'Items Needed',
+    color: 'warning',
     title: 'Please select inventory items before checking this item out',
     tone: 'caution',
     disabled: true,
     emoji: () => <EmojiIcon>📸</EmojiIcon>,
+  },
+  LOADING: {
+    label: 'Loading',
+    name: 'Loading',
+    color: 'warning',
+    title: 'Loading',
+    tone: 'default',
+    icon: EllipsisHorizontalIcon,
+    disabled: true,
+    emoji: () => <EmojiIcon>⋯</EmojiIcon>,
   },
 }
 
@@ -173,9 +213,9 @@ export const getCheckoutStatusProps = (document, status?: CheckoutStatus) => {
     PENDING: {
       label: 'Begin Checkout',
       name: 'Pending',
-      color: 'primary',
+      color: 'positive',
       title: 'This item is available to be checked out',
-      tone: 'primary',
+      tone: 'positive',
       icon: () => (
         <div className="flex rounded-full border-2 border-green-400"></div>
       ),
@@ -216,10 +256,12 @@ export const getCheckoutStatusProps = (document, status?: CheckoutStatus) => {
     },
   }
 
-  if (!status) {
+  if (!status && document) {
     status = getCheckoutStatus(document)
-  } else {
+  } else if (status) {
     return props[status]
+  } else if (!status) {
+    return props['LOADING']
   }
 
   return props[status]

@@ -30,6 +30,7 @@ import { templates } from 'lib/sanity.templates'
 import { TITLE } from 'lib/constants'
 
 import Icon from 'components/Icon'
+import { CheckoutBadge } from 'plugins/documentBadges/CheckoutBadge'
 import checkout from 'schemas/documents/inventory/checkout'
 import settings from 'schemas/singletons/settings'
 import 'styles/studio.css'
@@ -37,6 +38,8 @@ import 'styles/studio.css'
 const document = {
   actions: documentActions,
   templates: templates,
+  badges: (prev, context) =>
+    context.schemaType === 'checkout' ? [CheckoutBadge] : prev,
 }
 
 const tools = [inventoryStatsComponent()]
