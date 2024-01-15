@@ -18,7 +18,7 @@ export const parseReadableDate = (value) => {
   }${minutes ? `${minutes} min ` : ''}`
 
   readableDate = `${readableDate || 'Just now'} ${
-    date.getTime() < now ? 'ago' : 'from now'
+    !readableDate ? '' : date.getTime() < now ? 'ago' : 'from now'
   }`
 
   return readableDate

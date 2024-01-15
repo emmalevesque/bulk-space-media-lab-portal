@@ -49,11 +49,6 @@ const plugins = [
         S,
         [
           {
-            ...checkout,
-            title: 'New Checkout',
-            icon: checkoutActions.NEW.emoji,
-          },
-          {
             type: 'list',
             title: 'Manage Checkouts',
             icon: checkout.icon,

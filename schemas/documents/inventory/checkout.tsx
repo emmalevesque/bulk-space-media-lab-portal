@@ -1,6 +1,7 @@
 import { PortableText } from '@portabletext/react'
 import { Card, Stack, Text } from '@sanity/ui'
 import EmojiIcon from 'components/Icon/Emoji'
+import moment from 'moment'
 import { defineType } from 'sanity'
 import {
   ReadableDatetime,
@@ -22,48 +23,47 @@ export default defineType({
   type: 'document',
   icon: () => <EmojiIcon>🛒</EmojiIcon>,
   liveEdit: true,
-  groups: [
-    {
-      name: 'details',
-      default: true,
-    },
-    {
-      name: 'dates',
-    },
-    {
-      name: 'spotCheck',
-    },
+  fieldsets: [
     {
       name: 'status',
-    },
-    {
-      name: 'notes',
+      title: 'Status',
+      options: {
+        collapsible: false,
+        columns: 2,
+      },
     },
   ],
   fields: [
     {
-      group: 'status',
-      readOnly: true,
+      fieldset: 'status',
       name: 'isCheckedOut',
-      title: 'Item is Checked Out?',
-      description:
-        'This field is handled autotically when processing a checkout.',
+      title: 'Checked Out?',
       type: 'boolean',
       hidden: !dev,
+      components: {
+        input: (props) => (
+          <div className=" pointer-events-none">
+            {props?.renderDefault(props)}
+          </div>
+        ),
+      },
     },
     {
-      group: 'status',
-      readOnly: true,
+      fieldset: 'status',
       name: 'isReturned',
-      title: 'Item is Returned?',
-      description:
-        'This field is handled autotically when processing a checkout.',
+      title: 'Returned?',
       type: 'boolean',
       hidden: !dev,
+      components: {
+        input: (props) => (
+          <div className=" pointer-events-none">
+            {props?.renderDefault(props)}
+          </div>
+        ),
+      },
     },
     // TODO: confirm this feature or deprecate it
     {
-      group: 'details',
       name: 'staffMember',
       title: 'Staff Member',
       description:
@@ -75,7 +75,6 @@ export default defineType({
       },
     },
     {
-      group: 'details',
       name: 'isStaffCheckout',
       title: 'Is this a Staff Checkout?',
       description:
@@ -84,7 +83,6 @@ export default defineType({
       initialValue: false,
     },
     {
-      group: 'details',
       name: 'user',
       title: 'User',
       type: 'reference',
@@ -103,7 +101,6 @@ export default defineType({
       },
     },
     {
-      group: 'details',
       // TODO: rename this to items
       name: 'checkoutItems',
       title: 'Inventory Items',
@@ -121,7 +118,6 @@ export default defineType({
       ],
     },
     {
-      group: 'dates',
       name: 'checkoutDate',
       title: 'Checkout Date',
       type: 'datetime',
@@ -136,7 +132,6 @@ export default defineType({
       },
     },
     {
-      group: 'dates',
       name: 'scheduledReturnDate',
       title: 'Scheduled Return Date',
       type: 'datetime',
@@ -175,7 +170,6 @@ export default defineType({
       },
     },
     {
-      group: 'dates',
       name: 'returnDate',
       title: 'Return Date',
       type: 'datetime',
@@ -191,6 +185,8 @@ export default defineType({
     {
       name: 'notes',
       title: 'Checkout Notes',
+      description:
+        'You can use notes to add more details to a checkout at every stage',
       type: 'array',
       of: [
         {
@@ -202,10 +198,11 @@ export default defineType({
                   tone="caution"
                   className=" hover:cursor-pointer hover:saturate-200"
                   padding={2}
+                  radius={1}
                 >
                   <Stack space={2}>
                     <Text muted size={1}>
-                      {new Date(props?.date).toLocaleDateString()} (
+                      {moment(props?.date).format('yyyy/MM/DD hh:mma')} (
                       {useReadableDate(props?.date).readableDate})
                     </Text>
                     <span className=" text-sm">
@@ -257,7 +254,6 @@ export default defineType({
           ],
         },
       ],
-      group: 'notes',
     },
   ],
   preview: {
@@ -275,7 +271,7 @@ export default defineType({
       user: 'user',
     },
     prepare(selection) {
-      const props = getCheckoutStatusProps(selection)
+      const props = selection ? getCheckoutStatusProps(selection) : {}
       return {
         title: !selection?.isStaffCheckout
           ? selection.checkedOutTo
