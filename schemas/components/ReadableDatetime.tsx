@@ -2,12 +2,10 @@ import { Button, Card, CardTone, Flex, Inline, Stack, Text } from '@sanity/ui'
 
 import { set } from 'sanity'
 
-export const useReadableDate = (value) => {
-  const date = new Date(value)
-
+export const parseReadableDate = (value) => {
   const now = new Date().getTime()
 
-  const isPast = date.getTime() < now
+  const date = new Date(value)
 
   const diff = Math.abs(now - date.getTime())
 
@@ -20,8 +18,25 @@ export const useReadableDate = (value) => {
   }${minutes ? `${minutes} min ` : ''}`
 
   readableDate = `${readableDate || 'Just now'} ${
-    isPast && readableDate ? 'ago' : !isPast && readableDate ? 'from now' : ''
+    date.getTime() < now ? 'ago' : 'from now'
   }`
+
+  return readableDate
+}
+
+export const useReadableDate = (value) => {
+  const now = new Date().getTime()
+
+  const date = new Date(value)
+
+  const diff = Math.abs(now - date.getTime())
+
+  const isPast = date.getTime() < now
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24)
+
+  const readableDate = parseReadableDate(value)
 
   const tone = isPast
     ? 'default'
