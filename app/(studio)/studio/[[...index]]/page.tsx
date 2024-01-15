@@ -10,7 +10,7 @@ export const dynamic = 'force-static'
 export { metadata } from 'next-sanity/studio/metadata'
 export const viewport: Viewport = {
   ...nextSanityViewport,
-  themeColor: '#1f212b',
+  themeColor: '#13141b',
 }
 
 export default function StudioPage() {

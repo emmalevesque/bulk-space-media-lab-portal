@@ -280,7 +280,8 @@ export default defineType({
 
       const subtitle = `${manufacturerName} ${category}`
 
-      const variantNumberString = variantNumber > 1 ? ` (${variantNumber})` : ''
+      const variantNumberString =
+        variantNumber > 0 ? ` (Variant ${variantNumber})` : ''
 
       const statusIcon =
         stock > 0
