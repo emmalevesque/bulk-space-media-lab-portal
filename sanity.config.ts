@@ -2,6 +2,10 @@
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
 // plugins
+import {
+  embeddingsIndexDashboard,
+  embeddingsIndexReferenceInput,
+} from '@sanity/embeddings-index-ui'
 import { visionTool } from '@sanity/vision'
 import { apiVersion, projectId } from 'lib/sanity.api'
 import deskStructure from 'plugins/deskStructure'
@@ -45,6 +49,8 @@ const document = {
 const tools = [inventoryStatsComponent()]
 
 const plugins = [
+  embeddingsIndexReferenceInput(),
+
   deskTool({
     title: 'Manage',
     structure: (S, context) =>
@@ -125,6 +131,11 @@ const plugins = [
       ),
     defaultDocumentNode: previewDocumentNode(),
   }),
+  ...[
+    process.env.NODE_ENV === 'development'
+      ? embeddingsIndexDashboard()
+      : { name: 'embeddings-index-dashboard-disabled' },
+  ],
   // Configures the global "new document" button, and document actions, to suit the Settings document singleton
   // Add the "Open preview" action
   /*** */
@@ -137,7 +148,11 @@ const plugins = [
   // Add an image asset source for Unsplash
   // Vision lets you query your content with GROQ in the studio
   // https://www.sanity.io/docs/the-vision-plugin
-  visionTool({ defaultApiVersion: apiVersion }),
+  ...[
+    process.env.NODE_ENV === 'development'
+      ? visionTool({ defaultApiVersion: apiVersion })
+      : { name: 'vision-disabled' },
+  ],
 ]
 
 const commonConfig = {

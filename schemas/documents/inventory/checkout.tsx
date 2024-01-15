@@ -111,6 +111,13 @@ export default defineType({
       },
       of: [
         {
+          options: {
+            embeddingsIndex: {
+              indexName: 'bulk-space-index', // Name of the embeddings index
+              maxResults: 10, // Maximum number of returned results per request. Default: 10
+              searchMode: 'embeddings', // Sets default search mode for the field. Enables toggling between 'embeddings' (semantic search) and 'default' (default search based on GROQ filter)
+            },
+          },
           type: 'reference',
           weak: true,
           to: [{ type: 'item' }],
