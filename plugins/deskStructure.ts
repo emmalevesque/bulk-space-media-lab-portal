@@ -1,12 +1,6 @@
 import { uuid } from '@sanity/uuid'
 import { ComponentType, ReactNode } from 'react'
 import { DocumentDefinition, User } from 'sanity'
-import type {
-  Divider,
-  ListItemBuilder,
-  StructureBuilder,
-  StructureResolverContext,
-} from 'sanity/desk'
 
 import {
   DESK_NAME,
@@ -15,6 +9,14 @@ import {
   typesWithCustomFilters,
 } from 'lib/constants'
 import { apiVersion } from 'lib/sanity.api'
+
+import type { ListItemBuilder } from '@sanity/structure/lib/ListItem'
+
+import {
+  Divider,
+  StructureBuilder,
+  StructureResolverContext,
+} from 'sanity/desk'
 import navigationStructure from './navigationStructure'
 
 type FilteredDocumentDefinition = DocumentDefinition & {
@@ -35,6 +37,7 @@ type TopLevelListDefinition = {
   filter?: string
 }
 
+// TODO: replace deprecated type
 type ListItem = (TopLevelListDefinition | Divider | DocumentDefinition) & {
   type: 'list' | 'divider' | 'document'
 }
@@ -71,6 +74,7 @@ export const previewPanes = (S, type) => [
  * This returns a list item builder for a singleton document type
  */
 const singletonListItemBuilder = (
+  // TODO: replace deprecated type
   S: StructureBuilder,
   type: DocumentDefinition
 ): ListItemBuilder =>
@@ -182,6 +186,7 @@ const listItemBuilder = (
 const deskStructure = (
   S: StructureBuilder,
   listItems: ListItem[],
+  // TODO: replace deprecated type
   context: StructureResolverContext
 ) => {
   const currentUser = context?.currentUser
