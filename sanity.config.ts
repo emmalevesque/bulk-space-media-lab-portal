@@ -22,7 +22,6 @@ import user from 'schemas/documents/user/user'
 import { schema } from 'schemas/schema'
 
 import documentActions from 'plugins/documentActions'
-import { previewDocumentNode } from 'plugins/previewPane'
 import inventoryStatsComponent from 'plugins/tools/InventoryStatsWidget'
 import {
   checkoutActions,
@@ -158,7 +157,7 @@ const plugins = [
         ],
         context
       ),
-    defaultDocumentNode: previewDocumentNode(),
+    // defaultDocumentNode: previewDocumentNode(),
   }),
   ...[
     process.env.NODE_ENV === 'development'

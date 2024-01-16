@@ -93,7 +93,7 @@ export default defineType({
       fieldset: 'stock',
       group: 'metadata',
       type: 'number',
-      initialValue: 1,
+      initialValue: 0,
       hidden: ({ parent }) => !parent?.isVariant,
       readOnly: ({ parent }) => !parent?.isVariant,
     }),
@@ -114,7 +114,7 @@ export default defineType({
       of: [{ weak: true, type: 'reference', to: [{ type: 'item' }] }],
       fieldset: 'stock',
       group: 'metadata',
-      hidden: ({ parent, document }) => !document?.variants,
+      // hidden: ({  document }) => !document?.variants,
     }),
     {
       name: 'name',
@@ -165,11 +165,25 @@ export default defineType({
       type: 'slug',
       options: {
         source: 'manufacturerDetails',
-        slugify: (input: { make: string; model: string }) =>
-          slugify(`${input.make} ${input.model}`, {
-            lower: true,
-            strict: true,
-          }),
+        slugify: (
+          input: { make: string; model: string },
+          schemaType,
+          context
+        ) => {
+          console.log({ input, schemaType, context })
+
+          const parent = context?.parent as ItemType
+
+          return slugify(
+            `${input.make} ${input.model}${
+              parent?.variantNumber > 0 ? ` ${parent?.variantNumber}` : ''
+            }`,
+            {
+              lower: true,
+              strict: true,
+            }
+          )
+        },
         maxLength: 96,
       },
     },

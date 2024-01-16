@@ -1,13 +1,24 @@
-import { useCallback } from 'react'
 import { Box, Button, Inline } from '@sanity/ui'
 import LoadingOverlay from 'components/LoadingOverlay'
 import { groq } from 'next-sanity'
-import { useClient } from 'sanity'
+import { useCallback } from 'react'
+import { set, unset, useClient } from 'sanity'
 import useSWR from 'swr'
-import { childrenQuery } from 'tools/Navigation/NavigationStructure'
-import CategoryInputContainer from './CategoryInputContainer'
 import { CategoryInputContextProvider } from '../../hooks/useCategoryInputContext'
-import { set, unset } from 'sanity'
+import CategoryInputContainer from './CategoryInputContainer'
+
+export const childrenQuery = (childQuery) => groq`
+      "children": 
+        *[_type == "category" 
+        && defined(parent) 
+        && parent._ref == ^._id
+      ][] 
+      | order(name asc)
+      {
+      ...,
+      ${childQuery} 
+      }
+`
 
 export const CategoryInputComponent = (props) => {
   const { value, onChange, schemaType } = props

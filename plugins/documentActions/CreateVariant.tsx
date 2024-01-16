@@ -29,7 +29,10 @@ export default function CreateVariant(props) {
     title: latestDocument?.isVariant
       ? 'You cannot clone a variant. Please clone the original item.'
       : 'Create a Variant of this Item',
-    disabled: latestDocument?.isVariant ? true : false,
+    disabled:
+      latestDocument?.isVariant && latestDocument?.variantNumber > 1
+        ? true
+        : false,
     icon: CopyIcon,
     onHandle: async () => {
       if (!_writeClient || !_readClientWithConfig || !latestDocument)
@@ -46,9 +49,7 @@ export default function CreateVariant(props) {
               ? latestDocument?.variants?.map((v) => v._ref)
               : [],
           }
-        )) as number) || 1
-
-      console.log({ lastVariantNumber })
+        )) as number) || 0
 
       // draft the new variant document
       const newVariant = {
@@ -80,6 +81,8 @@ export default function CreateVariant(props) {
             patch.execute([
               {
                 set: {
+                  stock: 1,
+                  variantNumber: 0,
                   variants: [
                     ...(latestDocument?.variants || []),
                     {
