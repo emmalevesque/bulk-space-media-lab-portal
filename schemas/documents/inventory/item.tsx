@@ -294,8 +294,7 @@ export default defineType({
 
       const subtitle = `${manufacturerName} ${category}`
 
-      const variantNumberString =
-        variantNumber > 0 ? ` (Variant ${variantNumber})` : ''
+      const variantNumberString = variantNumber > 0 ? `(${variantNumber}) ` : ''
 
       const statusIcon =
         stock > 0
@@ -307,7 +306,7 @@ export default defineType({
         subtitle: `${parentCategory ? `${parentCategory} > ` : ''}${
           firstCategory || ''
         }`,
-        title: `${manufacturerName}${variantNumberString}`,
+        title: `${variantNumberString}${manufacturerName}`,
         // TODO: replace this with any uploaded images
         // TODO: potentially add a little dot icon to indicate stock
         stock: stock,

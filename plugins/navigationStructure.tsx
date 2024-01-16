@@ -74,9 +74,9 @@ export default function navigationStructure(
         ? `${item.manufacturerDetails?.make} ${item.manufacturerDetails?.model}`
         : 'Unnamed Item'
 
-    itemName = `${itemName}${
-      item.variantNumber > 1 ? ` (${item.variantNumber})` : ''
-    }`
+    itemName = `${
+      item.variantNumber > 0 ? `(${item.variantNumber}) ` : ''
+    }${itemName}`
     if (item._type === 'category') {
       // split the children ahead of time
       // to show the categories above the items

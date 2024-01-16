@@ -1,10 +1,12 @@
 import { createClient } from '@sanity/client'
-import { dataset, projectId } from 'lib/sanity.api'
+import { projectId } from 'lib/sanity.api'
 import { groq } from 'next-sanity'
 
 const client = createClient({
   projectId,
-  dataset,
+  dataset: 'production',
+  useCdn: false,
+  apiVersion: '2021-03-25',
   token: process.env.NEXT_PUBLIC_SANITY_PATCH_TOKEN,
 })
 
@@ -13,11 +15,12 @@ const queryAndPatchDocuments = async () => {
   // Query for a set of documents; replace the query as needed
   const documents = await client.fetch(groq`
     *[
-      _type == "item" 
+      _type == "item" &&
+      !isVariant && 
+      variantNumber == 1
      ] | order(_createdAt desc)
      []{
       _id,
-      description
      }
    `)
 
@@ -31,7 +34,7 @@ const queryAndPatchDocuments = async () => {
     // Example: Update the `name` field of each document
     transaction.patch(doc._id, {
       set: {
-        useShortName: false,
+        variantNumber: 0,
       },
     })
   })
