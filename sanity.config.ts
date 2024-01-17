@@ -22,7 +22,7 @@ import user from 'schemas/documents/user/user'
 import { schema } from 'schemas/schema'
 
 import documentActions from 'plugins/documentActions'
-import inventoryStatsComponent from 'plugins/tools/InventoryStatsWidget'
+import InventoryStatsTool from 'plugins/tools/InventoryStatsTool'
 import {
   checkoutActions,
   getCheckoutStatusProps,
@@ -35,6 +35,7 @@ import { TITLE } from 'lib/constants'
 import Icon from 'components/Icon'
 import { CheckoutBadge } from 'plugins/documentBadges/CheckoutBadge'
 import { ItemBadge } from 'plugins/documentBadges/ItemBadge'
+import ReportsTool from 'plugins/tools/ReportsTool'
 import checkout from 'schemas/documents/inventory/checkout'
 import settings from 'schemas/singletons/settings'
 import 'styles/studio.css'
@@ -60,7 +61,7 @@ const tools = (prev, context) => {
     .map((role) => role.name)
     .some((roleName) => ['administrator', 'developer'].includes(roleName))
 
-  const availableTools = [...prev, inventoryStatsComponent()]
+  const availableTools = [...prev, InventoryStatsTool(), ReportsTool()]
 
   return !canViewInventoryStats && !canManageEmbeddingsIndex
     ? [...prev.filter((tool) => tool.name !== 'embeddings-index')]

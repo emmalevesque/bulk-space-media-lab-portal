@@ -1,0 +1,9 @@
+{
+  "totalCheckouts": count(*[_type == "checkout"]),
+  "totalCheckoutsThisYear": count(*[_type == "checkout" && checkoutDate >= '2024-01-01']),
+  "totalPendingCheckouts": count(*[_type == "checkout" && !isCheckedOut && !isReturned]),
+  "totalHotCheckouts": count(*[_type == "checkout" && isCheckedOut && !isReturned]),
+  "totalCompletedCheckouts": count(*[_type == "checkout" && isCheckedOut && isReturned]),
+  "totalUsers": count(*[_type == "user"]),
+  "totalStaff": count(*[_type == "staff"])
+}

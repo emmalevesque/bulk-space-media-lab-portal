@@ -10,7 +10,7 @@ import { ItemType } from 'schemas/documents/inventory/item'
 // TODO: most common items checked,
 // TODO: tax related stats, total checkouts, total members, total value of inventory
 
-export default function inventoryStatsComponent(): Tool {
+export default function InventoryStatsTool(): Tool {
   return {
     name: 'inventory-stats',
     title: 'Inventory Stats',
