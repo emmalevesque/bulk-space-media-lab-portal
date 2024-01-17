@@ -1,12 +1,12 @@
 import { apiVersion, dataset, projectId, useCdn } from 'lib/sanity.api'
 import {
   indexQuery,
-  type Post,
   postAndMoreStoriesQuery,
   postBySlugQuery,
   postSlugsQuery,
-  type Settings,
   settingsQuery,
+  type Post,
+  type Settings,
 } from 'lib/sanity.queries'
 import { createClient, type SanityClient } from 'next-sanity'
 

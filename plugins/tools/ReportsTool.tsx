@@ -71,7 +71,7 @@ export default function ReportsTool(): Tool {
               </Button>
               <Button padding={2} mode="bleed" radius={3}>
                 <p>
-                  Total <b>Complted Checkouts</b>
+                  Total <b>Completed Checkouts</b>
                 </p>
                 <p className="font-bold">
                   <AnimatedNumber toValue={reports?.totalCompletedCheckouts} />

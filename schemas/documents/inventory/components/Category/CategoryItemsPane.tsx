@@ -1,10 +1,11 @@
+import { PortableText } from '@portabletext/react'
 import { Box, Card, Grid, Heading, Inline, Stack, Text } from '@sanity/ui'
 import LoadingOverlay from 'components/LoadingOverlay'
 import { groq } from 'next-sanity'
 import { useEffect, useState } from 'react'
 import { useClient } from 'sanity'
-import { ItemType } from '../../item'
 import { IntentLink } from 'sanity/router'
+import { ItemType } from '../../item'
 
 export default function CategoryProductsPane(props) {
   const client = useClient().withConfig({ apiVersion: '2021-06-07' })
@@ -57,7 +58,11 @@ export default function CategoryProductsPane(props) {
                       `}
                       </Text>
                     </Heading>
-                    <Text>{item.description}</Text>
+                    {item?.description && (
+                      <Text>
+                        <PortableText value={item.description} />
+                      </Text>
+                    )}
                   </Stack>
                 </Card>
               </IntentLink>

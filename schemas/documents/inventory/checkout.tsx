@@ -69,6 +69,7 @@ export default defineType({
       description:
         'The staff member who is checking out this item. In most cases, this will be you.',
       type: 'reference',
+      weak: true,
       to: [{ type: 'staff' }],
       components: {
         input: StaffMemberInput,
@@ -86,6 +87,7 @@ export default defineType({
       name: 'user',
       title: 'User',
       type: 'reference',
+      weak: true,
       to: [{ type: 'user' }, { type: 'staff' }],
       hidden: ({ document }) => Boolean(document?.isStaffCheckout),
       validation: (Rule) =>

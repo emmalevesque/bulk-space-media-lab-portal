@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import { PortableTextBlock, defineField, defineType } from 'sanity'
 
 import { Box, Card, Grid, Inline, Text } from '@sanity/ui'
 import EmojiIcon from 'components/Icon/Emoji'
@@ -18,22 +18,22 @@ export type ItemType = SanityDocument & {
   slug: {
     current: string
   }
-  showMoreDetails: boolean
-  sku: string
-  description: string
-  images: {
+  showMoreDetails?: boolean
+  sku?: string
+  description?: PortableTextBlock[]
+  images?: {
     asset: {
       _ref: string
     }
   }[]
-  category: {
+  category?: {
     title: string
     parent: {
       title: string
     }
   }
-  stock: number
-  productManualUrl: string
+  stock?: number
+  productManualUrl?: string
 }
 
 export default defineType({

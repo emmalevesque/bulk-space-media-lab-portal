@@ -30,8 +30,6 @@ import {
 
 import { templates } from 'lib/sanity.templates'
 
-import { TITLE } from 'lib/constants'
-
 import Icon from 'components/Icon'
 import { CheckoutBadge } from 'plugins/documentBadges/CheckoutBadge'
 import { ItemBadge } from 'plugins/documentBadges/ItemBadge'
@@ -204,17 +202,10 @@ const commonConfig = {
 // They must match the dataset name
 export default defineConfig([
   {
-    basePath: '/studio/production',
-    name: 'production',
-    dataset: 'production',
-    title: `${TITLE}`,
-    ...commonConfig,
-  },
-  {
-    basePath: '/studio/demo',
-    name: 'demo',
-    dataset: 'demo',
-    title: `Demo Data`,
+    basePath: '/studio/preview',
+    name: 'preview',
+    dataset: 'preview',
+    title: `Bulk Space Preview`,
     ...commonConfig,
   },
 ])
