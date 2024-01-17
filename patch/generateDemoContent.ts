@@ -28,11 +28,11 @@ const queryAndPatchDocuments = async () => {
     const lastName = faker.person.lastName()
 
     return {
-      _id: `member-${slugify(firstName + lastName, {
+      _id: `user-${slugify(firstName + lastName, {
         strict: true,
         lower: true,
       })}`,
-      _type: 'member',
+      _type: 'user',
       slug: {
         _type: 'slug',
         current: slugify(firstName + lastName, { strict: true, lower: true }),
@@ -49,7 +49,7 @@ const queryAndPatchDocuments = async () => {
     }
   })
 
-  const checkouts = new Array(120).fill(0).map(() => {
+  const checkouts = new Array(50).fill(0).map(() => {
     const getRandomMember = () => {
       const randomIndex = Math.floor(Math.random() * members.length)
       return members[randomIndex]
@@ -104,11 +104,6 @@ const queryAndPatchDocuments = async () => {
   console.log({ checkouts })
 
   const transaction = client.transaction()
-
-  // Loop through each document and apply patches
-  items.forEach(async (doc) => {
-    transaction.createOrReplace(doc)
-  })
 
   members.forEach(async (doc) => {
     transaction.createOrReplace(doc)

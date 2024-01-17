@@ -14,24 +14,26 @@ export default function ReportsTool(): Tool {
     component: () => {
       const reportsQuery = groq`
       {
-        "totalCheckouts": count(*[_type == "checkout"]),
-        "totalCheckoutsThisYear": count(*[_type == "checkout" && checkoutDate >= '2024-01-01']),
-        "totalPendingCheckouts": count(*[_type == "checkout" && !isCheckedOut && !isReturned]),
-        "totalHotCheckouts": count(*[_type == "checkout" && isCheckedOut && !isReturned]),
-        "totalCompletedCheckouts": count(*[_type == "checkout" && isCheckedOut && isReturned]),
-        "totalUsers": count(*[_type == "user"]),
+        "totalRentals": count(*[_type == "checkout"]),
+        "totalRentalsThisYear": count(*[_type == "checkout" && checkoutDate >= '2024-01-01']),
+        "totalPendingRentals": count(*[_type == "checkout" && !isCheckedOut && !isReturned]),
+        "totalHotRentals": count(*[_type == "checkout" && isCheckedOut && !isReturned]),
+        "totalCompletedRentals": count(*[_type == "checkout" && isCheckedOut && isReturned]),
+        "totalUsers": count(*[_type == "member"]),
+        "totalActiveUsers": count(*[_type == "member" && count(*[_type == "checkout" && references(^._id)]) > 0]),
         "totalStaff": count(*[_type == "staff"])
       }`
 
       const { data: reports, error } = useFetch(reportsQuery) as {
         data: {
-          totalCheckouts: number
-          totalCheckoutsThisYear: number
-          totalPendingCheckouts: number
-          totalHotCheckouts: number
-          totalCompletedCheckouts: number
+          totalRentals: number
+          totalRentalsThisYear: number
+          totalPendingRentals: number
+          totalHotRentals: number
+          totalCompletedRentals: number
           totalUsers: number
           totalStaff: number
+          totalActiveUsers: number
         }
         error: any
       }
@@ -50,10 +52,10 @@ export default function ReportsTool(): Tool {
                 mode="bleed"
               >
                 <p>
-                  Total Checkouts <b>Overall</b>
+                  Total Rentals <b>To Date</b>
                 </p>
                 <p className="font-bold">
-                  <AnimatedNumber toValue={reports?.totalCheckouts} />
+                  <AnimatedNumber toValue={reports?.totalRentals} />
                 </p>
               </Button>
               <Button
@@ -63,34 +65,42 @@ export default function ReportsTool(): Tool {
                 mode="bleed"
               >
                 <p>
-                  Total Checkouts <b>This Year</b>
+                  Total Rentals <b>This Year</b>
                 </p>
                 <p className="font-bold">
-                  <AnimatedNumber toValue={reports?.totalCheckoutsThisYear} />
+                  <AnimatedNumber toValue={reports?.totalRentalsThisYear} />
                 </p>
               </Button>
               <Button padding={2} mode="bleed" radius={3}>
                 <p>
-                  Total <b>Completed Checkouts</b>
+                  Total <b>Hot Rentals</b>
                 </p>
                 <p className="font-bold">
-                  <AnimatedNumber toValue={reports?.totalCompletedCheckouts} />
+                  <AnimatedNumber toValue={reports?.totalHotRentals} />
                 </p>
               </Button>
               <Button padding={2} mode="bleed" radius={3}>
                 <p>
-                  Total <b>Hot Checkouts</b>
+                  Total <b>Pending Rentals</b>
                 </p>
                 <p className="font-bold">
-                  <AnimatedNumber toValue={reports?.totalHotCheckouts} />
+                  <AnimatedNumber toValue={reports?.totalPendingRentals} />
                 </p>
               </Button>
               <Button padding={2} mode="bleed" radius={3}>
                 <p>
-                  Total <b>Pending Checkouts</b>
+                  Total <b>Users</b>
                 </p>
                 <p className="font-bold">
-                  <AnimatedNumber toValue={reports?.totalPendingCheckouts} />
+                  <AnimatedNumber toValue={reports?.totalUsers} />
+                </p>
+              </Button>
+              <Button padding={2} mode="bleed" radius={3}>
+                <p>
+                  Total <b>Active Users</b>
+                </p>
+                <p className="font-bold">
+                  <AnimatedNumber toValue={reports?.totalActiveUsers} />
                 </p>
               </Button>
             </Grid>

@@ -141,6 +141,7 @@ const documentListItemBuilder = (
                 ? getFilter(type.title || '')
                 : `_type == $type`
             )
+            .defaultOrdering([{ field: 'createdAt', direction: 'desc' }])
             .initialValueTemplates([
               S.initialValueTemplateItem('current-user-checkout', {
                 userId: currentUser?.id,
