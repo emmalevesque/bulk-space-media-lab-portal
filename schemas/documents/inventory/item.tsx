@@ -253,13 +253,35 @@ export default defineType({
       },
     },
   ],
+  orderings: [
+    {
+      name: 'nameAsc',
+      title: 'Name A-Z',
+      by: [{ field: 'name', direction: 'asc' }],
+    },
+    {
+      name: 'nameDesc',
+      title: 'Name Z-A',
+      by: [{ field: 'name', direction: 'desc' }],
+    },
+    {
+      name: 'stockAsc',
+      title: 'Stock Low-High',
+      by: [{ field: 'stock', direction: 'asc' }],
+    },
+    {
+      name: 'stockDesc',
+      title: 'Stock High-Low',
+      by: [{ field: 'stock', direction: 'desc' }],
+    },
+  ],
   preview: {
     select: {
       name: 'name',
       manufacturerDetails: 'manufacturerDetails',
       manufacturerMake: 'manufacturerDetails.make',
       manufacturerModel: 'manufacturerDetails.model',
-      media: 'images.0',
+      media: 'images.0.asset',
       parentCategory: 'categories.0.parent.name',
       firstCategory: 'categories.0.name',
       secondCategory: 'categories.1.name',
@@ -304,13 +326,13 @@ export default defineType({
       return {
         ...rest,
         subtitle: `${parentCategory ? `${parentCategory} > ` : ''}${
-          firstCategory || ''
+          firstCategory || subtitle
         }`,
         title: `${variantNumberString}${manufacturerName}`,
         // TODO: replace this with any uploaded images
         // TODO: potentially add a little dot icon to indicate stock
         stock: stock,
-        media: statusIcon,
+        media: media ?? statusIcon,
         secondCategory,
         firstCategory,
         parentCategory,

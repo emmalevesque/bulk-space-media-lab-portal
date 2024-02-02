@@ -10,7 +10,6 @@ import { visionTool } from '@sanity/vision'
 import { apiVersion, projectId } from 'lib/sanity.api'
 import deskStructure from 'plugins/deskStructure'
 import { defineConfig, isDev } from 'sanity'
-import { deskTool } from 'sanity/desk'
 
 // schema related items
 import category from 'schemas/documents/inventory/category'
@@ -39,6 +38,7 @@ import ReportsTool from 'plugins/tools/ReportsTool'
 import checkout from 'schemas/documents/inventory/checkout'
 import settings from 'schemas/singletons/settings'
 import 'styles/studio.css'
+import { structureTool } from 'sanity/structure'
 
 const document = {
   actions: documentActions,
@@ -75,7 +75,7 @@ const tools = (prev, context) => {
 const plugins = [
   embeddingsIndexReferenceInput(),
 
-  deskTool({
+  structureTool({
     title: 'Manage',
     structure: (S, context) =>
       deskStructure(

@@ -48,6 +48,8 @@ studio/.env.development
 *.ndjson
 *.csv
 assets*.json
+data
+
 # ignore any files that start with a number and end with .ndjson
 \d{6}\..*\.ndjson
 

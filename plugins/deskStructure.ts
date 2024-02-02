@@ -16,7 +16,7 @@ import {
   Divider,
   StructureBuilder,
   StructureResolverContext,
-} from 'sanity/desk'
+} from 'sanity/structure'
 import navigationStructure from './navigationStructure'
 
 type FilteredDocumentDefinition = DocumentDefinition & {
@@ -135,6 +135,7 @@ const documentListItemBuilder = (
               .documentId(type.name)
               .title(type.title || type.name)
         : S.documentList()
+            .menuItems([...S.documentTypeList(type.name).getMenuItems()])
             .title(type.title || type.name)
             .filter(
               typesWithCustomFilters.includes(type.name)
@@ -162,8 +163,7 @@ const documentListItemBuilder = (
  */
 const listItemBuilder = (
   S: StructureBuilder,
-  listItem: TopLevelListDefinition,
-  currentUser?: User | null
+  listItem: TopLevelListDefinition
 ) =>
   S.listItem()
     .title(listItem.title)
@@ -195,7 +195,7 @@ const deskStructure = (
 
   const documentTypesStructure = listItems.map((listItem) => {
     if (listItem.type === 'list') {
-      return listItemBuilder(S, listItem, currentUser)
+      return listItemBuilder(S, listItem)
     }
 
     if (listItem.type === 'divider') {
