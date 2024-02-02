@@ -135,6 +135,9 @@ const documentListItemBuilder = (
               .documentId(type.name)
               .title(type.title || type.name)
         : S.documentList()
+            // FIXME: find the lastest way to add ordering in the
+            // structure builder API
+            // @ts-ignore
             .menuItems([...S.documentTypeList(type.name).getMenuItems()])
             .title(type.title || type.name)
             .filter(
