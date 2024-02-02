@@ -1,6 +1,5 @@
 {
   // set the font face
-  "editor.fontFamily": "Space Mono",
   // highlight TODOS in the codebase
   "todohighlight.isEnable": true,
   // highlight FIXMEs in the codebase

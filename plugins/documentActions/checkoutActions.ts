@@ -1,5 +1,5 @@
 import { client } from 'lib/sanity.client'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDocumentOperation } from 'sanity'
 import { patchStock } from 'schemas/documents/inventory/hooks/useInventory'
 
