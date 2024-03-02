@@ -1,15 +1,11 @@
 import { Flex, Stack } from '@sanity/ui'
 import { useCurrentUser } from 'sanity'
 
-export default (props, context) => {
-  const { onChange, value } = props
-
+export default (props) => {
   const currentUser = useCurrentUser()
 
   if (!currentUser)
     throw new Error('There was an error trying to detect the current user.')
-
-  const { id, name } = currentUser || {}
 
   return (
     <Flex direction="column" style={{ width: '100%' }}>

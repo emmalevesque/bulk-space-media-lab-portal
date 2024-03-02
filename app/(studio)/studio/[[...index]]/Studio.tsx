@@ -1,4 +1,3 @@
-// ./src/app/studio/[[...index]]/Studio.tsx
 'use client'
 
 import { NextStudio } from 'next-sanity/studio'

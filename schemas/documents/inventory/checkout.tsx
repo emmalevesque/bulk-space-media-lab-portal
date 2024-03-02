@@ -3,12 +3,28 @@ import { Card, Stack, Text } from '@sanity/ui'
 import EmojiIcon from 'components/Icon/Emoji'
 import moment from 'moment'
 import { defineType } from 'sanity'
-import {
-  ReadableDatetime,
-  useReadableDate,
-} from 'schemas/components/ReadableDatetime'
-import StaffMemberInput from 'schemas/components/StaffMemberInput'
 import { CheckoutType, getCheckoutStatusProps } from './hooks/useCheckout'
+import { ReadableDatetime } from 'schemas/components/ReadableDatetime'
+
+export const CheckoutNotesPreview = (props) => {
+  return (
+    <Card
+      tone="caution"
+      className=" hover:cursor-pointer hover:saturate-200"
+      padding={2}
+      radius={1}
+    >
+      <Stack space={2}>
+        <Text muted size={1}>
+          {moment(props?.date).format('yyyy/MM/DD hh:mma')} (
+        </Text>
+        <span className=" text-sm">
+          <PortableText value={props?.note} />
+        </span>
+      </Stack>
+    </Card>
+  )
+}
 
 const dev = process.env.NODE_ENV !== 'production'
 
@@ -70,9 +86,6 @@ export default defineType({
         'The staff member who is checking out this item. In most cases, this will be you.',
       type: 'reference',
       to: [{ type: 'staff' }],
-      components: {
-        input: StaffMemberInput,
-      },
     },
     {
       name: 'isStaffCheckout',
@@ -111,13 +124,6 @@ export default defineType({
       },
       of: [
         {
-          options: {
-            embeddingsIndex: {
-              indexName: 'bulk-space-index', // Name of the embeddings index
-              maxResults: 10, // Maximum number of returned results per request. Default: 10
-              searchMode: 'embeddings', // Sets default search mode for the field. Enables toggling between 'embeddings' (semantic search) and 'default' (default search based on GROQ filter)
-            },
-          },
           type: 'reference',
           weak: true,
           to: [{ type: 'item' }],
@@ -163,8 +169,6 @@ export default defineType({
             return true
           }
 
-          const document = context?.document
-
           const checkoutDate = context?.document?.checkoutDate
             ? new Date((context?.document as CheckoutType)?.checkoutDate)
             : new Date()
@@ -199,26 +203,7 @@ export default defineType({
         {
           type: 'object',
           components: {
-            preview: (props, context) => {
-              return (
-                <Card
-                  tone="caution"
-                  className=" hover:cursor-pointer hover:saturate-200"
-                  padding={2}
-                  radius={1}
-                >
-                  <Stack space={2}>
-                    <Text muted size={1}>
-                      {moment(props?.date).format('yyyy/MM/DD hh:mma')} (
-                      {useReadableDate(props?.date).readableDate})
-                    </Text>
-                    <span className=" text-sm">
-                      <PortableText value={props?.note} />
-                    </span>
-                  </Stack>
-                </Card>
-              )
-            },
+            preview: CheckoutNotesPreview,
           },
           preview: {
             select: {
