@@ -170,8 +170,6 @@ export default defineType({
           schemaType,
           context
         ) => {
-          console.log({ input, schemaType, context })
-
           const parent = context?.parent as ItemType
 
           return slugify(

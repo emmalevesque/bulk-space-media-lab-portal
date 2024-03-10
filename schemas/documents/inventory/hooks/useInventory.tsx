@@ -180,10 +180,6 @@ export const useInventory = (
     if (document) setItemState(getItemState())
   }, [document])
 
-  useEffect(() => {
-    console.log({ itemState })
-  }, [itemState])
-
   const [itemStateProps, setItemStateProps] = useState(ItemStates.DEFAULT)
 
   useEffect(() => {

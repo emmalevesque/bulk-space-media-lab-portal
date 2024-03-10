@@ -6,7 +6,6 @@ export const parseReadableDate = (value) => {
   const now = new Date().getTime()
 
   const date = new Date(value)
-  console.log({ date })
 
   const diff = Math.abs(now - date.getTime())
 
