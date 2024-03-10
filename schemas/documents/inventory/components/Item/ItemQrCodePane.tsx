@@ -1,8 +1,10 @@
 import { Card, Flex } from '@sanity/ui'
-import QRCode from 'react-qr-code'
+import { useQRCode } from 'next-qrcode'
 import { useDataset } from 'sanity'
 
 export default (props) => {
+  const { SVG } = useQRCode()
+
   const dataset = useDataset()
 
   const basePath = `/studio/${dataset}/desk`
@@ -14,7 +16,15 @@ export default (props) => {
   return document ? (
     <Flex padding={4}>
       <Card padding={3} style={{ backgroundColor: 'white' }}>
-        <QRCode value={url} />
+        {/* <QRCode value={url} /> */}
+        <SVG
+          text={url}
+          options={{
+            margin: 1,
+            width: 500,
+            color: { dark: '#00F', light: '#FFF' },
+          }}
+        />
       </Card>
     </Flex>
   ) : null
