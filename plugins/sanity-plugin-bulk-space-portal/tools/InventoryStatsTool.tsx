@@ -5,7 +5,7 @@ import { useFetch } from 'hooks/useFetch'
 import { groq } from 'next-sanity'
 import { Tool } from 'sanity'
 import { IntentLink } from 'sanity/router'
-import { ItemType } from 'schemas/documents/inventory/item'
+import { ItemType } from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/item'
 
 // TODO: most common items checked,
 // TODO: tax related stats, total checkouts, total members, total value of inventory

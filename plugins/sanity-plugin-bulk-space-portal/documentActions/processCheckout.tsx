@@ -4,11 +4,11 @@ import { useDataset, useDocumentOperation } from 'sanity'
 import {
   checkoutActions,
   getCheckoutStatus,
-} from 'schemas/documents/inventory/hooks/useCheckout'
+} from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/hooks/useCheckout'
 import {
   patchStock,
   useInventory,
-} from 'schemas/documents/inventory/hooks/useInventory'
+} from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/hooks/useInventory'
 
 export default function ProcessCheckout(props) {
   const latestDocument = props?.published

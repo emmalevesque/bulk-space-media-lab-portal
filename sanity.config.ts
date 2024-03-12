@@ -12,18 +12,18 @@ import { deskStructure } from '@/sanity-plugin-bulk-space-portal'
 import { defineConfig, isDev } from 'sanity'
 
 // schema related items
-import category from 'schemas/documents/inventory/category'
-import item from 'schemas/documents/inventory/item'
-import kit from 'schemas/documents/inventory/kit'
-import tag from 'schemas/documents/inventory/tag'
-import staff from 'schemas/documents/user/staff'
-import user from 'schemas/documents/user/user'
-import { schema } from 'schemas/schema'
+import category from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/category'
+import item from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/item'
+import kit from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/kit'
+import tag from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/tag'
+import staff from '@/sanity-plugin-bulk-space-portal/schemas/documents/user/staff'
+import user from '@/sanity-plugin-bulk-space-portal/schemas/documents/user/user'
+import { schema } from '@/sanity-plugin-bulk-space-portal/schemas/schema'
 
 import {
   checkoutActions,
   getCheckoutStatusProps,
-} from 'schemas/documents/inventory/hooks/useCheckout'
+} from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/hooks/useCheckout'
 
 import { templates } from 'lib/sanity.templates'
 
@@ -31,8 +31,8 @@ import { TITLE } from 'lib/constants'
 
 import Icon from '@/sanity-plugin-bulk-space-portal/components/Icon/Icon'
 import { structureTool } from 'sanity/structure'
-import checkout from 'schemas/documents/inventory/checkout'
-import settings from 'schemas/singletons/settings'
+import checkout from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/checkout'
+import settings from '@/sanity-plugin-bulk-space-portal/schemas/singletons/settings'
 import 'styles/studio.css'
 
 const plugins = [

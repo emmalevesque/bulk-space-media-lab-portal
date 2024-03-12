@@ -1,4 +1,4 @@
-import { checkoutActions } from 'schemas/documents/inventory/hooks/useCheckout'
+import { checkoutActions } from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/hooks/useCheckout'
 
 export function itemsNeededBadge() {
   return {

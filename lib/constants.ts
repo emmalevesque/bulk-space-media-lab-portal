@@ -24,13 +24,18 @@ export const documentPreviewPanes: {
       title: 'QR Code',
       component: dynamic(
         () =>
-          import('schemas/documents/inventory/components/Item/ItemQrCodePane')
+          import(
+            '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/components/Item/ItemQrCodePane'
+          )
       ),
     },
     {
       title: 'Related',
       component: dynamic(
-        () => import('schemas/documents/inventory/components/RelatedDocuments')
+        () =>
+          import(
+            '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/components/RelatedDocuments'
+          )
       ),
     },
   ],
@@ -38,7 +43,10 @@ export const documentPreviewPanes: {
     {
       title: 'Related',
       component: dynamic(
-        () => import('schemas/documents/inventory/components/RelatedDocuments')
+        () =>
+          import(
+            '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/components/RelatedDocuments'
+          )
       ),
     },
   ],
@@ -46,7 +54,10 @@ export const documentPreviewPanes: {
     {
       title: 'Related',
       component: dynamic(
-        () => import('schemas/documents/inventory/components/RelatedDocuments')
+        () =>
+          import(
+            '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/components/RelatedDocuments'
+          )
       ),
     },
   ],
@@ -55,7 +66,9 @@ export const documentPreviewPanes: {
       title: 'QR Code',
       component: dynamic(
         () =>
-          import('schemas/documents/inventory/components/User/UserQrCodePane')
+          import(
+            '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/components/User/UserQrCodePane'
+          )
       ),
     },
   ],
@@ -63,7 +76,10 @@ export const documentPreviewPanes: {
     {
       title: 'Related',
       component: dynamic(
-        () => import('schemas/documents/inventory/components/RelatedDocuments')
+        () =>
+          import(
+            '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/components/RelatedDocuments'
+          )
       ),
     },
   ],
@@ -71,7 +87,10 @@ export const documentPreviewPanes: {
     {
       title: 'Related',
       component: dynamic(
-        () => import('schemas/documents/inventory/components/RelatedDocuments')
+        () =>
+          import(
+            '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/components/RelatedDocuments'
+          )
       ),
     },
   ],
@@ -79,7 +98,10 @@ export const documentPreviewPanes: {
     {
       title: 'Related',
       component: dynamic(
-        () => import('schemas/documents/inventory/components/RelatedDocuments')
+        () =>
+          import(
+            '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/components/RelatedDocuments'
+          )
       ),
     },
   ],

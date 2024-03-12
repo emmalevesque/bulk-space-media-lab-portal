@@ -4,9 +4,9 @@ import { groq } from 'next-sanity'
 import { map } from 'rxjs/operators'
 import { DocumentStore } from 'sanity'
 import { StructureBuilder } from 'sanity/structure'
-import category from 'schemas/documents/inventory/category'
-import item from 'schemas/documents/inventory/item'
-import tag from 'schemas/documents/inventory/tag'
+import category from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/category'
+import item from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/item'
+import tag from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/tag'
 import { previewPanes } from './deskStructure'
 
 const typeIconMap = {

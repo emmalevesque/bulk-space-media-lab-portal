@@ -2,7 +2,7 @@ import { definePlugin } from 'sanity'
 import documentActions from './documentActions'
 import documentBadges from './documentBadges'
 import { templates } from 'lib/sanity.templates'
-import { schema } from 'schemas/schema'
+import { schema } from './schemas/schema'
 import { tools } from './tools'
 
 export const bulkSpacePortal = definePlugin({

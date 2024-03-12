@@ -1,7 +1,7 @@
 import { client } from 'lib/sanity.client'
 import { useEffect, useState } from 'react'
 import { useDocumentOperation } from 'sanity'
-import { patchStock } from 'schemas/documents/inventory/hooks/useInventory'
+import { patchStock } from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/hooks/useInventory'
 
 export function CheckoutActions(props) {
   const { patch, publish } = useDocumentOperation(props.id, props.type)
