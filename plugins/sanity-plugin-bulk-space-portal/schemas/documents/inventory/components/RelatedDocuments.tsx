@@ -1,9 +1,10 @@
-import { Badge, Button, Card, Flex, Stack, Text } from '@sanity/ui'
+import { Badge, Button, Flex, Stack, Text } from '@sanity/ui'
 import { groq } from 'next-sanity'
 import { stripDraftNamespace } from 'plugins/sanity-plugin-bulk-space-portal/productionUrl/utils'
 import { IntentLink } from 'sanity/router'
 import { useFetch } from '@/sanity-plugin-bulk-space-portal/hooks/useFetch'
 import { camelCaseToTitleCase } from 'lib/helper/camelCaseToTitleCase'
+import LoadingOverlay from '@/sanity-plugin-bulk-space-portal/components/global/LoadingOverlay'
 
 export default function ReferencesComponent(props) {
   const { documentId } = props ?? {}
@@ -39,18 +40,7 @@ export default function ReferencesComponent(props) {
   if (error) throw new Error(error.message)
 
   if (!referencedDocuments || !Array.isArray(referencedDocuments))
-    return (
-      <Card padding={4}>
-        <Flex style={{ width: '100%' }}>
-          <Card
-            padding={3}
-            radius={2}
-            className="animate-pulse"
-            style={{ background: 'white', opacity: 0.4, width: '100%' }}
-          ></Card>
-        </Flex>
-      </Card>
-    )
+    return <LoadingOverlay />
 
   referencedDocuments = referencedDocuments
     // concatenate the main list with the referenced documents
@@ -108,13 +98,7 @@ export default function ReferencesComponent(props) {
           ))}
         </Stack>
       ) : (
-        <Card padding={4}>
-          <Button
-            padding={3}
-            radius={3}
-            style={{ background: 'white', opacity: 0.4 }}
-          ></Button>{' '}
-        </Card>
+        <LoadingOverlay />
       )}
     </>
   )

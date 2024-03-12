@@ -16,43 +16,30 @@ import { structureTool } from 'sanity/structure'
 import 'styles/studio.css'
 
 const plugins = [
-  bulkSpacePortal(),
   embeddingsIndexReferenceInput(),
   structureTool({
     title: 'Manage',
     structure: structureConfig,
     // defaultDocumentNode: previewDocumentNode(),
   }),
+  bulkSpacePortal(),
+  // if we're in development, we want to enable the embeddings index dashboard
+  // as well as the vision tool
   ...[
-    process.env.NODE_ENV === 'development'
-      ? embeddingsIndexDashboard()
-      : { name: 'embeddings-index-dashboard-disabled' },
-  ],
-  // Configures the global "new document" button, and document actions, to suit the Settings document singleton
-  // Add the "Open preview" action
-  /*** */
-  // productionUrl({
-  //   apiVersion,
-  //   previewSecretId,
-  //   types: [postType.name, settingsType.name],
-  // }),
-  /***** */
-  // Add an image asset source for Unsplash
-  // Vision lets you query your content with GROQ in the studio
-  // https://www.sanity.io/docs/the-vision-plugin
-  ...[
-    process.env.NODE_ENV === 'development'
-      ? visionTool({ defaultApiVersion: apiVersion })
-      : { name: 'vision-disabled' },
-  ],
+    isDev
+      ? [
+          embeddingsIndexDashboard(),
+          visionTool({ defaultApiVersion: apiVersion }),
+        ]
+      : [{ name: 'embeddings-index-dashboard-disabled' }],
+  ].flat(), // flatten the array otherwise we'd have two levels
 ]
 
+// create a common config to use between workspaces
 const commonConfig = {
   // The project ID you find in your sanity.json
   projectId,
-  plugins: isDev
-    ? plugins
-    : plugins.filter((plugin) => plugin.name !== 'vision'),
+  plugins,
   icon: Icon,
 }
 
@@ -61,17 +48,17 @@ const commonConfig = {
 // They must match the dataset name
 export default defineConfig([
   {
+    ...commonConfig,
     basePath: '/studio/production',
     name: 'production',
     dataset: 'production',
     title: `${TITLE}`,
-    ...commonConfig,
   },
   {
+    ...commonConfig,
     basePath: '/studio/demo',
     name: 'demo',
     dataset: 'demo',
     title: `Demo Data`,
-    ...commonConfig,
   },
 ])

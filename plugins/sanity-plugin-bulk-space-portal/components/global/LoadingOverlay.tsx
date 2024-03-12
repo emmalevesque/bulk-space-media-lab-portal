@@ -2,9 +2,8 @@ import { Flex, Spinner } from '@sanity/ui'
 
 export default function LoadingOverlay() {
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-white">
+    <div className="flex h-full w-full flex-col items-center justify-center">
       <Flex direction={'column'} align={'center'} gap={3}>
-        Loading
         <Spinner muted />
       </Flex>
     </div>
