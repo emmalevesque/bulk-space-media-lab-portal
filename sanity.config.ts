@@ -8,7 +8,7 @@ import {
 } from '@sanity/embeddings-index-ui'
 import { visionTool } from '@sanity/vision'
 import { apiVersion, projectId } from 'lib/sanity.api'
-import deskStructure from 'plugins/deskStructure'
+import { deskStructure } from '@/sanity-plugin-bulk-space-portal'
 import { defineConfig, isDev } from 'sanity'
 
 // schema related items
@@ -20,8 +20,6 @@ import staff from 'schemas/documents/user/staff'
 import user from 'schemas/documents/user/user'
 import { schema } from 'schemas/schema'
 
-import documentActions from 'plugins/documentActions'
-import InventoryStatsTool from 'plugins/tools/InventoryStatsTool'
 import {
   checkoutActions,
   getCheckoutStatusProps,
@@ -31,50 +29,14 @@ import { templates } from 'lib/sanity.templates'
 
 import { TITLE } from 'lib/constants'
 
-import Icon from 'components/Icon'
-import { CheckoutBadge } from 'plugins/documentBadges/CheckoutBadge'
-import { ItemBadge } from 'plugins/documentBadges/ItemBadge'
-import ReportsTool from 'plugins/tools/ReportsTool'
+import Icon from '@/sanity-plugin-bulk-space-portal/components/Icon/Icon'
+import { structureTool } from 'sanity/structure'
 import checkout from 'schemas/documents/inventory/checkout'
 import settings from 'schemas/singletons/settings'
 import 'styles/studio.css'
-import { structureTool } from 'sanity/structure'
-
-const document = {
-  actions: documentActions,
-  templates: templates,
-  // TODO: add item badge that shows if item is available or not
-  badges: (prev, context) =>
-    context.schemaType === 'checkout'
-      ? [CheckoutBadge]
-      : context.schemaType === 'item'
-      ? [ItemBadge]
-      : prev,
-}
-
-const tools = (prev, context) => {
-  const canManageEmbeddingsIndex = context.currentUser?.roles
-    .map((role) => role.name)
-    .some((roleName) => ['administrator', 'developer'].includes(roleName))
-
-  const canViewInventoryStats = context.currentUser?.roles
-    .map((role) => role.name)
-    .some((roleName) => ['administrator', 'developer'].includes(roleName))
-
-  const availableTools = [...prev, InventoryStatsTool(), ReportsTool()]
-
-  return !canViewInventoryStats && !canManageEmbeddingsIndex
-    ? [...prev.filter((tool) => tool.name !== 'embeddings-index')]
-    : !canViewInventoryStats && canManageEmbeddingsIndex
-    ? [...availableTools.filter((tool) => tool.name !== 'inventory-stats')]
-    : !canManageEmbeddingsIndex && canViewInventoryStats
-    ? [...availableTools.filter((tool) => tool.name !== 'embeddings-index')]
-    : [...availableTools]
-}
 
 const plugins = [
   embeddingsIndexReferenceInput(),
-
   structureTool({
     title: 'Manage',
     structure: (S, context) =>
@@ -191,11 +153,9 @@ const commonConfig = {
     types: schema,
     templates,
   },
-  tools,
   plugins: isDev
     ? plugins
     : plugins.filter((plugin) => plugin.name !== 'vision'),
-  document,
   icon: Icon,
 }
 

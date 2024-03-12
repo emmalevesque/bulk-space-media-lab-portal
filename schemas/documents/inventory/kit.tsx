@@ -1,4 +1,4 @@
-import EmojiIcon from 'components/Icon/Emoji'
+import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/Icon/Emoji'
 import { defineType } from 'sanity'
 import { CategoryInputComponent } from './components/Category/CategoryInput'
 

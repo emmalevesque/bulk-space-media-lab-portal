@@ -1,6 +1,6 @@
 import { BarChartIcon } from '@sanity/icons'
 import { Button, Card, Container, Grid, Stack } from '@sanity/ui'
-import AnimatedNumber from 'components/AnimatedNumber'
+import AnimatedNumber from '@/sanity-plugin-bulk-space-portal/components/AnimatedNumber'
 import { useFetch } from 'hooks/useFetch'
 import { groq } from 'next-sanity'
 import { Tool } from 'sanity'

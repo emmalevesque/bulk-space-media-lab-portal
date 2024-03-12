@@ -1,5 +1,5 @@
 import { AddIcon } from '@sanity/icons'
-import EmojiIcon from 'components/Icon/Emoji'
+import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/Icon/Emoji'
 import { groq } from 'next-sanity'
 import { map } from 'rxjs/operators'
 import { DocumentStore } from 'sanity'
@@ -15,7 +15,7 @@ const typeIconMap = {
   tag: tag.icon,
 }
 
-export default function navigationStructure(
+export function navigationStructure(
   S: StructureBuilder,
   documentStore: DocumentStore
 ) {

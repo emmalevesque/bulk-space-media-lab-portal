@@ -1,7 +1,7 @@
 import { Badge, Button, Card, Flex, Stack, Text } from '@sanity/ui'
 import { useFetch } from 'hooks/useFetch'
 import { groq } from 'next-sanity'
-import { stripDraftNamespace } from 'plugins/productionUrl/utils'
+import { stripDraftNamespace } from 'plugins/sanity-plugin-bulk-space-portal/productionUrl/utils'
 import { IntentLink } from 'sanity/router'
 
 export default function ReferencesComponent(props) {

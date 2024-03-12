@@ -1,6 +1,6 @@
 import { PortableText } from '@portabletext/react'
 import { Card, Stack, Text } from '@sanity/ui'
-import EmojiIcon from 'components/Icon/Emoji'
+import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/Icon/Emoji'
 import moment from 'moment'
 import { defineType } from 'sanity'
 import { CheckoutType, getCheckoutStatusProps } from './hooks/useCheckout'

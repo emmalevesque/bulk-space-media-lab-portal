@@ -12,12 +12,13 @@ import { apiVersion } from 'lib/sanity.api'
 
 import type { ListItemBuilder } from '@sanity/structure/lib/ListItem'
 
+import { navigationStructure } from '@/sanity-plugin-bulk-space-portal'
+
 import {
   Divider,
   StructureBuilder,
   StructureResolverContext,
 } from 'sanity/structure'
-import navigationStructure from './navigationStructure'
 
 type FilteredDocumentDefinition = DocumentDefinition & {
   filter: string
@@ -188,7 +189,7 @@ const listItemBuilder = (
 /***
  * This returns the deskStructure
  */
-const deskStructure = (
+export const deskStructure = (
   S: StructureBuilder,
   listItems: ListItem[],
   // TODO: replace deprecated type
@@ -216,5 +217,3 @@ const deskStructure = (
       ...documentTypesStructure,
     ])
 }
-
-export default deskStructure

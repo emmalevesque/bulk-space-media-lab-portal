@@ -1,4 +1,4 @@
-import EmojiIcon from 'components/Icon/Emoji'
+import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/Icon/Emoji'
 import { Id, Reference, defineField, defineType } from 'sanity'
 import slugify from 'slugify'
 

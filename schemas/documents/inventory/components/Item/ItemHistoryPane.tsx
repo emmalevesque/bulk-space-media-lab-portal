@@ -3,7 +3,7 @@ import { useInventory } from '../../hooks/useInventory'
 import { useMemo } from 'react'
 
 import { IntentLink } from 'sanity/router'
-import LoadingOverlay from 'components/LoadingOverlay'
+import LoadingOverlay from '@/sanity-plugin-bulk-space-portal/components/LoadingOverlay'
 import moment from 'moment'
 
 import Loading from 'components/Loading'
