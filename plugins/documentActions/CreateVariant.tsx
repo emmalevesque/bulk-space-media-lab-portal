@@ -71,31 +71,26 @@ export default function CreateVariant(props) {
 
       try {
         // create the new variant document
-        await _writeClientWithConfig
-          .create(newVariant)
-          .then((res) => {
-            console.log({ res })
-          })
-          .then(() => {
-            // update the original document with the new variant
-            patch.execute([
-              {
-                set: {
-                  stock: 1,
-                  variantNumber: 0,
-                  variants: [
-                    ...(latestDocument?.variants || []),
-                    {
-                      _key: uuid(),
-                      _type: 'reference',
-                      _ref: newVariant._id,
-                      _weak: true,
-                    },
-                  ],
-                },
+        await _writeClientWithConfig.create(newVariant).then(() => {
+          // update the original document with the new variant
+          patch.execute([
+            {
+              set: {
+                stock: 1,
+                variantNumber: 0,
+                variants: [
+                  ...(latestDocument?.variants || []),
+                  {
+                    _key: uuid(),
+                    _type: 'reference',
+                    _ref: newVariant._id,
+                    _weak: true,
+                  },
+                ],
               },
-            ])
-          })
+            },
+          ])
+        })
       } catch (err) {
         console.error(err)
 

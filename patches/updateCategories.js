@@ -61,7 +61,7 @@ const migrateNextBatch = async () => {
   if (patches.length === 0) {
     return null
   }
-  console.log(
+  console.info(
     `Migrating batch of ${patches.length} documents:\n %s`,
     patches
       .map((patch) => `${patch.id} => ${JSON.stringify(patch.patch)}`)

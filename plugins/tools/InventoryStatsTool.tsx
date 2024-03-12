@@ -99,8 +99,6 @@ export default function InventoryStatsTool(): Tool {
 
       if (categoriesError) throw new Error(categoriesError)
 
-      console.log({ categories })
-
       return (
         <Container width={[1, 2, 2]} padding={3}>
           <Stack space={3}>

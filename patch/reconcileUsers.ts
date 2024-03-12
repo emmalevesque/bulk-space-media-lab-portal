@@ -62,9 +62,7 @@ async function run() {
     userDetails.push(...batchUserDetails)
   }
 
-  console.log({ userDetails })
-
-  console.log('Patching staff users...')
+  console.info('Patching staff users...')
 
   const transaction = client.transaction()
 
@@ -94,7 +92,7 @@ async function run() {
     console.error(err)
   }
 
-  console.log('Complete')
+  console.info('Complete')
 }
 
 run()

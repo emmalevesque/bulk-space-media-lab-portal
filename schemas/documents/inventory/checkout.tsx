@@ -5,6 +5,7 @@ import moment from 'moment'
 import { defineType } from 'sanity'
 import { CheckoutType, getCheckoutStatusProps } from './hooks/useCheckout'
 import { ReadableDatetime } from 'schemas/components/ReadableDatetime'
+import CheckoutItemsInput from 'components/Fields/CheckoutItems'
 
 export const CheckoutNotesPreview = (props) => {
   return (
@@ -120,6 +121,7 @@ export default defineType({
       type: 'array',
       validation: (Rule) => Rule.min(1).required(),
       components: {
+        input: CheckoutItemsInput,
         // input: ArrayQrCodeScanner,
       },
       of: [
@@ -163,8 +165,6 @@ export default defineType({
       },
       validation: (Rule) => {
         return Rule.custom((value, context) => {
-          console.log({ value, context })
-
           if (!value || !context?.document) {
             return true
           }
