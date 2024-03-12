@@ -1,5 +1,5 @@
 import { Box, Button, Inline } from '@sanity/ui'
-import LoadingOverlay from '@/sanity-plugin-bulk-space-portal/components/LoadingOverlay'
+import LoadingOverlay from '@/sanity-plugin-bulk-space-portal/components/global/LoadingOverlay'
 import { groq } from 'next-sanity'
 import { useCallback } from 'react'
 import { set, unset, useClient } from 'sanity'

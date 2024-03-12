@@ -1,10 +1,10 @@
 import { PortableText } from '@portabletext/react'
 import { Card, Stack, Text } from '@sanity/ui'
-import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/Icon/Emoji'
+import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/global/Icon/Emoji'
 import moment from 'moment'
 import { defineType } from 'sanity'
 import { CheckoutType, getCheckoutStatusProps } from './hooks/useCheckout'
-import { ReadableDatetime } from '@/sanity-plugin-bulk-space-portal/schemas/components/ReadableDatetime'
+import { ReadableDatetime } from '@/sanity-plugin-bulk-space-portal/components/fields/ReadableDatetime'
 
 export const CheckoutNotesPreview = (props) => {
   return (

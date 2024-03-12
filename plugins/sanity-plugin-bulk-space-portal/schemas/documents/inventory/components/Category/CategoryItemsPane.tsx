@@ -1,5 +1,5 @@
 import { Box, Card, Grid, Heading, Inline, Stack, Text } from '@sanity/ui'
-import LoadingOverlay from '@/sanity-plugin-bulk-space-portal/components/LoadingOverlay'
+import LoadingOverlay from '@/sanity-plugin-bulk-space-portal/components/global/LoadingOverlay'
 import { groq } from 'next-sanity'
 import { useEffect, useState } from 'react'
 import { useClient } from 'sanity'

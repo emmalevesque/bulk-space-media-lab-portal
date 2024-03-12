@@ -1,6 +1,6 @@
 import { groq } from 'next-sanity'
 import useSWR from 'swr'
-import LoadingOverlay from '@/sanity-plugin-bulk-space-portal/components/LoadingOverlay'
+import LoadingOverlay from '@/sanity-plugin-bulk-space-portal/components/global/LoadingOverlay'
 import { Heading, Stack } from '@sanity/ui'
 import CategoryDetails from 'tools/Navigation/CategoryDetails'
 import { useNavigation } from 'tools/Navigation/hooks/useNavigation'

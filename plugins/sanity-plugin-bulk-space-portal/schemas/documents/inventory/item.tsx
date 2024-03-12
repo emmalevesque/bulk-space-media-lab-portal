@@ -1,7 +1,7 @@
 import { defineField, defineType } from 'sanity'
 
 import { Box, Card, Grid, Inline, Text } from '@sanity/ui'
-import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/Icon/Emoji'
+import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/global/Icon/Emoji'
 import { SanityDocument } from 'next-sanity'
 import conditionReport from '@/sanity-plugin-bulk-space-portal/schemas/objects/conditionReport'
 import slugify from 'slugify'

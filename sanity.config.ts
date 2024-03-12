@@ -29,7 +29,7 @@ import { templates } from 'lib/sanity.templates'
 
 import { TITLE } from 'lib/constants'
 
-import Icon from '@/sanity-plugin-bulk-space-portal/components/Icon/Icon'
+import Icon from '@/sanity-plugin-bulk-space-portal/components/global/Icon/Icon'
 import { structureTool } from 'sanity/structure'
 import checkout from '@/sanity-plugin-bulk-space-portal/schemas/documents/inventory/checkout'
 import settings from '@/sanity-plugin-bulk-space-portal/schemas/singletons/settings'

@@ -68,7 +68,7 @@ export const ReadableDatetime = (
 ) => {
   const { value } = props
 
-  const { readableDate, isPast, tone } = useReadableDate(value)
+  const { readableDate, tone } = useReadableDate(value)
 
   const optionalProps = {
     ...(options?.showTone && { tone }),

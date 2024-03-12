@@ -1,4 +1,4 @@
-import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/Icon/Emoji'
+import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/global/Icon/Emoji'
 import { definePlugin } from 'sanity'
 import { singletonDocumentTypes } from 'lib/constants'
 

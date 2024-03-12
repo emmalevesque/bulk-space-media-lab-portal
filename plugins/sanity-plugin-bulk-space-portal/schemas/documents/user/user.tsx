@@ -1,4 +1,4 @@
-import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/Icon/Emoji'
+import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/global/Icon/Emoji'
 import { defineField, defineType } from 'sanity'
 
 // TODO: Add QR Code for users

@@ -1,6 +1,6 @@
 import { Button, Card, Container, Grid, Stack } from '@sanity/ui'
-import AnimatedNumber from '@/sanity-plugin-bulk-space-portal/components/AnimatedNumber'
-import { useFetch } from 'hooks/useFetch'
+import AnimatedNumber from '@/sanity-plugin-bulk-space-portal/components/global/AnimatedNumber'
+import { useFetch } from '@/sanity-plugin-bulk-space-portal/hooks/useFetch'
 import { groq } from 'next-sanity'
 import { Tool } from 'sanity'
 

@@ -1,6 +1,6 @@
 import { definePlugin } from 'sanity'
-import documentActions from './documentActions'
-import documentBadges from './documentBadges'
+import documentActions from './actions'
+import documentBadges from './badges'
 import { templates } from 'lib/sanity.templates'
 import { schema } from './schemas/schema'
 import { tools } from './tools'

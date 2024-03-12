@@ -6,7 +6,7 @@ import {
   WarningOutlineIcon,
 } from '@sanity/icons'
 import { CardTone } from '@sanity/ui'
-import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/Icon/Emoji'
+import EmojiIcon from '@/sanity-plugin-bulk-space-portal/components/global/Icon/Emoji'
 import moment from 'moment'
 import { SanityDocument } from 'next-sanity'
 import type { ItemType } from '../item'
