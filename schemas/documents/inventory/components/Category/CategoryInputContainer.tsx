@@ -54,7 +54,7 @@ export default function CategoryInputContainer({
               value?.filter(
                 (item) =>
                   !childrenCategories?.some(
-                    (child) => child._id === item._ref
+                    (child) => child?._id === item._ref
                   ) && item._ref !== event.target.id
               )
             )
