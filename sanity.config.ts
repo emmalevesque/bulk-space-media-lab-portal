@@ -9,7 +9,6 @@ import {
 import { visionTool } from '@sanity/vision'
 import { apiVersion, projectId } from 'lib/sanity.api'
 import deskStructure from 'plugins/deskStructure'
-import { inventoryTaxonomy } from 'sanity-plugin-inventory-taxonomy'
 import { defineConfig, isDev } from 'sanity'
 
 // schema related items
@@ -73,7 +72,6 @@ const tools = (prev, context) => {
 
 const plugins = [
   embeddingsIndexReferenceInput(),
-  inventoryTaxonomy(),
   structureTool({
     title: 'Manage',
     structure: (S, context) =>
