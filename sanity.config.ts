@@ -29,8 +29,6 @@ import {
 
 import { templates } from 'lib/sanity.templates'
 
-import { TITLE } from 'lib/constants'
-
 import Icon from 'components/Icon'
 import { CheckoutBadge } from 'plugins/documentBadges/CheckoutBadge'
 import { ItemBadge } from 'plugins/documentBadges/ItemBadge'
@@ -74,7 +72,6 @@ const tools = (prev, context) => {
 
 const plugins = [
   embeddingsIndexReferenceInput(),
-
   structureTool({
     title: 'Manage',
     structure: (S, context) =>
@@ -165,18 +162,6 @@ const plugins = [
       ? embeddingsIndexDashboard()
       : { name: 'embeddings-index-dashboard-disabled' },
   ],
-  // Configures the global "new document" button, and document actions, to suit the Settings document singleton
-  // Add the "Open preview" action
-  /*** */
-  // productionUrl({
-  //   apiVersion,
-  //   previewSecretId,
-  //   types: [postType.name, settingsType.name],
-  // }),
-  /***** */
-  // Add an image asset source for Unsplash
-  // Vision lets you query your content with GROQ in the studio
-  // https://www.sanity.io/docs/the-vision-plugin
   ...[
     process.env.NODE_ENV === 'development'
       ? visionTool({ defaultApiVersion: apiVersion })
@@ -207,7 +192,14 @@ export default defineConfig([
     basePath: '/studio/production',
     name: 'production',
     dataset: 'production',
-    title: `${TITLE}`,
+    title: `Bulk Space`,
+    ...commonConfig,
+  },
+  {
+    basePath: '/studio/media-lab',
+    name: 'media-lab',
+    dataset: 'media-lab',
+    title: `Media Lab`,
     ...commonConfig,
   },
   {
