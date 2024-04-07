@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "sanity-plugin-inventory-taxonomy": {
+      "signature": "e9407359ec6194f382956f4219196e21",
+      "link": true
+    }
+  }
+}

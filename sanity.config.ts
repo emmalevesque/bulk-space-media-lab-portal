@@ -120,16 +120,19 @@ const plugins = [
                     ...item,
                     title: 'All Items',
                   },
+                  // @ts-expect-error
                   {
                     ...item,
                     title: 'Available Items',
                     icon: checkoutActions.RETURNED.emoji,
                   },
+                  // @ts-expect-error
                   {
                     ...item,
                     title: 'Unavailable Items',
                     icon: checkoutActions.CHECKED_OUT.emoji,
                   },
+                  // @ts-expect-error
                   {
                     ...item,
                     title: 'All Variants',
