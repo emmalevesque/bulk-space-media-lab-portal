@@ -33,8 +33,8 @@ export default function navigationStructure(
   // create the recursive fragment from which all things flow 🌊
   const childrenFragment = (subChildrenFragment: string) => groq`
     "children": *[references(^._id) && !(_id in path("drafts.**"))][] {
-       ${childrenFieldsFragment}
-       ${subChildrenFragment}
+      ${childrenFieldsFragment}
+      ${subChildrenFragment}
     }
   `
 
@@ -129,6 +129,7 @@ export default function navigationStructure(
                 .child(
                   S.document()
                     .title(`New Item in ${item.name}`)
+                    .id(uuid())
                     .schemaType('item')
                     .id(uuid())
                     .initialValueTemplate('item-child', {
