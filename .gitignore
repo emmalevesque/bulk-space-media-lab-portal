@@ -55,3 +55,6 @@ data
 
 # ignore the json directory
 json
+
+# Plugin dev
+.yalc

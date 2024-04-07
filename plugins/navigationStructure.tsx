@@ -8,6 +8,7 @@ import category from 'schemas/documents/inventory/category'
 import item from 'schemas/documents/inventory/item'
 import tag from 'schemas/documents/inventory/tag'
 import { previewPanes } from './deskStructure'
+import { uuid } from '@sanity/uuid'
 
 const typeIconMap = {
   category: category.icon,
@@ -32,8 +33,8 @@ export default function navigationStructure(
   // create the recursive fragment from which all things flow 🌊
   const childrenFragment = (subChildrenFragment: string) => groq`
     "children": *[references(^._id) && !(_id in path("drafts.**"))][] {
-       ${childrenFieldsFragment}
-       ${subChildrenFragment}
+      ${childrenFieldsFragment}
+      ${subChildrenFragment}
     }
   `
 
@@ -128,6 +129,7 @@ export default function navigationStructure(
                 .child(
                   S.document()
                     .title(`New Item in ${item.name}`)
+                    .id(uuid())
                     .schemaType('item')
                     .initialValueTemplate('item-child', {
                       parentId: item._id,

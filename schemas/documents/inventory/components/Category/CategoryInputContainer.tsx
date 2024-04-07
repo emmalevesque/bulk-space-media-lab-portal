@@ -1,6 +1,6 @@
 import { Box, Card } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
-import { SanityDocument } from 'next-sanity'
+import { SanityDocument, SanityDocumentStub } from 'next-sanity'
 import { ChangeEvent, useCallback } from 'react'
 import { Slug } from 'sanity'
 import { useCategoryInputContext } from '../../hooks/useCategoryInputContext'
@@ -54,7 +54,7 @@ export default function CategoryInputContainer({
               value?.filter(
                 (item) =>
                   !childrenCategories?.some(
-                    (child) => child._id === item._ref
+                    (child) => (child as SanityDocumentStub)?._id === item._ref
                   ) && item._ref !== event.target.id
               )
             )
