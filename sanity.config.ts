@@ -195,6 +195,7 @@ export default defineConfig([
     name: 'production',
     dataset: 'production',
     title: `Bulk Space`,
+<<<<<<< HEAD
     ...commonConfig,
   },
   {
@@ -216,6 +217,22 @@ export default defineConfig([
     name: 'preview',
     dataset: 'preview',
     title: `Preview`,
+=======
+    ...commonConfig,
+  },
+  {
+    basePath: '/studio/media-lab',
+    name: 'media-lab',
+    dataset: 'media-lab',
+    title: `Media Lab`,
+    ...commonConfig,
+  },
+  {
+    basePath: '/studio/demo',
+    name: 'preview',
+    dataset: 'preview',
+    title: `Demo Data`,
+>>>>>>> b8e888d (chore: upgrade sanity to latest, cleanup)
     ...commonConfig,
   },
 ])
