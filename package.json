@@ -66,7 +66,6 @@
     "sanity-plugin-documents-pane": "^2.1.2",
     "sanity-plugin-graph-view": "^2.0.1",
     "sanity-plugin-iframe-pane": "^2.5.4",
-    "sanity-plugin-inventory-taxonomy": "link:.yalc/sanity-plugin-inventory-taxonomy",
     "sanity-plugin-media": "^2.2.4",
     "sanity-plugin-webhooks": "^1.0.0",
     "slugify": "^1.6.6",
