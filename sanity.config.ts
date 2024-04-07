@@ -122,16 +122,19 @@ const plugins = [
                     ...item,
                     title: 'All Items',
                   },
+                  // @ts-expect-error
                   {
                     ...item,
                     title: 'Available Items',
                     icon: checkoutActions.RETURNED.emoji,
                   },
+                  // @ts-expect-error
                   {
                     ...item,
                     title: 'Unavailable Items',
                     icon: checkoutActions.CHECKED_OUT.emoji,
                   },
+                  // @ts-expect-error
                   {
                     ...item,
                     title: 'All Variants',
@@ -195,14 +198,6 @@ export default defineConfig([
     name: 'production',
     dataset: 'production',
     title: `Bulk Space`,
-<<<<<<< HEAD
-    ...commonConfig,
-  },
-  {
-    basePath: '/studio/media-lab',
-    name: 'media-lab',
-    dataset: 'media-lab',
-    title: `Media Lab`,
     ...commonConfig,
   },
   {
@@ -217,22 +212,6 @@ export default defineConfig([
     name: 'preview',
     dataset: 'preview',
     title: `Preview`,
-=======
-    ...commonConfig,
-  },
-  {
-    basePath: '/studio/media-lab',
-    name: 'media-lab',
-    dataset: 'media-lab',
-    title: `Media Lab`,
-    ...commonConfig,
-  },
-  {
-    basePath: '/studio/demo',
-    name: 'preview',
-    dataset: 'preview',
-    title: `Demo Data`,
->>>>>>> b8e888d (chore: upgrade sanity to latest, cleanup)
     ...commonConfig,
   },
 ])
