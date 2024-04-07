@@ -30,8 +30,6 @@ import {
 
 import { templates } from 'lib/sanity.templates'
 
-import { TITLE } from 'lib/constants'
-
 import Icon from 'components/Icon'
 import { CheckoutBadge } from 'plugins/documentBadges/CheckoutBadge'
 import { ItemBadge } from 'plugins/documentBadges/ItemBadge'
@@ -124,16 +122,19 @@ const plugins = [
                     ...item,
                     title: 'All Items',
                   },
+                  // @ts-expect-error
                   {
                     ...item,
                     title: 'Available Items',
                     icon: checkoutActions.RETURNED.emoji,
                   },
+                  // @ts-expect-error
                   {
                     ...item,
                     title: 'Unavailable Items',
                     icon: checkoutActions.CHECKED_OUT.emoji,
                   },
+                  // @ts-expect-error
                   {
                     ...item,
                     title: 'All Variants',
