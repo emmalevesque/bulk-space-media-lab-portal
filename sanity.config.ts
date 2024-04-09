@@ -211,10 +211,17 @@ export default defineConfig([
     ...commonConfig,
   },
   {
-    basePath: '/studio/demo',
-    name: 'demo',
-    dataset: 'demo',
-    title: `Demo Data`,
+    basePath: '/studio/media-lab',
+    name: 'media-lab',
+    dataset: 'media-lab',
+    title: `Media Lab`,
+    ...commonConfig,
+  },
+  {
+    basePath: '/studio/preview',
+    name: 'preview',
+    dataset: 'preview',
+    title: `Preview`,
     ...commonConfig,
   },
 ])
