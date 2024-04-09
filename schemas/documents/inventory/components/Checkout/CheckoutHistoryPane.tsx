@@ -1,6 +1,6 @@
 import { Box, Flex, Grid, Heading, Text } from '@sanity/ui'
 
-import Loading from 'components/Loading'
+import Loading from 'components/global/Loading'
 
 export default (props) => {
   if (!props?.document?.displayed?._id) return <Loading />

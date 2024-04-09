@@ -1,12 +1,12 @@
 import { Box, Card, Flex, Grid, Heading, Text } from '@sanity/ui'
-import { useInventory } from '../../hooks/useInventory'
+import { useInventory } from '../../../../../plugins/inventory-workflow/hooks/hooks/useInventory'
 import { useMemo } from 'react'
 
 import { IntentLink } from 'sanity/router'
-import LoadingOverlay from 'components/LoadingOverlay'
+import LoadingOverlay from 'components/global/LoadingOverlay'
 import moment from 'moment'
 
-import Loading from 'components/Loading'
+import Loading from 'components/global/Loading'
 
 export default (props) => {
   if (!props?.document?.displayed?._id) return <Loading />

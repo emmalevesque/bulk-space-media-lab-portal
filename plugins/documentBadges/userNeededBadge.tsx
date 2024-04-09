@@ -1,4 +1,4 @@
-import { checkoutActions } from 'schemas/documents/inventory/hooks/useCheckout'
+import { checkoutActions } from 'plugins/inventory-workflow/hooks/hooks/useCheckout'
 
 export function userNeededBadge() {
   return {

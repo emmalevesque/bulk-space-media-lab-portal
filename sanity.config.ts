@@ -21,22 +21,23 @@ import user from 'schemas/documents/user/user'
 import { schema } from 'schemas/schema'
 
 import documentActions from 'plugins/documentActions'
-import InventoryStatsTool from 'plugins/tools/InventoryStatsTool'
+import InventoryStatsTool from 'tools/InventoryStatsTool'
 import {
   checkoutActions,
   getCheckoutStatusProps,
-} from 'schemas/documents/inventory/hooks/useCheckout'
+} from 'plugins/inventory-workflow/hooks/hooks/useCheckout'
 
 import { templates } from 'lib/sanity.templates'
 
-import Icon from 'components/Icon'
+import Icon from 'components/global/Icon/Icon'
 import { CheckoutBadge } from 'plugins/documentBadges/CheckoutBadge'
 import { ItemBadge } from 'plugins/documentBadges/ItemBadge'
-import ReportsTool from 'plugins/tools/ReportsTool'
+import ReportsTool from 'tools/ReportsTool'
 import checkout from 'schemas/documents/inventory/checkout'
 import settings from 'schemas/singletons/settings'
 import 'styles/studio.css'
 import { structureTool } from 'sanity/structure'
+import search from 'plugins/search'
 
 const document = {
   actions: documentActions,
@@ -71,6 +72,7 @@ const tools = (prev, context) => {
 }
 
 const plugins = [
+  search(),
   embeddingsIndexReferenceInput(),
   structureTool({
     title: 'Manage',

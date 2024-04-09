@@ -1,4 +1,4 @@
-import EmojiIcon from 'components/Icon/Emoji'
+import EmojiIcon from 'components/global/Icon/Emoji'
 import { defineField, defineType } from 'sanity'
 
 // TODO: Add QR Code for users

@@ -1,5 +1,5 @@
 import { AddIcon } from '@sanity/icons'
-import EmojiIcon from 'components/Icon/Emoji'
+import EmojiIcon from 'components/global/Icon/Emoji'
 import { groq } from 'next-sanity'
 import { map } from 'rxjs/operators'
 import { DocumentStore } from 'sanity'
