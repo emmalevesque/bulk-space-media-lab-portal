@@ -8,6 +8,7 @@ import category from 'schemas/documents/inventory/category'
 import item from 'schemas/documents/inventory/item'
 import tag from 'schemas/documents/inventory/tag'
 import { previewPanes } from './deskStructure'
+import { uuid } from '@sanity/uuid'
 
 const typeIconMap = {
   category: category.icon,
@@ -129,6 +130,7 @@ export default function navigationStructure(
                   S.document()
                     .title(`New Item in ${item.name}`)
                     .schemaType('item')
+                    .id(uuid())
                     .initialValueTemplate('item-child', {
                       parentId: item._id,
                       parentTitle: item.name,
