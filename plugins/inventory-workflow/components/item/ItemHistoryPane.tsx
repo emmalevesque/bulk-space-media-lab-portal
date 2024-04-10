@@ -1,5 +1,5 @@
 import { Box, Card, Flex, Grid, Heading, Text } from '@sanity/ui'
-import { useInventory } from '../../../../../plugins/inventory-workflow/hooks/hooks/useInventory'
+import { useInventory } from '../../hooks/hooks/useInventory'
 import { useMemo } from 'react'
 
 import { IntentLink } from 'sanity/router'

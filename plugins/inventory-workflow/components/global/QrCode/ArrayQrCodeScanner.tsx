@@ -1,25 +1,16 @@
-import {
-  BadgeTone,
-  Box,
-  Button,
-  Card,
-  Dialog,
-  Flex,
-  Grid,
-  Stack,
-} from '@sanity/ui'
+import { BadgeTone, Button, Card, Dialog, Grid, Stack, Text } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
 import dynamic from 'next/dynamic'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { set, unset } from 'sanity'
 
 export default (props) => {
-  const { onChange, schemaType } = props
+  const { onChange, value, schemaType } = props
   const [toBeAdded, setToBeAdded] = useState<any>(null)
 
   const [open, setOpen] = useState(false)
 
-  const onOpen = useCallback(async () => {
+  const onOpen = useCallback(() => {
     setOpen(true)
   }, [])
   const onClose = useCallback(() => setOpen(false), [])
@@ -30,19 +21,33 @@ export default (props) => {
 
       if (!itemToBeAdded) return
 
-      const newReference = {
-        //  if it's a weak reference, set it to weak
-        _weak: schemaType.name === 'array' ? true : undefined,
-        _key: schemaType.name === 'array' ? uuid() : undefined,
-        _type: 'reference',
-        _ref: itemToBeAdded,
-      }
+      const newReference =
+        Array.isArray(value) && value.length > 0
+          ? [
+              ...value,
+              {
+                //  if it's a weak reference, set it to weak
+                _weak: schemaType.name === 'array' ? true : undefined,
+                _key: schemaType.name === 'array' ? uuid() : undefined,
+                _type: 'reference',
+                _ref: itemToBeAdded,
+              },
+            ]
+          : [
+              {
+                //  if it's a weak reference, set it to weak
+                _weak: schemaType.name === 'array' ? true : undefined,
+                _key: schemaType.name === 'array' ? uuid() : undefined,
+                _type: 'reference',
+                _ref: itemToBeAdded,
+              },
+            ]
 
       setToBeAdded(newReference)
 
       return
     },
-    [schemaType.name]
+    [schemaType.name, value]
   )
 
   const handleConfirm = useCallback(() => {
@@ -58,17 +63,10 @@ export default (props) => {
     setTone('critical')
   }
 
-  useEffect(() => {
-    if (open) {
-      onClose()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [toBeAdded, onClose])
-
-  const [tone, setTone] = useState<BadgeTone>('default')
+  const [tone, setTone] = useState<BadgeTone>('critical')
 
   const RenderQrScanner = (props) => {
-    const QrReader = dynamic(() => import('../QrScanner'), {
+    const QrReader = dynamic(() => import('./QrScanner'), {
       ssr: false,
     })
     return <QrReader {...props} />
@@ -78,7 +76,7 @@ export default (props) => {
     <>
       <Card className="bg-white">
         <Grid paddingY={2} gap={2} columns={[1]}>
-          {props?.renderDefault(props)}
+          {props.renderDefault(props)}
           <Stack space={2}>
             <Grid paddingY={[1]} columns={[1]}>
               <Stack space={1}>
@@ -102,27 +100,24 @@ export default (props) => {
         </Dialog>
       )}
       {toBeAdded ? (
-        <Dialog header="Confirm Add?" onClose={onClose} id={'add-item'}>
-          <Box padding={5}>
-            <Flex align="center" gap={3} justify="center">
-              <Button
-                tone="primary"
-                onClick={() => {
-                  setToBeAdded(null)
-                  handleConfirm()
-                }}
-                text="Confirm"
-              />
+        <Dialog header="Add Item" onClose={onClose} id={'add-item'}>
+          <Text>Are you sure you want to add this item?</Text>
+          <Button
+            onClick={() => {
+              setToBeAdded(null)
+              handleConfirm()
+            }}
+            mode="ghost"
+            text="Confirm"
+          />
 
-              <Button
-                onClick={() => {
-                  setToBeAdded(null)
-                }}
-                tone="default"
-                text="Cancel"
-              />
-            </Flex>
-          </Box>
+          <Button
+            onClick={() => {
+              setToBeAdded(null)
+            }}
+            mode="ghost"
+            text="Cancel"
+          />
         </Dialog>
       ) : null}
       {/* <ConfirmAddDialog
