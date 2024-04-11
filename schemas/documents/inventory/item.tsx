@@ -10,7 +10,6 @@ import { getCheckoutStatusProps } from '../../../plugins/inventory-workflow/hook
 import { ItemType } from 'plugins/inventory-workflow/types'
 
 export default defineType({
-  liveEdit: true,
   name: 'item',
   title: 'Inventory Item',
   type: 'document',
@@ -103,7 +102,7 @@ export default defineType({
       fieldset: 'stock',
       group: 'metadata',
       type: 'number',
-      initialValue: 0,
+      initialValue: 1,
       hidden: ({ parent }) => !parent?.isVariant,
       readOnly: ({ parent }) => !parent?.isVariant,
     }),
@@ -118,6 +117,7 @@ export default defineType({
     },
     defineField({
       name: 'variants',
+      hidden: ({ parent }) => parent?.isVariant,
       readOnly: true,
       title: 'Variants',
       type: 'array',
@@ -267,8 +267,12 @@ export default defineType({
       stock: 'stock',
       variantNumber: 'variantNumber',
       useShortName: 'useShortName',
+      variants: 'variants',
+      isVariant: 'isVariant',
     },
     prepare: ({
+      variants,
+      isVariant,
       parentCategory,
       name,
       manufacturerDetails,
@@ -295,7 +299,11 @@ export default defineType({
 
       const subtitle = `${manufacturerName} ${category}`
 
-      const variantNumberString = variantNumber > 0 ? `(${variantNumber}) ` : ''
+      const variantNumberString =
+        isVariant ||
+        (!isVariant && Array.isArray(variants) && variantNumber.length > 0)
+          ? `(${variantNumber}) `
+          : ''
 
       const statusIcon =
         stock > 0

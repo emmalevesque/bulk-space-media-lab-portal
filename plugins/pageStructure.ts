@@ -61,7 +61,7 @@ const getFilter = (title: string) => {
     case 'All Variants':
       return `_type == "item" && (isVariant || defined(variants))`
     default:
-      return `_type == $type`
+      return `_type == $type && !isVariant`
   }
 }
 
