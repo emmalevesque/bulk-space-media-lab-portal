@@ -29,11 +29,12 @@ export default function navigationStructure(
     useShortName,
     manufacturerDetails,
     variantNumber,
+    "hasVariants": count(variants) > 0,
   `
 
   // create the recursive fragment from which all things flow 🌊
   const childrenFragment = (subChildrenFragment: string) => groq`
-    "children": *[references(^._id)][] | order(_updatedAt desc) {
+    "children": *[references(^._id) && !isVariant][] | order(_updatedAt desc) {
       ${childrenFieldsFragment}
       ${subChildrenFragment}
     }
@@ -66,7 +67,9 @@ export default function navigationStructure(
         : 'Unnamed Item'
 
     itemName = `${
-      item.variantNumber > 0 ? `(${item.variantNumber}) ` : ''
+      item.variantNumber > 0 || item.hasVariants
+        ? `(${item.variantNumber || 1}) `
+        : ''
     }${itemName}`
     if (item._type === 'category') {
       // split the children ahead of time
@@ -81,7 +84,6 @@ export default function navigationStructure(
 
       // prepare the lists by checking if there are children
       // and return them if they do otherwise return nothing (not null)
-
       const listItemChildCategoriesList =
         listItemChildCategories?.length > 0
           ? [
