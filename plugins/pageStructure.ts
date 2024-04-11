@@ -59,7 +59,7 @@ const getFilter = (title: string) => {
     case 'Unavailable Items':
       return `_type == "item" && stock == 0`
     case 'All Variants':
-      return `_type == "item" && (isVariant || defined(variants))`
+      return `_type == "item" && isVariant`
     default:
       return `_type == $type && !isVariant`
   }

@@ -27,37 +27,6 @@ export const documentPreviewPanes: {
           import('plugins/inventory-workflow/components/item/ItemQrCodePane')
       ),
     },
-    {
-      title: 'Related',
-      component: dynamic(
-        () =>
-          import(
-            'plugins/inventory-workflow/components/global/RelatedDocuments'
-          )
-      ),
-    },
-  ],
-  checkout: [
-    {
-      title: 'Related',
-      component: dynamic(
-        () =>
-          import(
-            'plugins/inventory-workflow/components/global/RelatedDocuments'
-          )
-      ),
-    },
-  ],
-  kit: [
-    {
-      title: 'Related',
-      component: dynamic(
-        () =>
-          import(
-            'plugins/inventory-workflow/components/global/RelatedDocuments'
-          )
-      ),
-    },
   ],
   user: [
     {
@@ -70,38 +39,4 @@ export const documentPreviewPanes: {
       ),
     },
   ],
-  staff: [
-    {
-      title: 'Related',
-      component: dynamic(
-        () =>
-          import(
-            'plugins/inventory-workflow/components/global/RelatedDocuments'
-          )
-      ),
-    },
-  ],
-  category: [
-    {
-      title: 'Related',
-      component: dynamic(
-        () =>
-          import(
-            'plugins/inventory-workflow/components/global/RelatedDocuments'
-          )
-      ),
-    },
-  ],
-  tag: [
-    {
-      title: 'Related',
-      component: dynamic(
-        () =>
-          import(
-            'plugins/inventory-workflow/components/global/RelatedDocuments'
-          )
-      ),
-    },
-  ],
-  settings: [],
 }
