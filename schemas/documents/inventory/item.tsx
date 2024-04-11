@@ -42,7 +42,7 @@ export default defineType({
       title: 'Options',
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: false,
         columns: 2,
       },
     },
@@ -105,7 +105,6 @@ export default defineType({
       group: 'metadata',
     },
     {
-      fieldset: 'options',
       description: 'Short Name is used in the preview and in the slug',
       name: 'name',
       title: 'Short Name',

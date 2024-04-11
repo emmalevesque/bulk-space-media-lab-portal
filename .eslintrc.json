@@ -1,6 +1,10 @@
 {
   "extends": [
+<<<<<<< HEAD
     "@sanity/eslint-studio-plugin"
+=======
+    "@sanity/eslint-config-studio"
+>>>>>>> 037d280 (fix: issue with initial value templates)
   ],
   "plugins": [
     "simple-import-sort",
