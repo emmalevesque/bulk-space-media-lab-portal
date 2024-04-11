@@ -57,11 +57,7 @@ export const CategoryInputComponent = (props) => {
         unset,
       }}
     >
-      <Inline>
-        <Button padding={4} onClick={handleReset}>
-          Reset
-        </Button>
-      </Inline>
+      <Inline></Inline>
       <Box>
         {Array.isArray(data) &&
           data.map((category) => (
@@ -73,6 +69,9 @@ export const CategoryInputComponent = (props) => {
               category={category}
             />
           ))}
+        <Button mode="ghost" size={1} padding={4} onClick={handleReset}>
+          Reset
+        </Button>
       </Box>
     </TaxonomyContextProvider>
   ) : (

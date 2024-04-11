@@ -1,4 +1,4 @@
-import { Box, Button, Inline } from '@sanity/ui'
+import { Box, Button, Flex, Grid, Inline } from '@sanity/ui'
 import LoadingOverlay from 'components/global/LoadingOverlay'
 import { groq } from 'next-sanity'
 import { useCallback } from 'react'
@@ -21,11 +21,13 @@ export const TaxonomyComponent = (props) => {
     groq`*[!defined(parent) && _type == "category"][]{
         ...,
         "_key": _id,
-        ${childrenQuery(childrenQuery(''))} 
-      } | order(count(childrenQuery) desc)`,
+        ${childrenQuery(childrenQuery(''))},
+      }
+      | order(count(children) desc)`,
     {
       options: {
         perspective: 'previewDrafts',
+        tag: 'taxonomy',
       },
     }
   )
@@ -48,22 +50,24 @@ export const TaxonomyComponent = (props) => {
         unset,
       }}
     >
-      <Inline>
-        <Button padding={4} onClick={handleReset}>
-          Reset
-        </Button>
-      </Inline>
-      <Box>
-        {data.map((category) =>
-          category ? (
-            <Container
-              {...category}
-              categories={category.children || []}
-              key={category._key || category._id}
-            />
-          ) : null
-        )}
-      </Box>
+      <Flex justify="space-between">
+        <Box>
+          {data.map((category) =>
+            category ? (
+              <Container
+                {...category}
+                categories={category.children || []}
+                key={category._key || category._id}
+              />
+            ) : null
+          )}
+        </Box>
+        <Inline>
+          <Button padding={4} size={1} mode="ghost" onClick={handleReset}>
+            Clear
+          </Button>
+        </Inline>
+      </Flex>
     </TaxonomyContextProvider>
   ) : (
     <LoadingOverlay />

@@ -23,7 +23,7 @@ type FilteredDocumentDefinition = DocumentDefinition & {
   filter: string
 }
 
-// define new deskStructure list item type for legibility and organization
+// define new pageStructure list item type for legibility and organization
 type TopLevelListDefinition = {
   type: 'list'
   title: string
@@ -186,9 +186,9 @@ const listItemBuilder = (
     )
 
 /***
- * This returns the deskStructure
+ * This returns thepageStructure
  */
-const deskStructure = (
+const pageStructure = (
   S: StructureBuilder,
   listItems: ListItem[],
   // TODO: replace deprecated type
@@ -217,4 +217,4 @@ const deskStructure = (
     ])
 }
 
-export default deskStructure
+export default pageStructure

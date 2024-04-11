@@ -7,7 +7,7 @@ import { StructureBuilder } from 'sanity/structure'
 import category from 'schemas/documents/inventory/category'
 import item from 'schemas/documents/inventory/item'
 import tag from 'schemas/documents/inventory/tag'
-import { previewPanes } from './deskStructure'
+import { previewPanes } from './pageStructure'
 import { uuid } from '@sanity/uuid'
 import { apiVersion } from 'lib/sanity.api'
 
