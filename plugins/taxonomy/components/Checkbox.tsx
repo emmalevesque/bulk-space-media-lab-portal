@@ -1,7 +1,9 @@
-import { Checkbox, Inline, Stack } from '@sanity/ui'
+import { Button, Checkbox, Inline, Stack } from '@sanity/ui'
 import { CategoryChildren } from './Children'
 import { ContainerProps } from './Container'
 import { useTaxonomy } from '../hooks/useTaxonomy'
+import { IntentButton } from 'sanity'
+import { IntentLink } from 'sanity/router'
 
 type CheckboxProps = Partial<HTMLInputElement> & {
   id: string
