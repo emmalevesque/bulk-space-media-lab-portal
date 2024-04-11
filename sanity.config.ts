@@ -20,17 +20,12 @@ import staff from 'schemas/documents/user/staff'
 import user from 'schemas/documents/user/user'
 import { schema } from 'schemas/schema'
 
-import documentActions from 'plugins/inventory-workflow/actions'
 import {
   checkoutActions,
   getCheckoutStatusProps,
 } from 'plugins/inventory-workflow/hooks/hooks/useCheckout'
 
-import { templates } from 'lib/sanity.templates'
-
 import Icon from 'components/global/Icon/Icon'
-import { CheckoutBadge } from 'plugins/documentBadges/CheckoutBadge'
-import { ItemBadge } from 'plugins/documentBadges/ItemBadge'
 import ReportsTool from 'tools/ReportsTool'
 import checkout from 'schemas/documents/inventory/checkout'
 import settings from 'schemas/singletons/settings'
@@ -38,18 +33,7 @@ import 'styles/studio.css'
 import { structureTool } from 'sanity/structure'
 import inventoryWorkflow from 'plugins/inventory-workflow'
 import InventoryStatsTool from 'tools/InventoryStatsTool'
-
-const document = {
-  actions: documentActions,
-  templates: templates,
-  // TODO: add item badge that shows if item is available or not
-  badges: (prev, context) =>
-    context.schemaType === 'checkout'
-      ? [CheckoutBadge]
-      : context.schemaType === 'item'
-      ? [ItemBadge]
-      : prev,
-}
+import taxonomy from 'plugins/taxonomy'
 
 const tools = (prev, context) => {
   const canManageEmbeddingsIndex = context.currentUser?.roles
@@ -72,7 +56,15 @@ const tools = (prev, context) => {
 }
 
 const plugins = [
+  /***
+   * Inventory Workflow Plugin
+   * This plugin handles:
+   * - Checkout
+   * - Stock Management
+   * - Reporting
+   */
   inventoryWorkflow(),
+  taxonomy(),
   embeddingsIndexReferenceInput(),
   structureTool({
     title: 'Manage',
@@ -176,13 +168,11 @@ const commonConfig = {
   projectId,
   schema: {
     types: schema,
-    templates,
   },
   tools,
   plugins: isDev
     ? plugins
     : plugins.filter((plugin) => plugin.name !== 'vision'),
-  document,
   icon: Icon,
 }
 

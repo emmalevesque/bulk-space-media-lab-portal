@@ -65,6 +65,7 @@ export type CheckoutType = SanityDocument & {
     _type: 'reference'
     _ref: string
   }
+  isStaffCheckout?: boolean
   checkoutItems: {
     _type: 'reference'
     _ref: string
