@@ -1,6 +1,11 @@
 {
-  "extends": ["next"],
-  "plugins": ["simple-import-sort", "eslint-plugin-react"],
+  "extends": [
+    "@sanity/eslint-studio-plugin"
+  ],
+  "plugins": [
+    "simple-import-sort",
+    "eslint-plugin-react"
+  ],
   "rules": {
     "simple-import-sort/imports": "off",
     "simple-import-sort/exports": "off",
