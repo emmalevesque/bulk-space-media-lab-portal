@@ -81,7 +81,7 @@ export function useFetch<T = unknown>(query?: string, params?: any): State<T> {
     return () => {
       cancelRequest.current = true
     }
-  }, [query])
+  }, [query, params])
 
   return state
 }

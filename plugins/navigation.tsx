@@ -1,4 +1,4 @@
-import EmojiIcon from 'components/Icon/Emoji'
+import EmojiIcon from 'components/global/Icon/Emoji'
 import { definePlugin } from 'sanity'
 import { singletonDocumentTypes } from 'lib/constants'
 

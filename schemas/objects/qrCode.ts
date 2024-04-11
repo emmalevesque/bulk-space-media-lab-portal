@@ -1,5 +1,5 @@
 import { defineType } from 'sanity'
-import QrCode from 'schemas/documents/inventory/components/QrCode'
+import QrCode from 'plugins/inventory-workflow/components/global/QrCode/QrCode'
 import item from 'schemas/documents/inventory/item'
 import user from 'schemas/documents/user/user'
 

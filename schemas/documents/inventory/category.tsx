@@ -1,8 +1,9 @@
-import EmojiIcon from 'components/Icon/Emoji'
+import EmojiIcon from 'components/global/Icon/Emoji'
 import { Id, Reference, defineField, defineType } from 'sanity'
 import slugify from 'slugify'
 
 export type Category = {
+  _key?: string
   _id: Id
   _type: 'category'
   name: string

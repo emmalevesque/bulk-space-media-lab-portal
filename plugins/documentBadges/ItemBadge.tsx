@@ -1,4 +1,4 @@
-import { useInventory } from 'schemas/documents/inventory/hooks/useInventory'
+import { useInventory } from 'plugins/inventory-workflow/hooks/hooks/useInventory'
 
 export const ItemBadge = (props) => {
   const { itemStateProps } = useInventory(props?.published)

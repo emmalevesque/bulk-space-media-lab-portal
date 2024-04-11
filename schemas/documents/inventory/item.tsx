@@ -1,40 +1,13 @@
 import { defineField, defineType } from 'sanity'
 
 import { Box, Card, Grid, Inline, Text } from '@sanity/ui'
-import EmojiIcon from 'components/Icon/Emoji'
-import { SanityDocument } from 'next-sanity'
+import EmojiIcon from 'components/global/Icon/Emoji'
 import conditionReport from 'schemas/objects/conditionReport'
 import slugify from 'slugify'
-import { CategoryInputComponent } from './components/Category/CategoryInput'
-import ItemPreviewComponent from './components/Item/ItemPreviewComponent'
-import { getCheckoutStatusProps } from './hooks/useCheckout'
-
-export type ItemType = SanityDocument & {
-  name: string
-  manufacturerDetails: {
-    make: string
-    model: string
-  }
-  slug: {
-    current: string
-  }
-  showMoreDetails: boolean
-  sku: string
-  description: string
-  images: {
-    asset: {
-      _ref: string
-    }
-  }[]
-  category: {
-    title: string
-    parent: {
-      title: string
-    }
-  }
-  stock: number
-  productManualUrl: string
-}
+import { TaxonomyComponent } from 'plugins/taxonomy/components/TaxonomyComponent'
+import ItemPreviewComponent from '../../../plugins/inventory-workflow/components/preview/ItemPreviewComponent'
+import { getCheckoutStatusProps } from '../../../plugins/inventory-workflow/hooks/hooks/useCheckout'
+import { ItemType } from 'plugins/inventory-workflow/types'
 
 export default defineType({
   liveEdit: true,
@@ -165,13 +138,7 @@ export default defineType({
       type: 'slug',
       options: {
         source: 'manufacturerDetails',
-        slugify: (
-          input: { make: string; model: string },
-          schemaType,
-          context
-        ) => {
-          console.log({ input, schemaType, context })
-
+        slugify: (input: { make: string; model: string }, _, context) => {
           const parent = context?.parent as ItemType
 
           return slugify(
@@ -249,7 +216,7 @@ export default defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'category' }] }],
       components: {
-        input: CategoryInputComponent,
+        input: TaxonomyComponent,
       },
     },
   ],
