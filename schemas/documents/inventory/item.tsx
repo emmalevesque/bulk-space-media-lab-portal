@@ -52,7 +52,7 @@ export default defineType({
       options: {
         columns: 1,
         collapsible: true,
-        collapsed: true,
+        collapsed: false,
       },
     },
   ],
