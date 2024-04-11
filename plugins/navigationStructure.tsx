@@ -2,13 +2,14 @@ import { AddIcon } from '@sanity/icons'
 import EmojiIcon from 'components/global/Icon/Emoji'
 import { groq } from 'next-sanity'
 import { map } from 'rxjs/operators'
-import { DocumentStore } from 'sanity'
+import { DocumentStore, DocumentStoreOptions } from 'sanity'
 import { StructureBuilder } from 'sanity/structure'
 import category from 'schemas/documents/inventory/category'
 import item from 'schemas/documents/inventory/item'
 import tag from 'schemas/documents/inventory/tag'
 import { previewPanes } from './deskStructure'
 import { uuid } from '@sanity/uuid'
+import { apiVersion } from 'lib/sanity.api'
 
 const typeIconMap = {
   category: category.icon,
@@ -32,7 +33,7 @@ export default function navigationStructure(
 
   // create the recursive fragment from which all things flow 🌊
   const childrenFragment = (subChildrenFragment: string) => groq`
-    "children": *[references(^._id) && !(_id in path("drafts.**"))][] {
+    "children": *[references(^._id)][] {
       ${childrenFieldsFragment}
       ${subChildrenFragment}
     }
@@ -63,8 +64,6 @@ export default function navigationStructure(
       "childrenCount": count(children)
     } | order(childrenCount desc)
     `
-
-  const options = { apiVersion: `2023-01-01`, tag: 'menuItems' }
 
   // create the recursive structure builder
   const recursiveStructureBuilder = (item: any) => {
@@ -171,17 +170,27 @@ export default function navigationStructure(
     .id('inventory')
     .icon(() => <EmojiIcon>🗄️</EmojiIcon>)
     .child(
-      documentStore.listenQuery(query, {}, options).pipe(
-        map((response: any) => {
-          return S.list()
-            .title('Manage Inventory')
-            .id('manage-inventory')
-            .items([
-              ...response.map((item: any) => {
-                return recursiveStructureBuilder(item)
-              }),
-            ])
-        })
-      )
+      documentStore
+        .listenQuery(
+          query,
+          {},
+          {
+            apiVersion,
+            perspective: 'previewDrafts',
+            tag: 'menuCategories',
+          }
+        )
+        .pipe(
+          map((response: any) => {
+            return S.list()
+              .title('Manage Inventory')
+              .id('manage-inventory')
+              .items([
+                ...response.map((item: any) => {
+                  return recursiveStructureBuilder(item)
+                }),
+              ])
+          })
+        )
     )
 }

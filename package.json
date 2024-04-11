@@ -67,6 +67,7 @@
     "sanity-plugin-graph-view": "^2.0.1",
     "sanity-plugin-iframe-pane": "^2.5.4",
     "sanity-plugin-media": "^2.2.4",
+    "sanity-plugin-utils": "^1.6.4",
     "sanity-plugin-webhooks": "^1.0.0",
     "slugify": "^1.6.6",
     "styled-components": "^6.1.8",

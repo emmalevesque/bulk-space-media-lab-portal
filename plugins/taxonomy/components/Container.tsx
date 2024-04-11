@@ -1,40 +1,41 @@
-import { Box, Card } from '@sanity/ui'
+import { Box } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
-import { SanityDocument, SanityDocumentStub } from 'next-sanity'
+import { SanityDocumentStub } from 'next-sanity'
 import { ChangeEvent, useCallback } from 'react'
-import { Slug } from 'sanity'
-import { useCategoryInputContext } from '../../../inventory-workflow/hooks/hooks/useCategoryInputContext'
-import { CategoryInputCheckbox } from './CategoryInputCheckbox'
+import { CheckboxComponent } from './Checkbox'
+import { useTaxonomy } from '../hooks/useTaxonomy'
+import { Category } from 'schemas/documents/inventory/category'
 
-export type CategoryInputContainerProps = SanityDocument & {
-  slug: Slug
+export type ContainerProps = Category & {
+  _id: string
   name: string
-  children?: CategoryInputContainerProps[]
-  childrenCategories?: CategoryInputContainerProps[] | []
+  children?: (ContainerProps | Category)[]
+  categories?: (Category | ContainerProps)[] | []
   _key?: string
   isActive?: boolean
-  onClick: () => void
+  onClick?: () => void
 }
 
-export default function CategoryInputContainer({
+/**
+ * Renders a container component for the category input.
+ */
+export default function Container({
   _id,
   name,
   slug,
-  childrenCategories,
+  categories,
   children,
-}: CategoryInputContainerProps) {
-  const { value, onChange, set } = useCategoryInputContext()
+}: ContainerProps) {
+  const { value, onChange, set } = useTaxonomy()
 
   // handle the click event on the input checkbox
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const isSelected = value?.some((item) => item._ref === event.target.id)
-      const hasChildren = childrenCategories
-        ? childrenCategories?.length > 0
-        : false
+      const hasChildren = categories ? categories?.length > 0 : false
       const childrenAreSelected = isSelected
         ? value?.some((item) =>
-            childrenCategories?.some(
+            categories?.some(
               (child: { _ref: string }) => child?._ref === item._ref
             )
           )
@@ -53,7 +54,7 @@ export default function CategoryInputContainer({
             set(
               value?.filter(
                 (item) =>
-                  !childrenCategories?.some(
+                  !categories?.some(
                     (child) => (child as SanityDocumentStub)?._id === item._ref
                   ) && item._ref !== event.target.id
               )
@@ -65,29 +66,28 @@ export default function CategoryInputContainer({
         }
       }
     },
-    [onChange, value, set, childrenCategories]
+    [onChange, value, set, categories]
   )
 
   return (
     <Box>
-      {/* Parent Categories */}
-      {Array.isArray(children) ? (
-        <CategoryInputCheckbox
+      {/* If there are children append the count
+       * to the category name so the user knows too */}
+      {Array.isArray(children) && children.length > 0 ? (
+        <CheckboxComponent
           id={_id}
           label={`${name} (${children?.length})`}
-          slug={slug?.current}
           childCategories={children}
+          slug={slug}
           onClick={handleChange}
         />
       ) : (
-        <Card tone="default">
-          <CategoryInputCheckbox
-            id={_id}
-            label={name}
-            slug={slug?.current}
-            onClick={handleChange}
-          />
-        </Card>
+        <CheckboxComponent
+          id={_id}
+          label={name}
+          onClick={handleChange}
+          slug={''}
+        />
       )}
     </Box>
   )

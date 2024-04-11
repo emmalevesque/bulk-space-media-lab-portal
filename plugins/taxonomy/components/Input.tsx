@@ -4,8 +4,9 @@ import { groq } from 'next-sanity'
 import { useCallback } from 'react'
 import { set, unset, useClient } from 'sanity'
 import useSWR from 'swr'
-import { CategoryInputContextProvider } from '../../../inventory-workflow/hooks/hooks/useCategoryInputContext'
-import CategoryInputContainer from './CategoryInputContainer'
+import Container from './Container'
+import { TaxonomyContextProvider } from '../hooks/useTaxonomy'
+import { useListeningQuery } from 'sanity-plugin-utils'
 
 export const childrenQuery = (childQuery) => groq`
       "children": 
@@ -23,33 +24,31 @@ export const childrenQuery = (childQuery) => groq`
 export const CategoryInputComponent = (props) => {
   const { value, onChange, schemaType } = props
 
-  const client = useClient()
-
-  const fetcher = (query, params?: any) => client.fetch(query, params)
-
   // TODO: add search filtering feature
-  const { data, isLoading, error } = useSWR(
-    [
-      groq`*[!defined(parent) && _type == "category" && !(_id in path("drafts.**"))][]{
+  const { data, loading, error } = useListeningQuery(
+    groq`*[!defined(parent) && _type == "category"][]{
         ...,
         "_key": _id,
       //  look into why i passed an empty string here
-       ${childrenQuery(childrenQuery(''))} 
+        ${childrenQuery(childrenQuery(''))} 
       } | order(name asc)`,
-    ],
-    fetcher
+    {
+      options: {
+        perspective: 'previewDrafts',
+      },
+    }
   )
 
   const handleReset = useCallback(() => {
     onChange(Array.isArray(value) ? unset() : null)
   }, [onChange, value])
 
-  if (isLoading && !data) return <LoadingOverlay />
+  if (loading && !data) return <LoadingOverlay />
 
-  if (error) throw new Error(error)
+  if (error) throw new Error('error')
 
   return data ? (
-    <CategoryInputContextProvider
+    <TaxonomyContextProvider
       value={{
         value,
         onChange,
@@ -64,17 +63,18 @@ export const CategoryInputComponent = (props) => {
         </Button>
       </Inline>
       <Box>
-        {data.map((category) => (
-          <CategoryInputContainer
-            childrenCategories={category.children}
-            slug={category.slug}
-            {...category}
-            key={category._key}
-            category={category}
-          />
-        ))}
+        {Array.isArray(data) &&
+          data.map((category) => (
+            <Container
+              childrenCategories={category.children}
+              slug={category.slug}
+              {...category}
+              key={category._key}
+              category={category}
+            />
+          ))}
       </Box>
-    </CategoryInputContextProvider>
+    </TaxonomyContextProvider>
   ) : (
     <LoadingOverlay />
   )

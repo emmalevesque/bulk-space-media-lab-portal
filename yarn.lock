@@ -11744,7 +11744,7 @@ sanity-plugin-media@^2.2.4:
     rxjs "^7.0.0"
     zod "^3.21.4"
 
-sanity-plugin-utils@^1.6.3:
+sanity-plugin-utils@^1.6.3, sanity-plugin-utils@^1.6.4:
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/sanity-plugin-utils/-/sanity-plugin-utils-1.6.4.tgz#4e9cab5823e439c933cd8393471f68c65f1f91af"
   integrity sha512-j4LdOlvvM/Utyrl8RWE4VbBwOUx8m+GUoel4CjsBl5h8K1Tgjvpw8J7ftULwCwpcl/yzVGwQutgNw3FXxFbYYg==

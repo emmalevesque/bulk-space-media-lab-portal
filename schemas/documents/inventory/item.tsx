@@ -4,7 +4,7 @@ import { Box, Card, Grid, Inline, Text } from '@sanity/ui'
 import EmojiIcon from 'components/global/Icon/Emoji'
 import conditionReport from 'schemas/objects/conditionReport'
 import slugify from 'slugify'
-import { CategoryInputComponent } from '../../../plugins/taxonomy/components/Category/CategoryInput'
+import { TaxonomyComponent } from 'plugins/taxonomy/components/TaxonomyComponent'
 import ItemPreviewComponent from '../../../plugins/inventory-workflow/components/preview/ItemPreviewComponent'
 import { getCheckoutStatusProps } from '../../../plugins/inventory-workflow/hooks/hooks/useCheckout'
 import { ItemType } from 'plugins/inventory-workflow/types'
@@ -216,7 +216,7 @@ export default defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'category' }] }],
       components: {
-        input: CategoryInputComponent,
+        input: TaxonomyComponent,
       },
     },
   ],

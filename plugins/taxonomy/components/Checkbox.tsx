@@ -1,24 +1,24 @@
 import { Checkbox, Inline, Stack } from '@sanity/ui'
-import { CategoryChildren } from './CategoryChildren'
-import { CategoryInputContainerProps } from './CategoryInputContainer'
-import { useCategoryInputContext } from '../../../inventory-workflow/hooks/hooks/useCategoryInputContext'
+import { CategoryChildren } from './Children'
+import { ContainerProps } from './Container'
+import { useTaxonomy } from '../hooks/useTaxonomy'
 
-type CategoryInputCheckboxProps = Partial<HTMLInputElement> & {
+type CheckboxProps = Partial<HTMLInputElement> & {
   id: string
   slug: string
   label: string
   onClick?: any
-  childCategories?: CategoryInputContainerProps[] | undefined
+  childCategories?: ContainerProps[] | undefined
 }
 
-export const CategoryInputCheckbox = ({
+export const CheckboxComponent = ({
   id,
   slug,
   label,
   childCategories,
   onClick,
-}: CategoryInputCheckboxProps) => {
-  const { value = [] } = useCategoryInputContext()
+}: CheckboxProps) => {
+  const { value = [] } = useTaxonomy()
 
   const isSelected = value ? value?.some((item) => item._ref === id) : false
 

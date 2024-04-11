@@ -1,6 +1,6 @@
 import EmojiIcon from 'components/global/Icon/Emoji'
 import { defineType } from 'sanity'
-import { CategoryInputComponent } from '../../../plugins/taxonomy/components/Category/CategoryInput'
+import { TaxonomyComponent } from 'plugins/taxonomy/components/TaxonomyComponent'
 
 export default defineType({
   name: 'kit',
@@ -54,7 +54,7 @@ export default defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'category' }] }],
       components: {
-        input: CategoryInputComponent,
+        input: TaxonomyComponent,
       },
       validation: (Rule) => Rule.required(),
     },
