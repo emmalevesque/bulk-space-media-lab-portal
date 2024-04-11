@@ -24,13 +24,16 @@ export const documentPreviewPanes: {
       title: 'QR Code',
       component: dynamic(
         () =>
-          import('schemas/documents/inventory/components/Item/ItemQrCodePane')
+          import('plugins/inventory-workflow/components/item/ItemQrCodePane')
       ),
     },
     {
       title: 'Related',
       component: dynamic(
-        () => import('schemas/documents/inventory/components/RelatedDocuments')
+        () =>
+          import(
+            'plugins/inventory-workflow/components/global/RelatedDocuments'
+          )
       ),
     },
   ],
@@ -38,7 +41,10 @@ export const documentPreviewPanes: {
     {
       title: 'Related',
       component: dynamic(
-        () => import('schemas/documents/inventory/components/RelatedDocuments')
+        () =>
+          import(
+            'plugins/inventory-workflow/components/global/RelatedDocuments'
+          )
       ),
     },
   ],
@@ -46,7 +52,10 @@ export const documentPreviewPanes: {
     {
       title: 'Related',
       component: dynamic(
-        () => import('schemas/documents/inventory/components/RelatedDocuments')
+        () =>
+          import(
+            'plugins/inventory-workflow/components/global/RelatedDocuments'
+          )
       ),
     },
   ],
@@ -55,7 +64,9 @@ export const documentPreviewPanes: {
       title: 'QR Code',
       component: dynamic(
         () =>
-          import('schemas/documents/inventory/components/User/UserQrCodePane')
+          import(
+            'plugins/inventory-workflow/components/global/QrCode/UserQrCodePane'
+          )
       ),
     },
   ],
@@ -63,7 +74,10 @@ export const documentPreviewPanes: {
     {
       title: 'Related',
       component: dynamic(
-        () => import('schemas/documents/inventory/components/RelatedDocuments')
+        () =>
+          import(
+            'plugins/inventory-workflow/components/global/RelatedDocuments'
+          )
       ),
     },
   ],
@@ -71,7 +85,10 @@ export const documentPreviewPanes: {
     {
       title: 'Related',
       component: dynamic(
-        () => import('schemas/documents/inventory/components/RelatedDocuments')
+        () =>
+          import(
+            'plugins/inventory-workflow/components/global/RelatedDocuments'
+          )
       ),
     },
   ],
@@ -79,7 +96,10 @@ export const documentPreviewPanes: {
     {
       title: 'Related',
       component: dynamic(
-        () => import('schemas/documents/inventory/components/RelatedDocuments')
+        () =>
+          import(
+            'plugins/inventory-workflow/components/global/RelatedDocuments'
+          )
       ),
     },
   ],

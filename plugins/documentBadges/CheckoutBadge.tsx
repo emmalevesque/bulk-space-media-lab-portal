@@ -1,7 +1,7 @@
 import {
   checkoutActions,
   getCheckoutStatus,
-} from 'schemas/documents/inventory/hooks/useCheckout'
+} from 'plugins/inventory-workflow/hooks/hooks/useCheckout'
 
 export const CheckoutBadge = (props) => {
   const checkoutStatus = getCheckoutStatus(props?.published)
