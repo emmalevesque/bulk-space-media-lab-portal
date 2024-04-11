@@ -28,8 +28,7 @@ async function run() {
     _id,
     variantNumber
   }`,
-    {},
-    { perspective: 'previewDrafts' }
+    {}
   )
 
   items
