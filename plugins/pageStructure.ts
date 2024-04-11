@@ -214,6 +214,16 @@ const pageStructure = (
       navigationStructure(S, context.documentStore),
       S.divider(),
       ...documentTypesStructure,
+      S.listItem()
+        .id('tools')
+        .title('Developer')
+        .icon(() => '🛠️')
+        .child(
+          S.list()
+            .id('tools')
+            .title('Tools')
+            .items([...S.documentTypeListItems()])
+        ),
     ])
 }
 

@@ -20,8 +20,7 @@ import staff from 'schemas/documents/user/staff'
 import user from 'schemas/documents/user/user'
 import { schema } from 'schemas/schema'
 
-import documentActions from 'plugins/documentActions'
-import InventoryStatsTool from 'tools/InventoryStatsTool'
+import documentActions from 'plugins/inventory-workflow/actions'
 import {
   checkoutActions,
   getCheckoutStatusProps,
@@ -37,7 +36,8 @@ import checkout from 'schemas/documents/inventory/checkout'
 import settings from 'schemas/singletons/settings'
 import 'styles/studio.css'
 import { structureTool } from 'sanity/structure'
-import search from 'plugins/search'
+import inventoryWorkflow from 'plugins/inventory-workflow'
+import InventoryStatsTool from 'tools/InventoryStatsTool'
 
 const document = {
   actions: documentActions,
@@ -72,7 +72,7 @@ const tools = (prev, context) => {
 }
 
 const plugins = [
-  search(),
+  inventoryWorkflow(),
   embeddingsIndexReferenceInput(),
   structureTool({
     title: 'Manage',
