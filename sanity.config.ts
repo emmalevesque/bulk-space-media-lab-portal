@@ -8,7 +8,7 @@ import {
 } from '@sanity/embeddings-index-ui'
 import { visionTool } from '@sanity/vision'
 import { apiVersion, projectId } from 'lib/sanity.api'
-import deskStructure from 'plugins/deskStructure'
+import pageStructure from 'plugins/pageStructure'
 import { defineConfig, isDev } from 'sanity'
 
 // schema related items
@@ -77,7 +77,7 @@ const plugins = [
   structureTool({
     title: 'Manage',
     structure: (S, context) =>
-      deskStructure(
+      pageStructure(
         S,
         [
           {
