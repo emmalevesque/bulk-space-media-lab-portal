@@ -67,9 +67,7 @@ export default function navigationStructure(
         : 'Unnamed Item'
 
     itemName = `${
-      item.variantNumber > 0 || item.hasVariants
-        ? `(${item.variantNumber || 1}) `
-        : ''
+      item.isVariant || item.hasVariants ? `(${item.variantNumber || 1}) ` : ''
     }${itemName}`
     if (item._type === 'category') {
       // split the children ahead of time
