@@ -12,7 +12,6 @@ export const templates = [
       parentId: string
       parentTitle: string
     }) => ({
-      name: 'New Category in ' + parentTitle,
       parent: { _type: 'reference', _ref: parentId },
     }),
   },
@@ -33,7 +32,7 @@ export const templates = [
       parentTitle: string
     }) => {
       return {
-        name: 'New Item in ' + parentTitle,
+        useShortName: true,
         categories: [{ _type: 'reference', _ref: parentId }],
       }
     },

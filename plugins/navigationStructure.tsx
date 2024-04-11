@@ -2,7 +2,7 @@ import { AddIcon } from '@sanity/icons'
 import EmojiIcon from 'components/global/Icon/Emoji'
 import { groq } from 'next-sanity'
 import { map } from 'rxjs/operators'
-import { DocumentStore, DocumentStoreOptions } from 'sanity'
+import { DocumentStore } from 'sanity'
 import { StructureBuilder } from 'sanity/structure'
 import category from 'schemas/documents/inventory/category'
 import item from 'schemas/documents/inventory/item'
@@ -29,11 +29,12 @@ export default function navigationStructure(
     useShortName,
     manufacturerDetails,
     variantNumber,
+    "hasVariants": count(variants) > 0,
   `
 
   // create the recursive fragment from which all things flow 🌊
   const childrenFragment = (subChildrenFragment: string) => groq`
-    "children": *[references(^._id)][] {
+    "children": *[references(^._id) && !isVariant][] | order(_updatedAt desc) {
       ${childrenFieldsFragment}
       ${subChildrenFragment}
     }
@@ -41,11 +42,8 @@ export default function navigationStructure(
 
   // create the filter for the main query to get the inventory structure
   const filter = groq`
-  
-  // get categories
-  _type == "category" && 
-  // top level categories
-  !defined(parent) && !(_id in path("drafts.**"))`
+  _type == "category" &&
+  !defined(parent)`
 
   // build the main query
   const query = groq`
@@ -56,13 +54,7 @@ export default function navigationStructure(
       ${childrenFieldsFragment} 
       // begin the recursion ➿
       ${childrenFragment(childrenFragment(childrenFragment('')))} 
-      
-    }
-    // second projection to add count
-    {
-      ...,
-      "childrenCount": count(children)
-    } | order(childrenCount desc)
+    } | order(count(children) desc)
     `
 
   // create the recursive structure builder
@@ -75,12 +67,11 @@ export default function navigationStructure(
         : 'Unnamed Item'
 
     itemName = `${
-      item.variantNumber > 0 ? `(${item.variantNumber}) ` : ''
+      item.isVariant || item.hasVariants ? `(${item.variantNumber || 1}) ` : ''
     }${itemName}`
     if (item._type === 'category') {
       // split the children ahead of time
       // to show the categories above the items
-
       const listItemChildCategories = item.children.filter((child: any) => {
         return child._type === 'category'
       })
@@ -91,7 +82,6 @@ export default function navigationStructure(
 
       // prepare the lists by checking if there are children
       // and return them if they do otherwise return nothing (not null)
-
       const listItemChildCategoriesList =
         listItemChildCategories?.length > 0
           ? [
@@ -121,9 +111,10 @@ export default function navigationStructure(
             .title(itemName)
             .id(item._id)
             .items([
+              // new item button
               S.listItem()
                 .title(`New Item in ${item.name}`)
-                .id(`new-item-in-${item._id}`)
+                .id(`${item._id}-new`)
                 .icon(AddIcon)
                 .child(
                   S.document()
@@ -132,11 +123,11 @@ export default function navigationStructure(
                     .schemaType('item')
                     .id(uuid())
                     .initialValueTemplate('item-child', {
+                      _id: uuid(),
                       parentId: item._id,
                       parentTitle: item.name,
                     })
                 ),
-
               S.listItem()
                 .title(`Edit ${item.name}`)
                 .id(`${item._id}-edit`)
@@ -187,9 +178,7 @@ export default function navigationStructure(
               .title('Manage Inventory')
               .id('manage-inventory')
               .items([
-                ...response.map((item: any) => {
-                  return recursiveStructureBuilder(item)
-                }),
+                ...response.map((item: any) => recursiveStructureBuilder(item)),
               ])
           })
         )

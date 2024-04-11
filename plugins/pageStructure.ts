@@ -59,9 +59,9 @@ const getFilter = (title: string) => {
     case 'Unavailable Items':
       return `_type == "item" && stock == 0`
     case 'All Variants':
-      return `_type == "item" && (isVariant || defined(variants))`
+      return `_type == "item" && isVariant`
     default:
-      return `_type == $type`
+      return `_type == $type && !isVariant`
   }
 }
 
@@ -214,6 +214,16 @@ const pageStructure = (
       navigationStructure(S, context.documentStore),
       S.divider(),
       ...documentTypesStructure,
+      S.listItem()
+        .id('tools')
+        .title('Developer')
+        .icon(() => '🛠️')
+        .child(
+          S.list()
+            .id('tools')
+            .title('Tools')
+            .items([...S.documentTypeListItems()])
+        ),
     ])
 }
 

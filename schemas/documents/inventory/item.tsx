@@ -10,7 +10,6 @@ import { getCheckoutStatusProps } from '../../../plugins/inventory-workflow/hook
 import { ItemType } from 'plugins/inventory-workflow/types'
 
 export default defineType({
-  liveEdit: true,
   name: 'item',
   title: 'Inventory Item',
   type: 'document',
@@ -38,78 +37,40 @@ export default defineType({
   ],
   fieldsets: [
     {
+      name: 'options',
+      title: 'Options',
+      options: {
+        collapsible: true,
+        collapsed: false,
+        columns: 2,
+      },
+    },
+    {
       name: 'stock',
       title: 'Manage Stock & Variant Number',
       options: {
+        columns: 1,
         collapsible: true,
-        collapsed: true,
+        collapsed: false,
       },
     },
   ],
   fields: [
-    // TODO: add custom input component to ensure that stock
-    // is set 1 when isVariant is true
-    defineField({
-      name: 'isVariant',
-      title: 'Is this a variant of another inventory item?',
-      description:
-        'As a variant the maximum number of stock for this item will be 1. (Commonly used for more valueable items to track each item individually)',
-      initialValue: false,
-      type: 'boolean',
-      fieldset: 'stock',
-      group: 'metadata',
-    }),
-    defineField({
-      name: 'variantNumber',
-      title: 'Variant Number',
-      description: 'This number is automatically set when creating a variant',
-      fieldset: 'stock',
-      group: 'metadata',
-      type: 'number',
-      initialValue: 0,
-      hidden: ({ parent }) => !parent?.isVariant,
-      readOnly: ({ parent }) => !parent?.isVariant,
-    }),
     {
-      name: 'stock',
-      fieldset: 'stock',
-      title: 'Stock Quanity',
-      type: 'number',
-      group: 'metadata',
-      initialValue: 1,
-      readOnly: ({ parent }) => parent?.isVariant,
-    },
-    defineField({
-      name: 'variants',
-      title: 'Variants',
-      description: 'Variants of this item',
-      type: 'array',
-      of: [{ weak: true, type: 'reference', to: [{ type: 'item' }] }],
-      fieldset: 'stock',
-      group: 'metadata',
-      // hidden: ({  document }) => !document?.variants,
-    }),
-    {
+      description: 'Short Name is used in the preview and in the slug',
       name: 'name',
       title: 'Short Name',
-      description:
-        'Commonly used name for the item e.g. DSLR Camera, Cord, Adapter...',
       type: 'string',
       group: 'metadata',
       validation: (Rule) => Rule.required(),
     },
     {
-      name: 'useShortName',
-      title: 'Use Short Name?',
-      description:
-        'If checked, the short name will be used instead of the manufacturer name.',
-      type: 'boolean',
-      group: 'metadata',
-    },
-    {
       group: 'metadata',
       name: 'manufacturerDetails',
       title: 'Manufacturer Details',
+      options: {
+        columns: 2,
+      },
       type: 'object',
       fields: [
         {
@@ -124,6 +85,55 @@ export default defineType({
         },
       ],
     },
+    // TODO: add custom input component to ensure that stock
+    // is set 1 when isVariant is true
+    defineField({
+      name: 'isVariant',
+      title: 'Is this a variant of another inventory item?',
+      initialValue: false,
+      type: 'boolean',
+      fieldset: 'stock',
+      group: 'metadata',
+    }),
+    defineField({
+      name: 'variantNumber',
+      title: 'Variant Number',
+      description: 'This number is automatically set when creating a variant',
+      fieldset: 'stock',
+      group: 'metadata',
+      type: 'number',
+      initialValue: 1,
+      hidden: ({ parent }) => !parent?.isVariant,
+      readOnly: ({ parent }) => !parent?.isVariant,
+    }),
+    {
+      name: 'stock',
+      fieldset: 'stock',
+      title: 'Stock Quanity',
+      type: 'number',
+      group: 'metadata',
+      initialValue: 1,
+      readOnly: ({ parent }) => parent?.isVariant,
+    },
+    defineField({
+      name: 'variants',
+      hidden: ({ parent }) => parent?.isVariant,
+      readOnly: true,
+      title: 'Variants',
+      type: 'array',
+      of: [{ weak: true, type: 'reference', to: [{ type: 'item' }] }],
+      fieldset: 'stock',
+      group: 'metadata',
+      // hidden: ({  document }) => !document?.variants,
+    }),
+    {
+      fieldset: 'options',
+      name: 'useShortName',
+      title: 'Use Short Name?',
+      type: 'boolean',
+      group: 'metadata',
+    },
+
     {
       name: 'condition',
       title: 'Condition',
@@ -141,15 +151,17 @@ export default defineType({
         slugify: (input: { make: string; model: string }, _, context) => {
           const parent = context?.parent as ItemType
 
-          return slugify(
-            `${input.make} ${input.model}${
-              parent?.variantNumber > 0 ? ` ${parent?.variantNumber}` : ''
-            }`,
-            {
-              lower: true,
-              strict: true,
-            }
-          )
+          if (!input.make || !input.model) {
+            return slugify(
+              `${input.make} ${input.model}${
+                parent?.variantNumber > 0 ? ` ${parent?.variantNumber}` : ''
+              }`,
+              {
+                lower: true,
+                strict: true,
+              }
+            )
+          }
         },
         maxLength: 96,
       },
@@ -255,8 +267,12 @@ export default defineType({
       stock: 'stock',
       variantNumber: 'variantNumber',
       useShortName: 'useShortName',
+      variants: 'variants',
+      isVariant: 'isVariant',
     },
     prepare: ({
+      variants,
+      isVariant,
       parentCategory,
       name,
       manufacturerDetails,
@@ -283,7 +299,11 @@ export default defineType({
 
       const subtitle = `${manufacturerName} ${category}`
 
-      const variantNumberString = variantNumber > 0 ? `(${variantNumber}) ` : ''
+      const variantNumberString =
+        isVariant ||
+        (!isVariant && Array.isArray(variants) && variantNumber.length > 0)
+          ? `(${variantNumber}) `
+          : ''
 
       const statusIcon =
         stock > 0
