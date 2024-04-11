@@ -1,6 +1,7 @@
 import { CopyIcon } from '@sanity/icons'
 import { useToast } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
+import { apiVersion } from 'lib/sanity.api'
 import { _writeClient, client } from 'lib/sanity.client'
 import { groq } from 'next-sanity'
 import { useDataset, useDocumentOperation } from 'sanity'
@@ -9,7 +10,11 @@ export default function CreateVariant(props) {
   const latestDocument = props?.draft || props?.published
   const dataset = useDataset()
 
-  const _readClientWithConfig = client.withConfig({ dataset })
+  const _readClientWithConfig = client.withConfig({
+    apiVersion,
+    dataset,
+    perspective: 'previewDrafts',
+  })
 
   // init toast
   const toast = useToast()
@@ -49,7 +54,7 @@ export default function CreateVariant(props) {
               ? latestDocument?.variants?.map((v) => v._ref)
               : [],
           }
-        )) as number) || 0
+        )) as number) || 2
 
       // draft the new variant document
       const newVariant = {

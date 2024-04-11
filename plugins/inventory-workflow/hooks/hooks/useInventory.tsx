@@ -61,11 +61,6 @@ export const ItemStates = {
     title: 'This Item is Pending',
     color: 'warning',
   },
-  DEFAULT: {
-    label: 'Default',
-    title: 'This Item is Default',
-    color: 'default',
-  },
 }
 
 // create a type for all the keys of ItemStates
@@ -158,10 +153,10 @@ export const useInventory = (
     if (itemAvailability) return 'AVAILABLE'
     if (!itemAvailability) return 'CHECKED_OUT'
 
-    return 'DEFAULT'
+    return 'PENDING'
   }
 
-  const [itemState, setItemState] = useState<ItemState>('DEFAULT')
+  const [itemState, setItemState] = useState<ItemState>('PENDING')
 
   useEffect(() => {
     if (document) setItemState(getItemState())
@@ -171,7 +166,7 @@ export const useInventory = (
     console.log({ itemState })
   }, [itemState])
 
-  const [itemStateProps, setItemStateProps] = useState(ItemStates.DEFAULT)
+  const [itemStateProps, setItemStateProps] = useState(ItemStates.PENDING)
 
   useEffect(() => {
     if (document) setItemStateProps(ItemStates[itemState])

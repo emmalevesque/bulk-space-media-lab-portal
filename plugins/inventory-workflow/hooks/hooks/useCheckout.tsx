@@ -8,15 +8,21 @@ import {
 import { CardTone } from '@sanity/ui'
 import EmojiIcon from 'components/global/Icon/Emoji'
 import moment from 'moment'
-import { CheckoutStatus, CheckoutType } from 'plugins/inventory-workflow/types'
+import { SanityDocument } from 'next-sanity'
+import { CheckoutStatus } from 'plugins/inventory-workflow/types'
 
-export const getCheckoutStatus = (document: CheckoutType): CheckoutStatus => {
-  const isCheckedOut = document?.isCheckedOut
-  const isReturned = document?.isReturned
-  const user = document?.user
-  const checkoutItems = document?.checkoutItems
-  const isStaffCheckout = document?.isStaffCheckout
-  const staffMember = document?.staffMember?._ref
+export const getCheckoutStatus = (
+  document: SanityDocument | null
+): CheckoutStatus => {
+  if (!document) return 'LOADING'
+  const {
+    isCheckedOut = false,
+    isReturned = false,
+    user,
+    checkoutItems,
+    isStaffCheckout = false,
+    staffMember,
+  } = document ?? {}
 
   if (document) {
     if (isReturned) {
@@ -28,6 +34,7 @@ export const getCheckoutStatus = (document: CheckoutType): CheckoutStatus => {
     }
 
     if (
+      Array.isArray(checkoutItems) &&
       checkoutItems?.filter((item) => !Boolean(item?._ref))?.length > 0 &&
       (user || (staffMember && isStaffCheckout)) &&
       !isCheckedOut &&
