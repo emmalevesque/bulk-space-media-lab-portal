@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import { defineType } from 'sanity'
 import checkout from 'schemas/documents/inventory/checkout'
 
 export default defineType({

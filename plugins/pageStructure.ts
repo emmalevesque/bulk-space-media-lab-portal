@@ -18,7 +18,6 @@ import {
   StructureResolverContext,
 } from 'sanity/structure'
 import navigationStructure from './navigationStructure'
-import { taxonomyStructure } from './taxonomy/structure'
 
 type FilteredDocumentDefinition = DocumentDefinition & {
   filter: string

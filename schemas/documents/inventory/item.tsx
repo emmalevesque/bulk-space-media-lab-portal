@@ -57,6 +57,35 @@ export default defineType({
     },
   ],
   fields: [
+    {
+      description: 'Short Name is used in the preview and in the slug',
+      name: 'name',
+      title: 'Short Name',
+      type: 'string',
+      group: 'metadata',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      group: 'metadata',
+      name: 'manufacturerDetails',
+      title: 'Manufacturer Details',
+      options: {
+        columns: 2,
+      },
+      type: 'object',
+      fields: [
+        {
+          name: 'make',
+          title: 'Make',
+          type: 'string',
+        },
+        {
+          name: 'model',
+          title: 'Model',
+          type: 'string',
+        },
+      ],
+    },
     // TODO: add custom input component to ensure that stock
     // is set 1 when isVariant is true
     defineField({
@@ -89,8 +118,8 @@ export default defineType({
     },
     defineField({
       name: 'variants',
+      readOnly: true,
       title: 'Variants',
-      description: 'Variants of this item',
       type: 'array',
       of: [{ weak: true, type: 'reference', to: [{ type: 'item' }] }],
       fieldset: 'stock',
@@ -104,36 +133,7 @@ export default defineType({
       type: 'boolean',
       group: 'metadata',
     },
-    {
-      description: 'Short Name is used in the preview and in the slug',
-      name: 'name',
-      title: 'Short Name',
-      type: 'string',
-      group: 'metadata',
-      validation: (Rule) => Rule.required(),
-    },
 
-    {
-      group: 'metadata',
-      name: 'manufacturerDetails',
-      title: 'Manufacturer Details',
-      options: {
-        columns: 2,
-      },
-      type: 'object',
-      fields: [
-        {
-          name: 'make',
-          title: 'Make',
-          type: 'string',
-        },
-        {
-          name: 'model',
-          title: 'Model',
-          type: 'string',
-        },
-      ],
-    },
     {
       name: 'condition',
       title: 'Condition',
@@ -151,15 +151,17 @@ export default defineType({
         slugify: (input: { make: string; model: string }, _, context) => {
           const parent = context?.parent as ItemType
 
-          return slugify(
-            `${input.make} ${input.model}${
-              parent?.variantNumber > 0 ? ` ${parent?.variantNumber}` : ''
-            }`,
-            {
-              lower: true,
-              strict: true,
-            }
-          )
+          if (!input.make || !input.model) {
+            return slugify(
+              `${input.make} ${input.model}${
+                parent?.variantNumber > 0 ? ` ${parent?.variantNumber}` : ''
+              }`,
+              {
+                lower: true,
+                strict: true,
+              }
+            )
+          }
         },
         maxLength: 96,
       },
