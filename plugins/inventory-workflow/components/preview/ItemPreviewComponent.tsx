@@ -2,8 +2,6 @@ import { Badge, Container, Flex } from '@sanity/ui'
 import { useInventory } from '../../hooks/hooks/useInventory'
 
 export default (props) => {
-  if (props?.stock === undefined) return null
-
   const { itemStateProps } = useInventory(props)
 
   const tone =

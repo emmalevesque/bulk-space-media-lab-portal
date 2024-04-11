@@ -6,26 +6,6 @@
 import { groq } from 'next-sanity'
 import { getCliClient } from 'sanity/cli'
 
-interface UserDetail {
-  id: string
-  email: string
-  sanityUserId: string
-  imageUrl: string
-  displayName: string
-  givenName: string
-  familyName: string
-  loginProvider: string
-}
-
-interface ProjectUser {
-  projectUserId: string
-  isRobot: boolean
-  roles: {
-    name: string
-    title: string
-  }[]
-}
-
 // Configure a Sanity client to make authenticated API calls
 const client = getCliClient({ apiVersion: '2022-03-20' }).withConfig({
   dataset: 'production',
