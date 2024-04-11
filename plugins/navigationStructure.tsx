@@ -41,11 +41,8 @@ export default function navigationStructure(
 
   // create the filter for the main query to get the inventory structure
   const filter = groq`
-  
-  // get categories
-  _type == "category" && 
-  // top level categories
-  !defined(parent) && !(_id in path("drafts.**"))`
+  _type == "category" &&
+  !defined(parent)`
 
   // build the main query
   const query = groq`
@@ -56,13 +53,7 @@ export default function navigationStructure(
       ${childrenFieldsFragment} 
       // begin the recursion ➿
       ${childrenFragment(childrenFragment(childrenFragment('')))} 
-      
-    }
-    // second projection to add count
-    {
-      ...,
-      "childrenCount": count(children)
-    } | order(childrenCount desc)
+    } | order(count(childrenCount) desc)
     `
 
   // create the recursive structure builder
@@ -123,7 +114,7 @@ export default function navigationStructure(
             .items([
               S.listItem()
                 .title(`New Item in ${item.name}`)
-                .id(`new-item-in-${item._id}`)
+                .id(`new-item-in-${item._id}.${uuid()}`)
                 .icon(AddIcon)
                 .child(
                   S.document()

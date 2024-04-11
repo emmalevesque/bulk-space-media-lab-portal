@@ -38,9 +38,19 @@ export default defineType({
   ],
   fieldsets: [
     {
+      name: 'options',
+      title: 'Options',
+      options: {
+        collapsible: true,
+        collapsed: true,
+        columns: 2,
+      },
+    },
+    {
       name: 'stock',
       title: 'Manage Stock & Variant Number',
       options: {
+        columns: 1,
         collapsible: true,
         collapsed: true,
       },
@@ -52,8 +62,6 @@ export default defineType({
     defineField({
       name: 'isVariant',
       title: 'Is this a variant of another inventory item?',
-      description:
-        'As a variant the maximum number of stock for this item will be 1. (Commonly used for more valueable items to track each item individually)',
       initialValue: false,
       type: 'boolean',
       fieldset: 'stock',
@@ -90,26 +98,29 @@ export default defineType({
       // hidden: ({  document }) => !document?.variants,
     }),
     {
-      name: 'name',
-      title: 'Short Name',
-      description:
-        'Commonly used name for the item e.g. DSLR Camera, Cord, Adapter...',
-      type: 'string',
-      group: 'metadata',
-      validation: (Rule) => Rule.required(),
-    },
-    {
+      fieldset: 'options',
       name: 'useShortName',
       title: 'Use Short Name?',
-      description:
-        'If checked, the short name will be used instead of the manufacturer name.',
       type: 'boolean',
       group: 'metadata',
     },
     {
+      fieldset: 'options',
+      description: 'Short Name is used in the preview and in the slug',
+      name: 'name',
+      title: 'Short Name',
+      type: 'string',
+      group: 'metadata',
+      validation: (Rule) => Rule.required(),
+    },
+
+    {
       group: 'metadata',
       name: 'manufacturerDetails',
       title: 'Manufacturer Details',
+      options: {
+        columns: 2,
+      },
       type: 'object',
       fields: [
         {

@@ -1,6 +1,6 @@
-import CreateVariant from './CreateVariant'
-import ProcessCheckout from './processCheckout'
-import ResetCheckout from './resetCheckout'
+import CreateVariant from './variant/CreateVariant'
+import ProcessCheckout from './checkout/processCheckout'
+import ResetCheckout from './checkout/resetCheckout'
 
 const documentActions = (prev, context) => {
   if (context.schemaType === 'checkout') {
