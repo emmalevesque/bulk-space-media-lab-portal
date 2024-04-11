@@ -6,13 +6,24 @@ import { set, unset } from 'sanity'
 import Container from './Container'
 import { TaxonomyContextProvider } from '../hooks/useTaxonomy'
 import { useListeningQuery } from 'sanity-plugin-utils'
-import { childrenQuery } from './Input'
 import { Category } from 'schemas/documents/inventory/category'
+
+export const childrenQuery = (childQuery) => groq`
+      "children": 
+        *[_type == "category" 
+        && defined(parent) 
+        && parent._ref == ^._id
+      ][] 
+      | order(name asc)
+      {
+      ...,
+      ${childQuery} 
+      }
+`
 
 /**
  * Renders the main "categories" component
  */
-
 export const TaxonomyComponent = (props) => {
   const { value, onChange, schemaType } = props
 
