@@ -127,11 +127,12 @@ export const useInventory = (
     return await client.fetch(
       groq`
         *[
+          $id &&
           _id == $id
         ][0].stock
     `,
       {
-        id: document?._id,
+        id: document?._id || false,
       }
     )
   }
