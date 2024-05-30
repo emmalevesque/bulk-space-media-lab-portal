@@ -118,7 +118,6 @@ export default defineType({
     defineField({
       name: 'variants',
       hidden: ({ parent }) => parent?.isVariant,
-      readOnly: true,
       title: 'Variants',
       type: 'array',
       of: [{ weak: true, type: 'reference', to: [{ type: 'item' }] }],
@@ -184,10 +183,19 @@ export default defineType({
       type: 'description',
     },
     {
+      name: 'purchaseYear',
+      title: 'Purchase Year',
+      description: 'Used for insurance purposes',
+      type: 'number',
+      validation: (Rule) => Rule.min(2022).max(2999),
+      group: 'details',
+      initialValue: () => new Date().getFullYear(),
+    },
+    {
       name: 'replacementCost',
       title: 'Replacement Cost',
       group: 'details',
-      description: 'The cost to replace this item',
+      description: 'Market Value',
       type: 'number',
       components: {
         input: (props) => {
@@ -301,7 +309,10 @@ export default defineType({
 
       const variantNumberString =
         isVariant ||
-        (!isVariant && Array.isArray(variants) && variantNumber.length > 0)
+        (!isVariant &&
+          Array.isArray(variants) &&
+          variants.length > 0 &&
+          variantNumber > 0)
           ? `(${variantNumber}) `
           : ''
 
