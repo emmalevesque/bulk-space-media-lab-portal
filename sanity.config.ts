@@ -34,6 +34,7 @@ import { structureTool } from 'sanity/structure'
 import inventoryWorkflow from 'plugins/inventory-workflow'
 import InventoryStatsTool from 'tools/InventoryStatsTool'
 import taxonomy from 'plugins/taxonomy'
+import { simplerColorInput } from 'sanity-plugin-simpler-color-input'
 
 const tools = (prev, context) => {
   const canManageEmbeddingsIndex = context.currentUser?.roles
@@ -63,6 +64,24 @@ const plugins = [
    * - Stock Management
    * - Reporting
    */
+  simplerColorInput({
+    defaultColorFormat: 'hex',
+    defaultColorList: [
+      {
+        label: 'Yellow',
+        value: '#FFD700',
+      },
+      {
+        label: 'Red',
+        value: '#FF0000',
+      },
+      {
+        label: 'Blue',
+        value: '#0000FF',
+      },
+    ],
+    enableSearch: true,
+  }),
   inventoryWorkflow(),
   taxonomy(),
   embeddingsIndexReferenceInput(),
