@@ -14,6 +14,7 @@ import menu from './singletons/menu'
 
 import description from './objects/fields/description'
 import link from './objects/fields/link'
+import colorTag from './documents/colorTag'
 
 export const schema = [
   category,
@@ -29,6 +30,8 @@ export const schema = [
   user,
   qrCode,
   conditionReport,
+  // organization
+  colorTag,
   // fields
   description,
   link,
