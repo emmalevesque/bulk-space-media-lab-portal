@@ -34,7 +34,7 @@ export default defineType({
               style={{
                 width: '100%',
                 height: '100%',
-                backgroundColor: color.value,
+                backgroundColor: color?.value || '',
               }}
             ></div>
           )
