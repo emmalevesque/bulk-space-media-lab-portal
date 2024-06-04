@@ -41,7 +41,7 @@ export const TaxonomyComponent = (props) => {
         tag: 'taxonomy',
       },
     }
-  )
+  ) || { data: [] }
 
   const handleReset = useCallback(() => {
     onChange(Array.isArray(value) ? unset() : null)
@@ -62,17 +62,19 @@ export const TaxonomyComponent = (props) => {
       }}
     >
       <Flex justify="space-between">
-        <Box>
-          {data.map((category) =>
-            category ? (
-              <Container
-                {...category}
-                categories={category.children || []}
-                key={category._key || category._id}
-              />
-            ) : null
-          )}
-        </Box>
+        {Array.isArray(data) && (
+          <Box>
+            {data.map((category) =>
+              category ? (
+                <Container
+                  {...category}
+                  categories={category.children || []}
+                  key={category._key || category._id}
+                />
+              ) : null
+            )}
+          </Box>
+        )}
         <Inline>
           <Button padding={4} size={1} mode="ghost" onClick={handleReset}>
             Clear
