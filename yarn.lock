@@ -2770,7 +2770,7 @@
   resolved "https://registry.yarnpkg.com/@sanity/icons/-/icons-2.11.7.tgz#36cb48a5bcf2a283b2e063a7e6f470912588490b"
   integrity sha512-F0GkmYfzZFJZmhRRZFyzAVtqU4D+kiXMJCr5MeM9uGgGvFNKUW2amGCiN1528Z60v73hlqHTD9Eb6WEkwhWsiA==
 
-"@sanity/icons@^2.3.1":
+"@sanity/icons@^2.11.8", "@sanity/icons@^2.3.1":
   version "2.11.8"
   resolved "https://registry.yarnpkg.com/@sanity/icons/-/icons-2.11.8.tgz#90a38b7d23b5c9f728a6e7ebdac80c3f76c64c35"
   integrity sha512-C4ViXtk6eyiNTQ5OmxpfmcK6Jw+LLTi9zg9XBUD15DzC4xTHaGW9SVfUa43YtPGs3WC3M0t0K59r0GDjh52HIg==
@@ -11980,12 +11980,21 @@ sanity-plugin-simpler-color-input@^2.2.1:
     "@uiw/react-color" "^2.0.8"
     react-icons "^4.11.0"
 
-sanity-plugin-utils@^1.6.3, sanity-plugin-utils@^1.6.4:
+sanity-plugin-utils@^1.6.3:
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/sanity-plugin-utils/-/sanity-plugin-utils-1.6.4.tgz#4e9cab5823e439c933cd8393471f68c65f1f91af"
   integrity sha512-j4LdOlvvM/Utyrl8RWE4VbBwOUx8m+GUoel4CjsBl5h8K1Tgjvpw8J7ftULwCwpcl/yzVGwQutgNw3FXxFbYYg==
   dependencies:
     "@sanity/icons" "^2.2.2"
+    "@sanity/incompatible-plugin" "^1.0.4"
+    styled-components "^6.1.6"
+
+sanity-plugin-utils@^1.6.5:
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/sanity-plugin-utils/-/sanity-plugin-utils-1.6.5.tgz#f32e6ef91585cc3d60ff9964690f8b21d213fed8"
+  integrity sha512-QJOBaNSIR7nG8xaSRD/CsqPMz8ZMZIkJ2pCIzB14uD9J4iiCaRh6V4R6We6L4gNJ/Pr57AuzQS/SGqlyTue5Qw==
+  dependencies:
+    "@sanity/icons" "^2.11.8"
     "@sanity/incompatible-plugin" "^1.0.4"
     styled-components "^6.1.6"
 
