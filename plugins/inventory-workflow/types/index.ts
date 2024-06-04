@@ -1,5 +1,13 @@
 import { SanityDocument } from 'next-sanity'
 import { ItemStates } from 'plugins/inventory-workflow/hooks/hooks/useInventory'
+import { SimplerColorType } from 'sanity-plugin-simpler-color-input'
+
+export type ColorTag = {
+  _ref: string
+  title: string
+  label: string
+  color: SimplerColorType
+}
 
 export type ItemType = SanityDocument & {
   name: string
@@ -26,6 +34,7 @@ export type ItemType = SanityDocument & {
   }
   stock: number
   productManualUrl: string
+  colorTag: ColorTag
 }
 
 export type InventoryHook = {
