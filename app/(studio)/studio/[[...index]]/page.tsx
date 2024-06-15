@@ -1,15 +1,11 @@
-import 'tailwindcss/tailwind.css'
+// ./src/app/studio/[[...index]]/page.tsx
 import { Studio } from './Studio'
 
-import { Viewport } from 'next'
-import { viewport as nextSanityViewport } from 'next-sanity/studio'
+// Ensures the Studio route is statically generated
 export const dynamic = 'force-static'
 
-export { metadata } from 'next-sanity/studio/metadata'
-export const viewport: Viewport = {
-  ...nextSanityViewport,
-  themeColor: '#13141b',
-}
+// Set the right `viewport`, `robots` and `referer` meta tags
+export { metadata, viewport } from 'next-sanity/studio'
 
 export default function StudioPage() {
   return <Studio />
