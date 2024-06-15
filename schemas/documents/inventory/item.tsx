@@ -8,6 +8,7 @@ import { TaxonomyComponent } from 'plugins/taxonomy/components/TaxonomyComponent
 import ItemPreviewComponent from '../../../plugins/inventory-workflow/components/preview/ItemPreviewComponent'
 import { getCheckoutStatusProps } from '../../../plugins/inventory-workflow/hooks/hooks/useCheckout'
 import { ItemType } from 'plugins/inventory-workflow/types'
+import { urlForImage } from 'lib/sanity.image'
 
 export default defineType({
   name: 'item',
@@ -132,7 +133,13 @@ export default defineType({
       type: 'boolean',
       group: 'metadata',
     },
-
+    {
+      group: 'metadata',
+      name: 'colorTag',
+      title: 'Color Tag',
+      type: 'reference',
+      to: [{ type: 'colorTag' }],
+    },
     {
       name: 'condition',
       title: 'Condition',
@@ -277,6 +284,7 @@ export default defineType({
       useShortName: 'useShortName',
       variants: 'variants',
       isVariant: 'isVariant',
+      colorTag: 'colorTag.color.value',
     },
     prepare: ({
       variants,
@@ -291,6 +299,7 @@ export default defineType({
       secondCategory,
       variantNumber,
       media,
+      colorTag,
       useShortName,
       ...rest
     }) => {
@@ -330,7 +339,36 @@ export default defineType({
         // TODO: replace this with any uploaded images
         // TODO: potentially add a little dot icon to indicate stock
         stock: stock,
-        media: media ?? statusIcon,
+        media: colorTag
+          ? () => (
+              <span
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  display: 'block',
+                }}
+              >
+                {media && (
+                  <img
+                    src={urlForImage(media)
+                      .width(200)
+                      .height(200)
+                      .fit('crop')
+                      .url()}
+                  />
+                )}
+                <span
+                  style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: '100%',
+                    backgroundColor: colorTag,
+                  }}
+                  className=" absolute bottom-2 left-2"
+                ></span>
+              </span>
+            )
+          : media,
         secondCategory,
         firstCategory,
         parentCategory,

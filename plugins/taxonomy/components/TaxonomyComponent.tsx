@@ -41,7 +41,7 @@ export const TaxonomyComponent = (props) => {
         tag: 'taxonomy',
       },
     }
-  )
+  ) || { data: [] }
 
   const handleReset = useCallback(() => {
     onChange(Array.isArray(value) ? unset() : null)
