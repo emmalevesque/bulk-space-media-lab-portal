@@ -35,6 +35,7 @@ import inventoryWorkflow from 'plugins/inventory-workflow'
 import InventoryStatsTool from 'tools/InventoryStatsTool'
 import taxonomy from 'plugins/taxonomy'
 import { simplerColorInput } from 'sanity-plugin-simpler-color-input'
+import { defaultDocumentNode } from 'plugins/defaultDocumentNode'
 
 const tools = (prev, context) => {
   const canManageEmbeddingsIndex = context.currentUser?.roles
@@ -168,6 +169,7 @@ const plugins = [
         ],
         context
       ),
+    defaultDocumentNode,
     // defaultDocumentNode: previewDocumentNode(),
   }),
   ...[
