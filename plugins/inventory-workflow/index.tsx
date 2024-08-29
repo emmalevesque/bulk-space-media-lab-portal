@@ -4,7 +4,7 @@ import userCheckout from './schema/user.checkout'
 import actions from './actions'
 import { CheckoutBadge } from './badges/CheckoutBadge'
 import { ItemBadge } from './badges/ItemBadge'
-import { ColorBadge } from './badges/ColorBadge'
+// import { ColorBadge } from './badges/ColorBadge'
 
 export default definePlugin({
   name: 'inventory-workflow',
@@ -16,7 +16,8 @@ export default definePlugin({
         : context.schemaType === 'item'
         ? [
             ItemBadge as DocumentBadgeComponent,
-            ColorBadge as DocumentBadgeComponent,
+            // TODO: fix this
+            // ColorBadge as DocumentBadgeComponent,
           ].filter(Boolean)
         : prev,
   },
